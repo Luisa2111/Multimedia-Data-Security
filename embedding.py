@@ -34,8 +34,8 @@ def embedding(image,name_image, mark, alpha, v='multiplicative'):
     watermarked_dct *= sign
     watermarked = np.uint8(idct(idct(watermarked_dct, axis=1, norm='ortho'), axis=0, norm='ortho'))
 
-    w = ip.wpsnr(image, watermarked)
-    print("wPSNR of watermarked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
-    ip.plotting_images(image, watermarked, title=('Watermarked {image_name}').format(image_name=name_image))
+    # w = ip.wpsnr(image, watermarked)
+    # print("wPSNR of watermarked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
+    # ip.plotting_images(image, watermarked, title=('Watermarked {image_name}').format(image_name=name_image))
 
     return watermarked
