@@ -11,12 +11,12 @@ def awgn_bf(image1, std_max, seed):
     image2=ip.awgn(image1, std, seed) #this it the image attacked
     wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
     if detection(image1, image2):
-      listwpsnrwatermaked.append([wpsnr,std])
+      listwpsnrwatermarked.append([wpsnr,std])
     else:
       listwpsnrNOwatermark.append([wpsnr,std])
-  print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermarked)
-  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  print(listwpsnrwatermark)
+  print(listwpsnrNOwatermark)
+  return listwpsnrwatermark, listwpsnrNOwatermark
 
   
 def blur_bf(image1, sigma_max):
@@ -26,12 +26,12 @@ def blur_bf(image1, sigma_max):
     image2=ip.blur(image1, sigma) #this it the image attacked
     wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
     if detection(image1, image2):
-      listwpsnrwatermaked.append([wpsnr,std])
+      listwpsnrwatermarked.append([wpsnr,std])
     else:
       listwpsnrNOwatermark.append([wpsnr,std])
-  print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermarked)
-  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  print(listwpsnrwatermark)
+  print(listwpsnrNOwatermark)
+  return listwpsnrwatermark, listwpsnrNOwatermark
   
 
   
@@ -43,12 +43,12 @@ def sharpening_bf(image1, sigma_max, alpha_max):
       image2=ip.sharpening(image1, sigma, alpha) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermaked.append([wpsnr,sigma,alpha])
+       listwpsnrwatermarked.append([wpsnr,sigma,alpha])
       else:
         listwpsnrNOwatermark.append([wpsnr,sigma,alpha])
   print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermarked)
-  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  print(listwpsnrNOwatermark)
+  return listwpsnrwatermark, listwpsnrNOwatermark
   
 
 def jpeg_compression_bf(image1, qf_max):
@@ -58,12 +58,12 @@ def jpeg_compression_bf(image1, qf_max):
       image2=ip.jpeg_compression(image1, qf) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermaked.append([wpsnr,qf])
+       listwpsnrwatermarked.append([wpsnr,qf])
       else:
         listwpsnrNOwatermark.append([wpsnr,qf])
-  print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermarked)
-  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  print(listwpsnrwatermark)
+  print(listwpsnrNOwatermark)
+  return listwpsnrwatermark, listwpsnrNOwatermark
 
 
 def resizing_bf(image1, scale_max):
@@ -73,12 +73,12 @@ def resizing_bf(image1, scale_max):
       image2=ip.resizing(image1, scale) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermaked.append([wpsnr,scale])
+       listwpsnrwatermarked.append([wpsnr,scale])
       else:
         listwpsnrNOwatermark.append([wpsnr,scale])
-  print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermarked)
-  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  print(listwpsnrwatermark)
+  print(listwpsnrNOwatermark)
+  return listwpsnrwatermark, listwpsnrNOwatermark
 
 
 def median_bf(image1, kernel_size_max):
@@ -88,9 +88,9 @@ def median_bf(image1, kernel_size_max):
       image2=ip.median(image1, kernel_size) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermaked.append([wpsnr,kernel_size])
+       listwpsnrwatermarked.append([wpsnr,kernel_size])
       else:
         listwpsnrNOwatermark.append([wpsnr,kernel_size])
-  print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermarked)
-  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  print(listwpsnrwatermark)
+  print(listwpsnrNOwatermark)
+  return listwpsnrwatermark, listwpsnrNOwatermark
