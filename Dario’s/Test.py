@@ -11,7 +11,7 @@ def awgn_bf(image1, std_max, seed):
     image2=ip.awgn(image1, std, seed) #this it the image attacked
     wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
     if detection(image1, image2):
-      listwpsnrwatermarked.append([wpsnr,std])
+      listwpsnrwatermark.append([wpsnr,std])
     else:
       listwpsnrNOwatermark.append([wpsnr,std])
   print(listwpsnrwatermark)
@@ -26,7 +26,7 @@ def blur_bf(image1, sigma_max):
     image2=ip.blur(image1, sigma) #this it the image attacked
     wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
     if detection(image1, image2):
-      listwpsnrwatermarked.append([wpsnr,std])
+      listwpsnrwatermark.append([wpsnr,std])
     else:
       listwpsnrNOwatermark.append([wpsnr,std])
   print(listwpsnrwatermark)
@@ -43,7 +43,7 @@ def sharpening_bf(image1, sigma_max, alpha_max):
       image2=ip.sharpening(image1, sigma, alpha) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermarked.append([wpsnr,sigma,alpha])
+       listwpsnrwatermark.append([wpsnr,sigma,alpha])
       else:
         listwpsnrNOwatermark.append([wpsnr,sigma,alpha])
   print(listwpsnrwatermarked)
@@ -58,7 +58,7 @@ def jpeg_compression_bf(image1, qf_max):
       image2=ip.jpeg_compression(image1, qf) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermarked.append([wpsnr,qf])
+       listwpsnrwatermark.append([wpsnr,qf])
       else:
         listwpsnrNOwatermark.append([wpsnr,qf])
   print(listwpsnrwatermark)
@@ -73,7 +73,7 @@ def resizing_bf(image1, scale_max):
       image2=ip.resizing(image1, scale) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermarked.append([wpsnr,scale])
+       listwpsnrwatermark.append([wpsnr,scale])
       else:
         listwpsnrNOwatermark.append([wpsnr,scale])
   print(listwpsnrwatermark)
@@ -88,7 +88,7 @@ def median_bf(image1, kernel_size_max):
       image2=ip.median(image1, kernel_size) #this it the image attacked
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
-       listwpsnrwatermarked.append([wpsnr,kernel_size])
+       listwpsnrwatermark.append([wpsnr,kernel_size])
       else:
         listwpsnrNOwatermark.append([wpsnr,kernel_size])
   print(listwpsnrwatermark)
