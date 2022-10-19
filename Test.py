@@ -21,6 +21,7 @@ def awgn_bf(image1, std_max, seed):
       listwpsnrNOwatermark.append([wpsnr,std])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
+  return listwpsnrwatermarked, listwpsnrNOwatermarked
 
   
 def blur_bf(image1, sigma_max):
@@ -34,6 +35,9 @@ def blur_bf(image1, sigma_max):
     else
       listwpsnrNOwatermark.append([wpsnr,std])
   print(listwpsnrwatermarked)
+  print(listwpsnrNOwatermarked)
+  return listwpsnrwatermarked, listwpsnrNOwatermarked
+  
 
   
 def sharpening_bf(image1, sigma_max, alpha_max):
@@ -47,7 +51,9 @@ def sharpening_bf(image1, sigma_max, alpha_max):
        listwpsnrwatermaked.append([wpsnr,sigma,alpha])
       else
         listwpsnrNOwatermark.append([wpsnr,sigma,alpha])
-    print(listwpsnrwatermarked)
+  print(listwpsnrwatermarked)
+  print(listwpsnrNOwatermarked)
+  return listwpsnrwatermarked, listwpsnrNOwatermarked
   
 
-def 
+def jpeg
