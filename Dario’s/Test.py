@@ -14,8 +14,6 @@ def awgn_bf(OriginalImage, WatermarkedImage, std_max, seed):
       listwpsnrwatermark.append([wpsnrValue,std])
     else:
       listwpsnrNOwatermark.append([wpsnrValue,std])
-  print(listwpsnrwatermark)
-  print(listwpsnrNOwatermark)
   return listwpsnrwatermark, listwpsnrNOwatermark
 
   
@@ -29,8 +27,6 @@ def blur_bf(OriginalImage, WatermarkedImage, sigma_max):
       listwpsnrwatermark.append([wpsnrValue,std])
     else:
       listwpsnrNOwatermark.append([wpsnrValue,std])
-  print(listwpsnrwatermark)
-  print(listwpsnrNOwatermark)
   return listwpsnrwatermark, listwpsnrNOwatermark
   
 
@@ -46,8 +42,6 @@ def sharpening_bf(OriginalImage, WatermarkedImage, sigma_max, alpha_max):
        listwpsnrwatermark.append([wpsnrValue,sigma,alpha])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,sigma,alpha])
-  print(listwpsnrwatermarked)
-  print(listwpsnrNOwatermark)
   return listwpsnrwatermark, listwpsnrNOwatermark
   
 
@@ -61,8 +55,6 @@ def jpeg_compression_bf(OriginalImage, WatermarkedImage, qf_max):
        listwpsnrwatermark.append([wpsnrValue,qf])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,qf])
-  print(listwpsnrwatermark)
-  print(listwpsnrNOwatermark)
   return listwpsnrwatermark, listwpsnrNOwatermark
 
 
@@ -76,8 +68,6 @@ def resizing_bf(OriginalImage, WatermarkedImage, scale_max):
        listwpsnrwatermark.append([wpsnrValue,scale])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,scale])
-  print(listwpsnrwatermark)
-  print(listwpsnrNOwatermark)
   return listwpsnrwatermark, listwpsnrNOwatermark
 
 
@@ -91,6 +81,4 @@ def median_bf(OriginalImage, WatermarkedImage, kernel_size_max):
        listwpsnrwatermark.append([wpsnrValue,kernel_size])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,kernel_size])
-  print(listwpsnrwatermark)
-  print(listwpsnrNOwatermark)
   return listwpsnrwatermark, listwpsnrNOwatermark
