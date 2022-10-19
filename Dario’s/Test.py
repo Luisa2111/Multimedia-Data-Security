@@ -4,13 +4,13 @@ import image_processing as ip
 #After embedded the image, I want to test how robusts the watermark is against the attacks
 #So I am interested only in that value of std that break the watermark
 
-def awgn_bf(image1, std_max, seed):
+def awgn_bf(OriginalImage, WatermarkedImage, std_max, seed):
   listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
   listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
   for std in range(std_max): """We have to analyse which are the best values"""
-    image2=ip.awgn(image1, std, seed) #this it the image attacked
-    wpsnrValue=ip.wpsnr(image1, image2) #this evaluate the wpsnr
-    if detection(image1, image2):
+    AttackedImage=ip.awgn(WatermarkedImage, std, seed) #this it the image attacked
+    wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
+    if detection(OriginalImage, WatermarkedImage, AttackedImage):
       listwpsnrwatermark.append([wpsnrValue,std])
     else:
       listwpsnrNOwatermark.append([wpsnrValue,std])
@@ -19,13 +19,13 @@ def awgn_bf(image1, std_max, seed):
   return listwpsnrwatermark, listwpsnrNOwatermark
 
   
-def blur_bf(image1, sigma_max):
+def blur_bf(OriginalImage, WatermarkedImage, sigma_max):
   listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
   listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
   for sigma in range(sigma_max): """We have to analyse which are the best values"""
-    image2=ip.blur(image1, sigma) #this it the image attacked
-    wpsnrValue=ip.wpsnr(image1, image2) #this evaluate the wpsnr
-    if detection(image1, image2):
+    AttackedImage=ip.blur(WatermarkedImage, sigma) #this it the image attacked
+    wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
+    if detection(OriginalImage, WatermarkedImage, AttackedImage):
       listwpsnrwatermark.append([wpsnrValue,std])
     else:
       listwpsnrNOwatermark.append([wpsnrValue,std])
@@ -35,14 +35,14 @@ def blur_bf(image1, sigma_max):
   
 
   
-def sharpening_bf(image1, sigma_max, alpha_max):
+def sharpening_bf(OriginalImage, WatermarkedImage, sigma_max, alpha_max):
   listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
   listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
   for sigma in range(sigma_max): """We have to analyse which are the best values"""
     for alpha in range(alpha_max): """We have to analyse which are the best values"""
-      image2=ip.sharpening(image1, sigma, alpha) #this it the image attacked
-      wpsnrValue=ip.wpsnr(image1, image2) #this evaluate the wpsnr
-      if detection(image1, image2):
+      AttackedImage=ip.sharpening(WatermarkedImage, sigma, alpha) #this it the image attacked
+      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
+      if detection(WatermarkedImage, AttackedImage):
        listwpsnrwatermark.append([wpsnrValue,sigma,alpha])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,sigma,alpha])
@@ -51,13 +51,13 @@ def sharpening_bf(image1, sigma_max, alpha_max):
   return listwpsnrwatermark, listwpsnrNOwatermark
   
 
-def jpeg_compression_bf(image1, qf_max):
+def jpeg_compression_bf(OriginalImage, WatermarkedImage, qf_max):
   listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
   listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
   for qf in range(qf_max): """We have to analyse which are the best values"""
-      image2=ip.jpeg_compression(image1, qf) #this it the image attacked
-      wpsnrValue=ip.wpsnr(image1, image2) #this evaluate the wpsnr
-      if detection(image1, image2):
+      AttackedImage=ip.jpeg_compression(WatermarkedImage, qf) #this it the image attacked
+      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
+      if detection(WatermarkedImage, AttackedImage):
        listwpsnrwatermark.append([wpsnrValue,qf])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,qf])
@@ -66,13 +66,13 @@ def jpeg_compression_bf(image1, qf_max):
   return listwpsnrwatermark, listwpsnrNOwatermark
 
 
-def resizing_bf(image1, scale_max):
+def resizing_bf(OriginalImage, WatermarkedImage, scale_max):
   listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
   listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
   for scale in range(scale_max): """We have to analyse which are the best values"""
-      image2=ip.resizing(image1, scale) #this it the image attacked
-      wpsnrValue=ip.wpsnr(image1, image2) #this evaluate the wpsnr
-      if detection(image1, image2):
+      AttackedImage=ip.resizing(WatermarkedImage, scale) #this it the image attacked
+      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
+      if detection(OriginalImage, WatermarkedImage, AttackedImage):
        listwpsnrwatermark.append([wpsnrValue,scale])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,scale])
@@ -81,13 +81,13 @@ def resizing_bf(image1, scale_max):
   return listwpsnrwatermark, listwpsnrNOwatermark
 
 
-def median_bf(image1, kernel_size_max):
+def median_bf(OriginalImage, WatermarkedImage, kernel_size_max):
   listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
   listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
   for kernel_size in range(kernel_size_max): """We have to analyse which are the best values"""
-      image2=ip.median(image1, kernel_size) #this it the image attacked
-      wpsnrValue=ip.wpsnr(image1, image2) #this evaluate the wpsnr
-      if detection(image1, image2):
+      AttackedImage=ip.median(WatermarkedImage, kernel_size) #this it the image attacked
+      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
+      if detection(OriginalImage, WatermarkedImage, AttackedImage):
        listwpsnrwatermark.append([wpsnrValue,kernel_size])
       else:
         listwpsnrNOwatermark.append([wpsnrValue,kernel_size])
