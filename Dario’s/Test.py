@@ -12,7 +12,7 @@ def awgn_bf(image1, std_max, seed):
     wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
     if detection(image1, image2):
       listwpsnrwatermaked.append([wpsnr,std])
-    else
+    else:
       listwpsnrNOwatermark.append([wpsnr,std])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
@@ -27,7 +27,7 @@ def blur_bf(image1, sigma_max):
     wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
     if detection(image1, image2):
       listwpsnrwatermaked.append([wpsnr,std])
-    else
+    else:
       listwpsnrNOwatermark.append([wpsnr,std])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
@@ -44,7 +44,7 @@ def sharpening_bf(image1, sigma_max, alpha_max):
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
        listwpsnrwatermaked.append([wpsnr,sigma,alpha])
-      else
+      else:
         listwpsnrNOwatermark.append([wpsnr,sigma,alpha])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
@@ -59,7 +59,7 @@ def jpeg_compression_bf(image1, qf_max):
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
        listwpsnrwatermaked.append([wpsnr,qf])
-      else
+      else:
         listwpsnrNOwatermark.append([wpsnr,qf])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
@@ -74,7 +74,7 @@ def resizing_bf(image1, scale_max):
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
        listwpsnrwatermaked.append([wpsnr,scale])
-      else
+      else:
         listwpsnrNOwatermark.append([wpsnr,scale])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
@@ -89,7 +89,7 @@ def median_bf(image1, kernel_size_max):
       wpsnr=ip.wpsnr(image1, image2) #this evaluate the wpsnr
       if detection(image1, image2):
        listwpsnrwatermaked.append([wpsnr,kernel_size])
-      else
+      else:
         listwpsnrNOwatermark.append([wpsnr,kernel_size])
   print(listwpsnrwatermarked)
   print(listwpsnrNOwatermarked)
