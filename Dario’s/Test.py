@@ -1,5 +1,4 @@
 import image_processing as ip
-import 
 
 
 #After embedded the image, I want to test how robusts the watermark is against the attacks
