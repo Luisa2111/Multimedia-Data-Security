@@ -1,8 +1,16 @@
+from scipy.fft import dct, idct
+import numpy as np
+import matplotlib.pyplot as plt
+import cv2
+
+img_path='lena.bmp'
+image = cv2.imread(img_path, 0)
+
 mark = np.random.uniform(0.0, 1.0, 1024)
 mark = np.uint8(np.rint(mark))
 
 import pywt
-from google.colab.patches import cv2_imshow
+#from google.colab.patches import cv2_imshow
 
 def embedding_DCT(image, mark = mark, alpha = 0.1, v='multiplicative'):
     # Get the DCT transform of the image
@@ -65,6 +73,6 @@ def embedding_WDT(image, mark = mark, alpha = 0.1):
 
 wat_wdt = embedding_WDT(image,alpha = 0.01)
 
-cv2_imshow(wat_wdt)
+#cv2_imshow(wat_wdt)
 
 wpsnr(wat_wdt,image)

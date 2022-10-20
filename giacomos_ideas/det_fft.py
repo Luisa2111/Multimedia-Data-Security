@@ -1,6 +1,7 @@
 from scipy.fft import fft, ifft
 import numpy as np
 
+
 def embedding_FFT(image, mark_size, alpha, v='multiplicative'):
     # Get the DCT transform of the image
     ori_dct = fft(fft(image, axis=0, norm='ortho'), axis=1, norm='ortho')
