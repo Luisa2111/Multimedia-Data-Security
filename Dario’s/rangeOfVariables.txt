@@ -1,0 +1,83 @@
+All the attacked are referred to lena watermarked with SVD with mark a 512 bit random generated
+awgn -> row 10 -> std=[0, 50]
+blur -> row 62 -> range_sigma=[0.0, 1.0]
+sharpening -> row 83 -> 
+jpeg_compression -> 
+resizing -> 
+median -> 
+
+
+awgn: with std=2 there is no more the watermark
+std= 0 : wpsrn=  999999
+std= 1 : wpsrn=  63.315307944279375
+std= 2 : wpsrn=  57.29470834098098
+std= 3 : wpsrn=  53.772883066264974
+std= 4 : wpsrn=  51.274108419822056
+std= 5 : wpsrn=  49.33590815425126
+std= 6 : wpsrn=  47.75228322740845
+std= 7 : wpsrn=  46.41336214957903
+std= 8 : wpsrn=  45.25356483570136
+std= 9 : wpsrn=  44.23054566538585
+std= 10 : wpsrn=  43.315456129026344
+std= 11 : wpsrn=  42.487753817918886
+std= 12 : wpsrn=  41.73219428570559
+std= 13 : wpsrn=  41.03722199159655
+std= 14 : wpsrn=  40.39411607098185
+std= 15 : wpsrn=  39.79570531901352
+std= 16 : wpsrn=  39.23625556150833
+std= 17 : wpsrn=  38.71126293352209
+std= 18 : wpsrn=  38.216992175121376
+std= 19 : wpsrn=  37.7503175833703
+std= 20 : wpsrn=  37.30837450857178
+std= 21 : wpsrn=  36.88896457127598
+std= 22 : wpsrn=  36.48998693761286
+std= 23 : wpsrn=  36.10982375264929
+std= 24 : wpsrn=  35.74666551746449
+std= 25 : wpsrn=  35.399050205088
+std= 26 : wpsrn=  35.065936696909745
+std= 27 : wpsrn=  34.74597631010944
+std= 28 : wpsrn=  34.43841839124735
+std= 29 : wpsrn=  34.142670806562315
+std= 30 : wpsrn=  33.85782430441032
+std= 31 : wpsrn=  33.5831932787156
+std= 32 : wpsrn=  33.31824879214893
+std= 33 : wpsrn=  33.06245475873088
+std= 34 : wpsrn=  32.81489927833753
+std= 35 : wpsrn=  32.575131055413806
+std= 36 : wpsrn=  32.34281839279582
+std= 37 : wpsrn=  32.11750822469292
+std= 38 : wpsrn=  31.898890388989862
+std= 39 : wpsrn=  31.68656993900172
+std= 40 : wpsrn=  31.48042671461027
+std= 41 : wpsrn=  31.28006854487183
+std= 42 : wpsrn=  31.085203186190785
+std= 43 : wpsrn=  30.89570612097357
+std= 44 : wpsrn=  30.711378229257843
+std= 45 : wpsrn=  30.531752837830794
+std= 46 : wpsrn=  30.356562359251114
+std= 47 : wpsrn=  30.185816815310673
+std= 48 : wpsrn=  30.019285267964815
+std= 49 : wpsrn=  29.85674884932576
+
+blur: with sigma=0.2 there is no more the watermark
+sigma= 0 : wpsrn=  999999
+sigma= 0.1 : wpsrn=  999999
+sigma= 0.2 : wpsrn=  145.98271598090116
+sigma= 0.3 : wpsrn=  85.75691802280728
+sigma= 0.4 : wpsrn=  65.34610935995605
+sigma= 0.5 : wpsrn=  56.92896936182819
+sigma= 0.6 : wpsrn=  52.795733979918026
+sigma= 0.7 : wpsrn=  50.14657454701998
+sigma= 0.8 : wpsrn=  48.076268908507025
+sigma= 0.9 : wpsrn=  46.33035188549218
+sigma= 1 : wpsrn=  44.82483198187275
+sigma= 2 : wpsrn=  36.58752619664755
+sigma= 3 : wpsrn=  33.257023930762834
+sigma= 4 : wpsrn=  31.428572182492406
+sigma= 5 : wpsrn=  30.224634707242032
+sigma= 6 : wpsrn=  29.34086487154946
+sigma= 7 : wpsrn=  28.647924945138836
+sigma= 8 : wpsrn=  28.081004245023422
+sigma= 9 : wpsrn=  27.602798985732
+
+sharpening: with sigma=0.2 there is no more the watermark
