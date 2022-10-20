@@ -1,84 +1,70 @@
-import image_processing as ip
-
-
 #After embedded the image, I want to test how robusts the watermark is against the attacks
 #So I am interested only in that value of std that break the watermark
+#Remember: we want that the watermark will be not present
 
-def awgn_bf(OriginalImage, WatermarkedImage, std_max, seed):
-  listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
-  listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
-  for std in range(std_max): """We have to analyse which are the best values"""
-    AttackedImage=ip.awgn(WatermarkedImage, std, seed) #this it the image attacked
-    wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
-    if detection(OriginalImage, WatermarkedImage, AttackedImage):
-      listwpsnrwatermark.append([wpsnrValue,std])
-    else:
-      listwpsnrNOwatermark.append([wpsnrValue,std])
-  return listwpsnrwatermark, listwpsnrNOwatermark
+def awgn_bf(originalImage, watermarkedImage, std_max, seed):
+  listwpsnrwatermark=[]
+
+  for std in range(std_max):# """We have to analyse which are the best values"""
+    attackedImage=awgn(watermarkedImage, std, seed) #this it the image attacked
+    decisionMade, wpsnrWatermarkAttacked = detection(originalImage, watermarkedImage, attackedImage)
+    listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, std])
+
+  return listwpsnrwatermark
 
   
-def blur_bf(OriginalImage, WatermarkedImage, sigma_max):
-  listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
-  listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
-  for sigma in range(sigma_max): """We have to analyse which are the best values"""
-    AttackedImage=ip.blur(WatermarkedImage, sigma) #this it the image attacked
-    wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
-    if detection(OriginalImage, WatermarkedImage, AttackedImage):
-      listwpsnrwatermark.append([wpsnrValue,std])
-    else:
-      listwpsnrNOwatermark.append([wpsnrValue,std])
-  return listwpsnrwatermark, listwpsnrNOwatermark
+def blur_bf(originalImage, watermarkedImage, sigma_max):
+  listwpsnrwatermark=[]
+
+  for sigma in range(sigma_max):# """We have to analyse which are the best values"""
+    attackedImage=blur(watermarkedImage, sigma) #this it the image attacked
+    decisionMade, wpsnrWatermarkAttacked = detection(originalImage, watermarkedImage, attackedImage)
+    listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma])
+
+  return listwpsnrwatermark
   
 
   
-def sharpening_bf(OriginalImage, WatermarkedImage, sigma_max, alpha_max):
-  listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
-  listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
-  for sigma in range(sigma_max): """We have to analyse which are the best values"""
-    for alpha in range(alpha_max): """We have to analyse which are the best values"""
-      AttackedImage=ip.sharpening(WatermarkedImage, sigma, alpha) #this it the image attacked
-      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
-      if detection(WatermarkedImage, AttackedImage):
-       listwpsnrwatermark.append([wpsnrValue,sigma,alpha])
-      else:
-        listwpsnrNOwatermark.append([wpsnrValue,sigma,alpha])
-  return listwpsnrwatermark, listwpsnrNOwatermark
+def sharpening_bf(originalImage, watermarkedImage, sigma_max, alpha_max):
+  listwpsnrwatermark=[]
+
+  for sigma in range(sigma_max):# """We have to analyse which are the best values"""
+    for alpha in range(alpha_max):
+      attackedImage=sharpening(watermarkedImage, sigma, alpha) #this it the image attacked
+      decisionMade, wpsnrWatermarkAttacked = detection(originalImage, watermarkedImage, attackedImage)
+      listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha])
+
+  return listwpsnrwatermark
   
 
-def jpeg_compression_bf(OriginalImage, WatermarkedImage, qf_max):
-  listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
-  listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
-  for qf in range(qf_max): """We have to analyse which are the best values"""
-      AttackedImage=ip.jpeg_compression(WatermarkedImage, qf) #this it the image attacked
-      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
-      if detection(WatermarkedImage, AttackedImage):
-       listwpsnrwatermark.append([wpsnrValue,qf])
-      else:
-        listwpsnrNOwatermark.append([wpsnrValue,qf])
-  return listwpsnrwatermark, listwpsnrNOwatermark
+def jpeg_compression_bf(originalImage, watermarkedImage, qf_max):
+  listwpsnrwatermark=[]
+
+  for qf in range(qf_max):# """We have to analyse which are the best values"""
+    attackedImage=jpeg_compression(watermarkedImage, qf) #this it the image attacked
+    decisionMade, wpsnrWatermarkAttacked = detection(originalImage, watermarkedImage, attackedImage)
+    listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, qf])
+
+  return listwpsnrwatermark
 
 
-def resizing_bf(OriginalImage, WatermarkedImage, scale_max):
-  listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
-  listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
-  for scale in range(scale_max): """We have to analyse which are the best values"""
-      AttackedImage=ip.resizing(WatermarkedImage, scale) #this it the image attacked
-      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
-      if detection(OriginalImage, WatermarkedImage, AttackedImage):
-       listwpsnrwatermark.append([wpsnrValue,scale])
-      else:
-        listwpsnrNOwatermark.append([wpsnrValue,scale])
-  return listwpsnrwatermark, listwpsnrNOwatermark
+def resizing_bf(originalImage, watermarkedImage, scale_max):
+  listwpsnrwatermark=[]
+
+  for scale in range(scale_max):# """We have to analyse which are the best values"""
+    attackedImage=resizing(watermarkedImage, scale) #this it the image attacked
+    decisionMade, wpsnrWatermarkAttacked = detection(originalImage, watermarkedImage, attackedImage)
+    listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, scale])
+    
+  return listwpsnrwatermark
 
 
-def median_bf(OriginalImage, WatermarkedImage, kernel_size_max):
-  listwpsnrwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is present
-  listwpsnrNOwatermark=[] #I will save here all the values of the wpsnr after the attack was done and the watermark is not present
-  for kernel_size in range(kernel_size_max): """We have to analyse which are the best values"""
-      AttackedImage=ip.median(WatermarkedImage, kernel_size) #this it the image attacked
-      wpsnrValue=ip.wpsnr(WatermarkedImage, AttackedImage) #this evaluate the wpsnr
-      if detection(OriginalImage, WatermarkedImage, AttackedImage):
-       listwpsnrwatermark.append([wpsnrValue,kernel_size])
-      else:
-        listwpsnrNOwatermark.append([wpsnrValue,kernel_size])
-  return listwpsnrwatermark, listwpsnrNOwatermark
+def median_bf(originalImage, watermarkedImage, kernel_size_max):
+  listwpsnrwatermark=[]
+
+  for kernel_size in range(kernel_size_max):# """We have to analyse which are the best values"""
+    attackedImage=median(watermarkedImage, kernel_size) #this it the image attacked
+    decisionMade, wpsnrWatermarkAttacked = detection(originalImage, watermarkedImage, attackedImage)
+    listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, kernel_size])
+    
+  return listwpsnrwatermark
