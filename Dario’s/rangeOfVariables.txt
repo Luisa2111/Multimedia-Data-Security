@@ -3,8 +3,8 @@ awgn -> row 10 -> std=[0, 50]
 blur -> row 62 -> range_sigma=[0.0, 1.0]
 sharpening -> row 83 -> range_sigma=[0.2, 1.5], range_alpha=[0.2, 1.5]
 jpeg_compression -> row 
-resizing -> 
-median -> 
+resizing -> row 241 -> range_qf=[1, 10] This kind of attack is very slow
+median -> row 253 -> range_qf=   qf have to be odd.. Moreover, there are some problems beacuse it isn't able to destroy the watermark
 
 
 awgn: with std=2 there is no more the watermark
@@ -236,4 +236,19 @@ sigma= 1.2  alpha= 1.1 : wpsrn=  41.529739409926606
 sigma= 1.2  alpha= 1.2 : wpsrn=  40.77396820413672
 
 jpeg_compression: with qf= there is no more the watermark
+PROBLEMS
+
+resizing: with qf=2 there is no more the watermark
+qf= 0 : wpsrn=  9999999
+qf= 1 : wpsrn=  999999
+qf= 2 : wpsrn=  53.96192040847367
+qf= 3 : wpsrn=  55.879542519978294
+qf= 4 : wpsrn=  53.431698438658294
+qf= 5 : wpsrn=  53.67294373141799
+qf= 6 : wpsrn=  52.876581773504924
+qf= 7 : wpsrn=  52.94364042928929
+qf= 8 : wpsrn=  52.5442147163633
+qf= 9 : wpsrn=  52.57176680303044
+
+median: with std=2 there is no more the watermark
 PROBLEMS
