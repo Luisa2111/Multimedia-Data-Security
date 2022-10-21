@@ -1,7 +1,7 @@
 All the attacked are referred to lena watermarked with SVD with mark a 512 bit random generated
 awgn -> row 10 -> std=[0, 50]
 blur -> row 62 -> range_sigma=[0.0, 1.0]
-sharpening -> row 83 -> range_sigma=[0.2, 1.5], range_alpha=[0.2, 1.5]
+sharpening -> row 83 -> range_sigma=[0.2, 2.0], range_alpha=[0.2, 2.0]
 jpeg_compression -> row 
 resizing -> row 241 -> range_qf=[1, 10] This kind of attack is very slow
 median -> row 253 -> range_qf=   qf have to be odd.. Moreover, there are some problems beacuse it isn't able to destroy the watermark
