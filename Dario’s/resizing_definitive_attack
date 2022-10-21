@@ -22,7 +22,7 @@ def resizing_bf(originalImage, watermarkedImage, scale_min, scale_max, scale_ste
           return attackedImage, wpsnrWatermarkAttacked, decisionMade, scale
   return "resizing does not work"
 
-def rizing_bf_definitive(originalImage, watermarkedImage):
+def resizing_bf_definitive(originalImage, watermarkedImage):
   #it seems that the seed does not influence much the attack
   attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(originalImage, watermarkedImage, 1    , 50     , 1   , 1)
   #I'm sure that with std-1 the watermark will be present as I want
