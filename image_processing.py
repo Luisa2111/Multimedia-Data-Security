@@ -1,4 +1,5 @@
 import numpy as np
+import os
 from PIL import Image
 from scipy.ndimage import gaussian_filter
 from scipy.signal import medfilt
@@ -87,10 +88,12 @@ we can specify the Quality Factor (QF ∈ [0, 100]$). They lower the QF the high
 
 def jpeg_compression(img, qf):
     img = Image.fromarray(img)
+    if img.mode != 'RGB':
+        img = img.convert('RGB')
     img.save('tmp.jpg', "JPEG", quality=qf)
     attacked = Image.open('tmp.jpg')
     attacked = np.asarray(attacked, dtype=np.uint8)
-    # os.remove('tmp.jpg')
+    os.remove('tmp.jpg')
     return attacked
 
 

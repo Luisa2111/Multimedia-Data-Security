@@ -11,7 +11,6 @@ def generate_mark(mark_size):
     np.save('mark.npy', mark)
     return mark
 
-
 # here we will insert differnt possibilities for embedding
 
 def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative'):
@@ -34,7 +33,6 @@ def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative'):
     watermarked_dct *= sign
     watermarked = (idct(idct(watermarked_dct,axis=1, norm='ortho'),axis=0, norm='ortho'))
     return watermarked
-
 
 import pywt
 
