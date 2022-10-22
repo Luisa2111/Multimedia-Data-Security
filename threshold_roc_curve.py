@@ -7,12 +7,13 @@ from sklearn.metrics import roc_curve, auc
 import embedding as em
 import detection as dt
 import attack as at
+import psnr as ps
 
 
 # mark_size, alpha and v are parameters for generating mark (which we do not have to do in the challenge)
 # and the spread spectrum (depending on our embedding function, these might be unnecessary)
 
-def compute_roc(alpha, mark_size, v):
+def compute_roc(mark_size, alpha, mark):
     # get all sample images
     files = []
     for root, dirs, filenames in os.walk('sample-images-roc'):
@@ -20,21 +21,20 @@ def compute_roc(alpha, mark_size, v):
     # compute scores and labels
     scores = []
     labels = []
-
     for i in range(0, len(files)):
-        print(files[i])
+        # print(files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
-        mark = em.generate_mark(mark_size)
-        watermarked = em.embedding(image, files[i], mark, alpha, v)
+        watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]), mark=mark, alpha=alpha)
         sample = 0
-        while sample < 5: # unsure how many samples we should include in the dataset, gonna send Andrea an e-mail about it
+        while sample < 5:  # unsure how many samples we should include in the dataset, gonna send Andrea an e-mail
+            # about it
             fakemark = np.random.uniform(0.0, 1.0, mark_size)
             fakemark = np.uint8(np.rint(fakemark))
             res_att = at.random_attack(watermarked)
-            w_ex = dt.detection(image, res_att, alpha, mark_size, v)
-            scores.append(dt.similarity(mark, w_ex))
+            w_ex = dt.extraction(image, res_att, mark_size, alpha=alpha)
+            scores.append(ps.similarity(mark, w_ex))
             labels.append(1)
-            scores.append(dt.similarity(fakemark, w_ex))
+            scores.append(ps.similarity(fakemark, w_ex))
             labels.append(0)
             sample += 1
 
