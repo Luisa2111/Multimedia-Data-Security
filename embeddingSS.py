@@ -4,7 +4,11 @@ import cv2
 import matplotlib.pyplot as plt
 import image_processing as ip
 
+"""
+NOTES:
+destroyed with attack 2 and 5
 
+"""
 def generate_mark(mark_size):
     # Generate a watermark
     mark = np.random.uniform(0.0, 1.0, mark_size)
@@ -38,7 +42,7 @@ def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative', plot_mark = Fals
         plt.figure(figsize=(15, 6))
         plt.title('Position for watermark embedding')
         plt.imshow(mark_places, cmap='gray')
-        plt.show()
+        plt.draw()
     watermarked_dct *= sign
     watermarked = np.uint8(idct(idct(watermarked_dct,axis=1, norm='ortho'),axis=0, norm='ortho'))
     return watermarked

@@ -1,9 +1,10 @@
 from scipy.fft import dct, idct
 import numpy as np
 from psnr import wpsnr,similarity
+import matplotlib.pyplot as plt
 
 
-def extraction_DCT(image, watermarked, mark_size, alpha, v='multiplicative'):
+def extraction_DCT(image, watermarked, mark_size, alpha, v='multiplicative', plot_mark = False):
     ori_dct = dct(dct(image,axis=0, norm='ortho'),axis=1, norm='ortho')
     wat_dct = dct(dct(watermarked,axis=0, norm='ortho'),axis=1, norm='ortho')
 
@@ -16,6 +17,8 @@ def extraction_DCT(image, watermarked, mark_size, alpha, v='multiplicative'):
     # Generate a watermark
     w_ex = np.zeros(mark_size, dtype=np.float64)
     # Embed the watermark
+    mark_places = ori_dct.copy()
+    mark_places[:, :] = 1
     for idx, loc in enumerate(locations[1:mark_size+1]):
         if v=='additive':
             w_ex[idx] = (wat_dct[loc] - ori_dct[loc]) / alpha
@@ -23,6 +26,12 @@ def extraction_DCT(image, watermarked, mark_size, alpha, v='multiplicative'):
             #print(alpha)
             #print(loc, wat_dct[loc],ori_dct[loc])
             w_ex[idx] = (wat_dct[loc] - ori_dct[loc]) / (alpha*ori_dct[loc])
+            mark_places[loc] = 0
+    if plot_mark:
+        plt.figure(figsize=(15, 6))
+        plt.title('Position for watermark detection')
+        plt.imshow(mark_places, cmap='gray')
+        plt.show()
     return w_ex
 
 import cv2, pywt
@@ -30,7 +39,7 @@ import cv2, pywt
 def extraction(image, watermarked, mark_size, alpha):
     # extraction phase
     # first level
-    mark_ex = extraction_DCT(watermarked, image, alpha=alpha, mark_size=mark_size)
+    mark_ex = extraction_DCT(image, watermarked, alpha=alpha, mark_size=mark_size)
     LL_ori, (LH_ori, HL_ori, HH_ori) = pywt.dwt2(image, 'haar')
     LL_wat, (LH_wat, HL_wat, HH_wat) = pywt.dwt2(watermarked, 'haar')
     # mark_ex = extraction_DCT(LL_wat, LL_ori, alpha=alpha, mark_size=mark_size)
