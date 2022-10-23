@@ -1,6 +1,7 @@
 from scipy.fft import dct, idct
 import numpy as np
 import cv2
+import matplotlib.pyplot as plt
 import image_processing as ip
 
 
@@ -13,7 +14,7 @@ def generate_mark(mark_size):
 
 # here we will insert differnt possibilities for embedding
 
-def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative'):
+def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative', plot_mark = False):
     # Get the DCT transform of the image
     ori_dct = dct(dct(image,axis=0, norm='ortho'),axis=1, norm='ortho')
     # Get the locations of the most perceptually significant components
@@ -24,15 +25,24 @@ def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative'):
     locations = [(val//rows, val%rows) for val in locations] # locations as (x,y) coordinates
     # Embed the watermark
     watermarked_dct = ori_dct.copy()
+    mark_places = ori_dct.copy()
+    mark_places[:,:] = 1
     for idx, (loc,mark_val) in enumerate(zip(locations[1:], mark)):
         if v == 'additive':
             watermarked_dct[loc] += (alpha * mark_val)
         elif v == 'multiplicative':
             watermarked_dct[loc] *= 1 + ( alpha * mark_val)
+            mark_places[loc] = 0
     # Restore sign and o back to spatial domain
+    if plot_mark:
+        plt.figure(figsize=(15, 6))
+        plt.title('Position for watermark embedding')
+        plt.imshow(mark_places, cmap='gray')
+        plt.show()
     watermarked_dct *= sign
     watermarked = (idct(idct(watermarked_dct,axis=1, norm='ortho'),axis=0, norm='ortho'))
     return watermarked
+
 
 import pywt
 
