@@ -1,3 +1,5 @@
+It is a very slow attack
+
 watermark= 1  sigma= 0.2  alpha= 0.2 : wpsrn=  159.52241719146323
 watermark= 1  sigma= 0.2  alpha= 0.3 : wpsrn=  156.23083582968434
 watermark= 1  sigma= 0.2  alpha= 0.4 : wpsrn=  153.8375402934047
