@@ -24,4 +24,4 @@ def jpeg_compression_bf_best(originalImage, watermarkedImage):
   attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(originalImage, watermarkedImage, qf-1, qf    , 0.1 , -1)
   #I'm sure that with std+0.1 the watermark will be NOT present as I want
   attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(originalImage, watermarkedImage, qf  , qf+0.1, 0.01, 1)
-  return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma
+  return attackedImage, wpsnrWatermarkAttacked, decisionMade, qf
