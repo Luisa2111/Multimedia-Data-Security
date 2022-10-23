@@ -21,12 +21,12 @@ def compute_roc(mark_size, alpha, mark):
     # compute scores and labels
     scores = []
     labels = []
-    for i in range(0, 1): #len(files)):
-        print(files[i])
+    for i in range(0, len(files)):
+        print(i, ':', files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
         watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]), mark=mark, alpha=alpha)
         sample = 0
-        while sample < 50:  # unsure how many samples we should include in the dataset, gonna send Andrea an e-mail
+        while sample < 10:  # unsure how many samples we should include in the dataset, gonna send Andrea an e-mail
             # about it
             fakemark = np.random.uniform(0.0, 1.0, mark_size)
             fakemark = np.uint8(np.rint(fakemark))
