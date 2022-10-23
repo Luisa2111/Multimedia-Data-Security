@@ -19,7 +19,7 @@ def jpeg_compression_bf(originalImage, watermarkedImage, qf_min, qf_max, qf_step
   
 def jpeg_compression_bf_best(originalImage, watermarkedImage):
   #it seems that the seed does not influence much the attack
-  attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(originalImage, watermarkedImage, 0   , 50    , 1   , 1)
+  attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(originalImage, watermarkedImage, 0   , 100    , 1   , 1)
   #I'm sure that with std-1 the watermark will be present as I want
   attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(originalImage, watermarkedImage, qf-1, qf    , 0.1 , -1)
   #I'm sure that with std+0.1 the watermark will be NOT present as I want
