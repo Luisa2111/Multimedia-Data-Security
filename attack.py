@@ -7,7 +7,7 @@ We still have to develop an attack strategy for the day of the challenge.
 """
 
 
-def random_attack(watermarked):
+def random_attack(watermarked, output = False):
     i = random.randint(1, 6)
     if i == 1:
         attacked = ip.awgn(watermarked, 5.0, 123)
@@ -21,6 +21,8 @@ def random_attack(watermarked):
         attacked = ip.resizing(watermarked, 0.5)
     elif i == 6:
         attacked = ip.jpeg_compression(watermarked, 75)
+    if output:
+        print('Attacked with attack :',i)
     # w = ip.wpsnr(original, attacked)
     # print("wPSNR of attacked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
     # ip.plotting_images(original, attacked, title=('Attacked {image_name}').format(image_name=name_image))

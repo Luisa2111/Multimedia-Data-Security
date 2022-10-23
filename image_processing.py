@@ -91,7 +91,7 @@ def jpeg_compression(img, qf):
     if img.mode != 'RGB':
         img = img.convert('RGB')
     img.save('tmp.jpg', "JPEG", quality=qf)
-    attacked = Image.open('tmp.jpg')
+    attacked = Image.open('tmp.jpg').convert('F')
     attacked = np.asarray(attacked, dtype=np.uint8)
     os.remove('tmp.jpg')
     return attacked
