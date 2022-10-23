@@ -18,15 +18,17 @@ def random_attack(watermarked, output = False):
     elif i == 4:
         attacked = ip.median(watermarked, [3, 5])
     elif i == 5:
-        attacked = ip.resizing(watermarked, 0.5)
+        attacked = ip.resizing(watermarked, 0.95)
     elif i == 6:
         attacked = ip.jpeg_compression(watermarked, 75)
     if output:
-        print('Attacked with attack :',i)
+        # print('Attacked with attack :',i)
+        return attacked, i
     # w = ip.wpsnr(original, attacked)
     # print("wPSNR of attacked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
     # ip.plotting_images(original, attacked, title=('Attacked {image_name}').format(image_name=name_image))
-    return attacked
+    else:
+        return attacked
 
 
 """
