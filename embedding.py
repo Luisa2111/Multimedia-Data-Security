@@ -4,6 +4,11 @@ import cv2
 import matplotlib.pyplot as plt
 import image_processing as ip
 
+"""
+NOTES
+
+destroyed with attack 5, 2, 4
+"""
 
 def generate_mark(mark_size):
     # Generate a watermark
