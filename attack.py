@@ -18,7 +18,7 @@ def random_attack(watermarked, output = False):
     elif i == 4:
         attacked = ip.median(watermarked, [3, 5])
     elif i == 5:
-        attacked = ip.resizing(watermarked, 0.95)
+        attacked = ip.resizing(watermarked, 0.5)
     elif i == 6:
         attacked = ip.jpeg_compression(watermarked, 75)
     if output:

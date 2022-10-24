@@ -14,11 +14,11 @@ AWGN (Additive White Gaussian Noise) is used to add a normally distributed noise
 
 
 def awgn(img, std, seed):
-    mean = 0.0  # some constant
-    np.random.seed(seed)
-    attacked = img + np.random.normal(mean, std, img.shape)
-    attacked = np.clip(attacked, 0, 255)
-    return attacked
+  mean = 0.0
+  np.random.seed(seed)
+  attacked = img + np.random.normal(mean, std, img.shape)
+  attacked = np.clip(attacked, 0, 255)
+  return attacked
 
 
 """
@@ -30,8 +30,9 @@ the Gaussian filter, which affects the size of the kernel, can be an integer or 
 """
 
 
+from scipy.ndimage.filters import gaussian_filter
+
 def blur(img, sigma):
-    from scipy.ndimage.filters import gaussian_filter
     attacked = gaussian_filter(img, sigma)
     return attacked
 
@@ -44,7 +45,6 @@ brightness difference along edges within an image.
 
 def sharpening(img, sigma, alpha):
     filter_blurred_f = gaussian_filter(img, sigma)
-
     attacked = img + alpha * (img - filter_blurred_f)
     return attacked
 
@@ -57,10 +57,11 @@ in each dimension. Elements of kernel_size should be odd. If kernel_size is a sc
 size in each dimension.
 """
 
+from scipy.signal import medfilt
 
 def median(img, kernel_size):
-    attacked = medfilt(img, kernel_size)
-    return attacked
+  attacked = medfilt(img, kernel_size)
+  return attacked
 
 
 """
@@ -70,12 +71,17 @@ When upscaled the values of the new pixels are estimated using interpolation.
 """
 
 
+import cv2
+
 def resizing(img, scale):
-    x, y = img.shape
-    attacked = rescale(img, scale)
-    attacked = rescale(attacked, 1 / scale)
-    attacked = attacked[:x, :y]
-    return attacked
+  x, y = img.shape
+  _x = int(x*scale)
+  _y = int(y*scale)
+
+  attacked = cv2.resize(img, (_x, _y))
+  attacked = cv2.resize(attacked, (x, y))
+
+  return attacked
 
 
 """
@@ -85,16 +91,15 @@ process. By increasing the compression rate, artifacts appear: blocking, blurrin
 we can specify the Quality Factor (QF ∈ [0, 100]$). They lower the QF the higher the compression rate.
 """
 
+# provare a convertire in uint
+import cv2
 
-def jpeg_compression(img, qf):
-    img = Image.fromarray(img)
-    if img.mode != 'RGB':
-        img = img.convert('RGB')
-    img.save('tmp.jpg', "JPEG", quality=qf)
-    attacked = Image.open('tmp.jpg').convert('F')
-    attacked = np.asarray(attacked, dtype=np.uint8)
-    os.remove('tmp.jpg')
-    return attacked
+def jpeg_compression(img, QF):
+  cv2.imwrite('tmp.jpg', img, [int(cv2.IMWRITE_JPEG_QUALITY), QF])
+  attacked = cv2.imread('tmp.jpg', 0)
+  os.remove('tmp.jpg')
+
+  return attacked
 
 
 """
