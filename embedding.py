@@ -45,7 +45,7 @@ def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative', plot_mark = Fals
         plt.imshow(mark_places, cmap='gray')
         plt.show()
     watermarked_dct *= sign
-    watermarked = (idct(idct(watermarked_dct,axis=1, norm='ortho'),axis=0, norm='ortho'))
+    watermarked = np.uint8(idct(idct(watermarked_dct,axis=1, norm='ortho'),axis=0, norm='ortho'))
     return watermarked
 
 
