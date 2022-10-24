@@ -8,6 +8,9 @@ import image_processing as ip
 NOTES:
 version 1 destroied with attack 2,4,5,6
 
+version with svd on the dct domain broken by 1 and 2 (awgn and blur)
+
+in my opinion in texture area we have to do different embedding (these areas are less effected by awgn)
 
 """
 
@@ -75,7 +78,7 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'multiplicative'):
 import pywt
 
 
-def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', dim = 32):
+def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', dim = 16):
     # first level
     image = cv2.imread(name_image, 0)
 

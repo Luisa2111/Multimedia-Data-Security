@@ -40,7 +40,7 @@ def extraction_SVD(image, watermarked, alpha, mark_size, mode='multiplicative'):
         w_ex = (s_wat - s)/alpha
     return w_ex[1:mark_size+1]
 
-def extraction(image, watermarked, mark_size, alpha, dim = 32):
+def extraction(image, watermarked, mark_size, alpha, dim = 16):
     # extraction phase
     # first level
     mark = []
@@ -56,6 +56,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 32):
         for j in range(0, sh[1], dim):
              mark.append((extraction_SVD(im_dct(image[i:i + dim - 1, j:j + dim - 1]), im_dct(watermarked[i:i + dim - 1, j:j + dim - 1])
                                                                       ,mark_size=sub_mark_size,  alpha=alpha)))
+    mark.reverse()
     return np.concatenate(mark)
 
 def detection(name_original, name_watermarked, name_attacked, mark,  threeshold = 12, alpha = 0.1,  v = 'multiplicative', ):
