@@ -21,7 +21,7 @@ def compute_roc(mark_size, alpha, mark):
     # compute scores and labels
     scores = []
     labels = []
-    for i in range(0, len(files)//20):
+    for i in range(0, len(files)):
         print(i, ':', files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
         watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]), mark=mark, alpha=alpha)
@@ -49,7 +49,6 @@ def compute_roc(mark_size, alpha, mark):
     roc_auc = auc(fpr, tpr)
     plt.figure()
     lw = 2
-
     plt.plot(fpr, tpr, color='darkorange',
              lw=lw, label='AUC = %0.2f' % roc_auc)
     plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--')
@@ -60,7 +59,25 @@ def compute_roc(mark_size, alpha, mark):
     plt.title('Receiver operating characteristic example')
     plt.legend(loc="lower right")
     plt.show()
-    idx_tpr = np.where((fpr - 0.05) == min(i for i in (fpr - 0.05) if i > 0))
+
+    p_value = 0.05
+    idx_tpr = np.where((fpr - p_value) == min(i for i in (fpr - p_value) if i > 0))
     print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
     print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
     print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])
+
+    p_value = 0.01
+    idx_tpr = np.where((fpr - p_value) == min(i for i in (fpr - p_value) if i > 0))
+    print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
+    print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
+    print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])
+
+    p_value = 0.1
+    idx_tpr = np.where((fpr - p_value) == min(i for i in (fpr - p_value) if i > 0))
+    print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
+    print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
+    print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])
+    """idx_tpr = np.where((fpr - 0.05) == min(i for i in (fpr - 0.05) if i > 0))
+    print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
+    print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
+    print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])"""
