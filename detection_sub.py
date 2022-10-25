@@ -78,20 +78,19 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8):
     mark = np.concatenate(mark)
     return mark
 
-def detection(name_original, wat_original, attacked, mark,  threeshold = 2, alpha = 10):
-    mark_size = mark.size
+def detection(name_original, name_watermarked, name_attacked,mark_size=1024,  threeshold = 2, alpha = 10):
     image = cv2.imread(name_original, 0)
-    # wat_original = cv2.imread(name_watermarked,0)
-    # wat_attacked = cv2.imread(name_attacked,0)
-    extracted_mark = extraction(image, attacked, mark_size, alpha)
-
+    wat_original = cv2.imread(name_watermarked,0)
+    wat_attacked = cv2.imread(name_attacked,0)
+    extracted_mark = extraction(image, wat_attacked, mark_size, alpha)
+    mark = extraction(image, wat_original,mark_size,alpha)
     # threeshold and similiarity
     sim = similarity(mark,extracted_mark)
     if sim > threeshold:
         out1 = 1
     else:
         out1 = 0
-    return out1, wpsnr(wat_original,attacked)
+    return out1, wpsnr(wat_original,wat_attacked)
 
 
 """
