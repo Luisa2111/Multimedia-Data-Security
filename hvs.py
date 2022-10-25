@@ -92,7 +92,7 @@ def hvs_step(image, dim = 16, step = 10):
 
 if __name__ == "__main__":
     import cv2
-    image = cv2.imread('lena.bmp', 0)
+    image = cv2.imread('sample-images-roc/0004.bmp', 0)
     plt.figure(figsize=(15, 6))
     plt.subplot(131)
     plt.title('Original')
