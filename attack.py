@@ -30,6 +30,27 @@ def random_attack(watermarked, output = False):
     else:
         return attacked
 
+def attack_num(watermarked,i, output = False):
+    if i == 1:
+        attacked = ip.awgn(watermarked, 5.0, 123)
+    elif i == 2:
+        attacked = ip.blur(watermarked, [3, 2])
+    elif i == 3:
+        attacked = ip.sharpening(watermarked, 1, 1)
+    elif i == 4:
+        attacked = ip.median(watermarked, [3, 5])
+    elif i == 5:
+        attacked = ip.resizing(watermarked, 0.5)
+    elif i == 6:
+        attacked = ip.jpeg_compression(watermarked, 75)
+    if output:
+        # print('Attacked with attack :',i)
+        return attacked, i
+    # w = ip.wpsnr(original, attacked)
+    # print("wPSNR of attacked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
+    # ip.plotting_images(original, attacked, title=('Attacked {image_name}').format(image_name=name_image))
+    else:
+        return attacked
 
 """
 just used and implemented for our own testing purposes
