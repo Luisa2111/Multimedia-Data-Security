@@ -14,7 +14,7 @@ def random_attack(watermarked, output = False):
     elif i == 2:
         attacked = ip.blur(watermarked, [3, 2])
     elif i == 3:
-        attacked = ip.sharpening(watermarked, 1, 1)
+        attacked = ip.sharpening(watermarked, 1, 2)
     elif i == 4:
         attacked = ip.median(watermarked, [3, 5])
     elif i == 5:
