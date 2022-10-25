@@ -88,7 +88,7 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
 import pywt
 
 
-def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', dim = 8):
+def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim = 8):
     # first level
     image = cv2.imread(name_image, 0)
 
