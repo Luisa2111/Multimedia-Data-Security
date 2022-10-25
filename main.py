@@ -25,6 +25,7 @@ def main():
     name_out = 'wat_lena.bmp'
     #em.embedding_DCT(cv2.imread(name_image,0),mark)
     watermarked = em.embedding(name_image, mark, alpha, name_output=name_out)
+    watermarked = cv2.imread(name_out,0)
     mark_ex = dt.extraction(image = cv2.imread(name_image, 0), watermarked=watermarked, mark_size=mark.size,alpha=alpha)
     # np.set_printoptions(threshold=np.inf)
     print('mark ex', (mark_ex), len(mark_ex))
@@ -39,32 +40,18 @@ def main():
     T = 16
 
     FAKE = []
-    for _ in range(10):
+    """for _ in range(10):
         fakemark = dt.extraction(image, at.random_attack(image), mark_size=mark.size,alpha=alpha)
         plt.hist(fakemark, bins=50)
         plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
         plt.show()
         fake_s = similarity(mark_ex,fakemark)
-        print('false sim', fake_s)
+        print('false sim', fake_s)"""
 
 
 
 
-    def compute_thr(sim, mark_size, w):
-        SIM = np.zeros(1000)
-        SIM[0] = abs(sim)
-        for i in range(1, 1000):
-            r = np.random.uniform(-1.0, 1.0, mark_size)
-            SIM[i] = (similarity(w,r))
-            plt.scatter(range(0, 1000), SIM, s=0.5)
-        SIM.sort()
-        t = SIM[-2]
-        T = t + (0.1 * t)
-        plt.hlines(T, 0, 1000, color='red')
-        plt.show()
-        return T
-    #T = compute_thr(sim,mark_size, w = mark)
-    print(T)
+
     problem = set({})
     print('starting attacks')
     for i in range(1,7):
@@ -74,7 +61,7 @@ def main():
         mark_atk = dt.extraction(image = cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size,alpha=alpha)
         sim = similarity(mark_ex,mark_atk)
         print(i, sim, wpsnr(watermarked, atk))
-        if sim < 10 :
+        if sim < 4 :
             problem.add(i)
             # print(i, wpsnr(watermarked,atk))
         """print('mark atk :',mark_atk)
