@@ -25,14 +25,31 @@ def hvs_quantization_Lambda(image):
                 L = 1 / 256 * I[3][3][1 + floor(i // (2 ** (3 - l))), 1 + floor(j // (2 ** (3 - l)))]
                 Lambda = 1 + L
             matrix[i, j] = Lambda
-    plt.figure(figsize=(15, 6))
-    plt.subplot(121)
-    plt.title('Original')
-    plt.imshow(image, cmap='gray')
-    plt.subplot(122)
-    plt.title('Matrix Lambda')
-    plt.imshow(matrix, cmap='gray')
-    plt.show()
+
+    return matrix
+
+
+def hvs_quantization_L(image):
+    sh = image.shape
+    I_30, (I_00, I_20, I_10) = pywt.dwt2(image, 'haar')
+    I_31, (I_01, I_21, I_11) = pywt.dwt2(I_30, 'haar')
+    I_32, (I_02, I_22, I_12) = pywt.dwt2(I_31, 'haar')
+    I_33, (I_03, I_23, I_13) = pywt.dwt2(I_32, 'haar')
+
+    matrix = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
+
+    I = [[I_00, I_10, I_20], [I_01, I_11, I_21], [I_02, I_12, I_22], [I_03, I_13, I_23, I_33]]
+    print(I[3][3].shape)
+
+    for i in range((sh[0] // 2)):
+        for j in range((sh[1] // 2)):
+            l = 0
+            # the eye is less sensitive to noise in those areas of the image where brightness is high or low
+            if 1 + floor(i // (2 ** (3 - l))) < 32 and 1 + floor(j // (2 ** (3 - l))) < 32:
+                L = 1 / 256 * I[3][3][1 + floor(i // (2 ** (3 - l))), 1 + floor(j // (2 ** (3 - l)))]
+            if L < 0.5 : L = 1 - L
+            matrix[i, j] = L
+
     return matrix
 
 def hvs_quantization_Xi(image):
@@ -71,14 +88,6 @@ def hvs_quantization_Xi(image):
 
             matrix[i, j] = (Xi ** 0.2)
 
-    plt.figure(figsize=(15, 6))
-    plt.subplot(121)
-    plt.title('Original')
-    plt.imshow(image, cmap='gray')
-    plt.subplot(122)
-    plt.title('Matrix Xi')
-    plt.imshow(matrix, cmap='gray')
-    plt.show()
     return matrix
 
 def hvs_blocks(image, dim = 16):
@@ -115,18 +124,23 @@ if __name__ == "__main__":
     import cv2
     image = cv2.imread('lena.bmp', 0)
     plt.figure(figsize=(15, 6))
-    plt.subplot(131)
+    plt.subplot(141)
     plt.title('Original')
     plt.imshow(image, cmap='gray')
-    plt.subplot(132)
+    plt.subplot(142)
     plt.title('Matrix')
     matrix = hvs_quantization_Xi(image)
     plt.imshow(matrix, cmap='gray')
-    plt.subplot(133)
+    plt.subplot(143)
     plt.title('Mean')
     hvs = hvs_blocks(image)
     print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
     print(hvs)
     plt.imshow(hvs, cmap='gray')
+    plt.subplot(144)
+    matrix = hvs_quantization_Lambda(image)
+    plt.title('Matrix Lambda')
+    plt.imshow(matrix, cmap='gray')
+    plt.show()
     plt.show()
 
