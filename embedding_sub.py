@@ -24,13 +24,6 @@ def im_idct(image):
     return (idct(idct(image, axis=1, norm='ortho'), axis=0, norm='ortho'))
 
 
-def generate_mark(mark_size):
-    # Generate a watermark
-    mark = np.random.uniform(0.0, 1.0, mark_size)
-    mark = np.uint8(np.rint(mark))
-    np.save('mark.npy', mark)
-    return mark
-
 # here we will insert differnt possibilities for embedding
 
 def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative', plot_mark = False):
@@ -88,11 +81,11 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
 import pywt
 
 
-def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim = 8):
+def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim = 8 , step = 15):
     # first level
     image = cv2.imread(name_image, 0)
 
-    q = hvs.hvs_step(image, dim = dim, step = 15)
+    q = hvs.hvs_step(image, dim = dim, step = step)
 
     coeffs2 = pywt.dwt2(image, 'haar')
     image, (LH, HL, HH) = coeffs2
@@ -108,8 +101,7 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
 
     # watermarked = image.copy()
     sub_mark = np.array_split(mark, np.count_nonzero(q))
-    sub_mark_size = mark.size // np.count_nonzero(q) + 1
-    last_mark_size = mark.size % sub_mark_size
+    sub_mark_size = sub_mark[0].size
     for i in range(len(sub_mark)):
         sub_mark[i] = np.pad(sub_mark[i], (0,sub_mark_size - sub_mark[i].size), 'constant')
     for i in range(0,sh[0],dim):
