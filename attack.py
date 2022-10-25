@@ -34,7 +34,7 @@ def attack_num(watermarked,i, output = False):
     if i == 1:
         attacked = ip.awgn(watermarked, 5.0, 123)
     elif i == 2:
-        attacked = ip.blur(watermarked, [3, 2])
+        attacked = ip.blur(watermarked, 1.5)
     elif i == 3:
         attacked = ip.sharpening(watermarked, 1, 1)
     elif i == 4:
