@@ -81,3 +81,9 @@ def compute_roc(mark_size, alpha, mark):
     print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
     print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
     print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])"""
+
+if __name__ == "__main__":
+    alpha = 10
+    MARK = np.load('ef26420c.npy')
+    mark = np.array([(-1) ** m for m in MARK])
+    compute_roc(mark.size, alpha=alpha, mark=mark)

@@ -1,7 +1,7 @@
 import numpy as np
 
-import embedding_sub as em
-import detection_sub as dt
+import embedding_sub_cap as em
+import detection_sub_cap as dt
 import attack as at
 from psnr import similarity, wpsnr
 import cv2
@@ -10,8 +10,8 @@ import matplotlib.pyplot as plt
 
 def main():
     # settings
-    mark_size = 1024
     alpha = 10
+    dim = 8
     v = 'multiplicative'
 
     # generate a watermark (in the challenge, we will be provided a mark)
@@ -19,37 +19,32 @@ def main():
     mark = np.array([(-1) ** m for m in MARK])
     # embed watermark into three different pictures of 512x512 (as it will be in the challenge)
     pictures = ['watermarking-images/lena.bmp', 'watermarking-images/baboon.bmp', 'watermarking-images/cameraman.tif']
-    watermarked_pictures = []
-    name_image = 'lena.bmp'
+    name_image = 'sample-images-roc/0004.bmp'
     image = cv2.imread(name_image,0)
-    name_out = 'wat_lena.bmp'
-    #em.embedding_DCT(cv2.imread(name_image,0),mark)
-    watermarked = em.embedding(name_image, mark, alpha, name_output=name_out)
+    name_out = 'wat_0004.bmp'
+    em.embedding(name_image, mark, alpha, name_output=name_out, dim = dim)
     watermarked = cv2.imread(name_out,0)
-    mark_ex = dt.extraction(image = cv2.imread(name_image, 0), watermarked=watermarked, mark_size=mark.size,alpha=alpha)
-    # np.set_printoptions(threshold=np.inf)
+    mark_ex = dt.extraction(image = cv2.imread(name_image, 0), watermarked=watermarked, mark_size=mark.size,alpha=alpha, dim = dim)
     print('mark ex', (mark_ex), len(mark_ex))
     print('mark   ', mark, len(mark))
-    # print('els st',len([ m for m in mark_ex if (m < 1) ]))
     sim = (similarity(mark,mark_ex))
     print('sim', sim)
-    from psnr import compute_thr
 
     # roc.compute_roc(mark.size, alpha= alpha, mark = mark)
 
-    T = 16
-
     FAKE = []
-    """for _ in range(10):
+    for _ in range(10):
         fakemark = dt.extraction(image, at.random_attack(image), mark_size=mark.size,alpha=alpha)
-        plt.hist(fakemark, bins=50)
+        FAKE.append(fakemark)
+        """plt.hist(fakemark, bins=50)
         plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
-        plt.show()
+        plt.show()"""
         fake_s = similarity(mark_ex,fakemark)
-        print('false sim', fake_s)"""
+        print('false sim', fake_s)
 
-
-
+    plt.hist(np.concatenate(FAKE), bins=50)
+    plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
+    plt.show()
 
 
     problem = set({})
@@ -74,8 +69,8 @@ def main():
     from collections import Counter
     print((problem))
 
-
-    name_atk = 'atk_lena.bmp'
+    atk = at.attack_num(watermarked, 3)
+    name_atk = 'atk_0004.bmp'
     cv2.imwrite(name_atk, atk)
     # print(dt.detection(name_image,name_out,name_atk,mark,T,alpha))
     plt.figure(figsize=(15, 6))
