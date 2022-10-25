@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     mark = np.random.uniform(0.0, 1.0, mark_size)
     mark = np.uint8(np.rint(mark))
-    name_image = 'lena.bmp'
+    name_image = 'baboon.bmp'
     name_out = path_out + 'wat0_' + name_image
     embeddingSS.embedding(name_image, mark, name_output=name_out,alpha=0.05)
     name_out = path_out + 'wat1_' + name_image
