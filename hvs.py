@@ -72,8 +72,24 @@ def hvs_blocks(image, dim = 16):
         for j in range(sh[1] // (2*dim)):
             matrix[i,j] = np.mean(hvs[i*dim_hvs:(i+1)*dim_hvs-1,j*dim_hvs:(j+1)*dim_hvs-1])
     return matrix
-"""
-import cv2
+
+def hvs_step(image, dim = 16, step = 10):
+    """ dim is the dimension of block in wavelet domain first level, so we need to double it """
+    hvs = hvs_quantization(image)
+    sh = image.shape
+    sh_hvs = hvs.shape
+    dim_out = (sh[0] // (2 * dim))
+    matrix = np.zeros((dim_out, sh[1] // (2 * dim)), dtype=np.float64)
+    dim_hvs = sh_hvs[0] // (dim_out)
+    for i in range(dim_out):
+        for j in range(sh[1] // (2 * dim)):
+            matrix[i, j] = np.mean(hvs[i * dim_hvs:(i + 1) * dim_hvs - 1, j * dim_hvs:(j + 1) * dim_hvs - 1])
+            if matrix[i,j] != 0:
+                matrix[i,j] = np.ceil(matrix[i,j]/step)
+
+    return matrix
+
+"""import cv2
 image = cv2.imread('lena.bmp', 0)
 plt.figure(figsize=(15, 6))
 plt.subplot(131)
@@ -87,6 +103,7 @@ plt.subplot(133)
 plt.title('Mean')
 hvs = hvs_blocks(image)
 print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
+print(hvs)
 plt.imshow(hvs, cmap='gray')
-plt.show()
-"""
+plt.show()"""
+
