@@ -42,7 +42,7 @@ def attack_num(watermarked,i, output = False):
     elif i == 5:
         attacked = ip.resizing(watermarked, 0.5)
     elif i == 6:
-        attacked = ip.jpeg_compression(watermarked, 75)
+        attacked = ip.jpeg_compression(watermarked, 20)
     if output:
         # print('Attacked with attack :',i)
         return attacked, i
