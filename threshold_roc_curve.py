@@ -4,8 +4,8 @@ import cv2
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_curve, auc
 
-import embeddingSS as em
-import detectionSS as dt
+import embedding_sub as em
+import detection_sub as dt
 import attack as at
 import psnr as ps
 
@@ -21,20 +21,25 @@ def compute_roc(mark_size, alpha, mark):
     # compute scores and labels
     scores = []
     labels = []
-    for i in range(0, len(files)):
+    for i in range(0, len(files)//20):
         print(i, ':', files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
         watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]), mark=mark, alpha=alpha)
+        mark1 = dt.extraction(image, watermarked, mark_size=mark.size, alpha=alpha)
+        # print("sim normal",ps.similarity(mark,mark1))
+        # code added to complain with the fact that we should not use the mark
+        # mark = dt.extraction(image, watermarked, alpha = alpha, mark_size=1024)
         sample = 0
         while sample < 10:  # unsure how many samples we should include in the dataset, gonna send Andrea an e-mail
             # about it
-            fakemark = np.random.uniform(0.0, 1.0, mark_size)
-            fakemark = np.uint8(np.rint(fakemark))
-            res_att = at.random_attack(watermarked)
+            fakemark = np.random.standard_normal(mark_size)
+            # fakemark = np.uint8(np.rint(fakemark))
+            res_att,i = at.random_attack(watermarked, output=True)
             w_ex = dt.extraction(image, res_att, mark_size, alpha=alpha)
-            scores.append(ps.similarity(mark, w_ex))
+            scores.append((ps.similarity(mark1, w_ex)))
             labels.append(1)
-            scores.append(ps.similarity(fakemark, w_ex))
+            scores.append((ps.similarity(mark1, fakemark)))
+            # print('scores ',scores[-2:],'atk',i)
             labels.append(0)
             sample += 1
 
