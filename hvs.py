@@ -89,21 +89,23 @@ def hvs_step(image, dim = 16, step = 10):
 
     return matrix
 
-"""import cv2
-image = cv2.imread('lena.bmp', 0)
-plt.figure(figsize=(15, 6))
-plt.subplot(131)
-plt.title('Original')
-plt.imshow(image, cmap='gray')
-plt.subplot(132)
-plt.title('Matrix')
-matrix = hvs_quantization(image)
-plt.imshow(matrix, cmap='gray')
-plt.subplot(133)
-plt.title('Mean')
-hvs = hvs_blocks(image)
-print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
-print(hvs)
-plt.imshow(hvs, cmap='gray')
-plt.show()"""
+
+if __name__ == "__main__":
+    import cv2
+    image = cv2.imread('lena.bmp', 0)
+    plt.figure(figsize=(15, 6))
+    plt.subplot(131)
+    plt.title('Original')
+    plt.imshow(image, cmap='gray')
+    plt.subplot(132)
+    plt.title('Matrix')
+    matrix = hvs_quantization(image)
+    plt.imshow(matrix, cmap='gray')
+    plt.subplot(133)
+    plt.title('Mean')
+    hvs = hvs_blocks(image)
+    print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
+    print(hvs)
+    plt.imshow(hvs, cmap='gray')
+    plt.show()
 
