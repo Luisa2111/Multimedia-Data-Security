@@ -37,11 +37,18 @@ def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
     uu, s_wat, vv = np.linalg.svd(watermarked)
     if mode == 'multiplicative':
         w_ex = (s_wat - s)/(alpha*s)
-    else:
+        return w_ex[1:mark_size + 1]
+    elif mode == 'additive':
         w_ex = (s_wat - s)/alpha
-    return w_ex[1:mark_size+1]
+        return w_ex[1:mark_size+1]
+    else:
+        locations = np.argsort(-s)
+        w_ex = np.zeros(mark_size)
+        for i in range(mark_size):
+            w_ex[i] = (s_wat[locations[i+1]] - s[locations[i+1]])/alpha
+        return w_ex
 
-def extraction(image, watermarked, mark_size, alpha, dim = 16):
+def extraction(image, watermarked, mark_size, alpha, dim = 8):
     # extraction phase
     # first level
     mark = []
@@ -63,7 +70,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 16):
                 #                           mark_size = sub_mark_size,  alpha=alpha))
             if q[i // dim, j // dim] != 0:
                 mark.append((extraction_SVD(im_dct(image[i:i + dim - 1, j:j + dim - 1]), im_dct(watermarked[i:i + dim - 1, j:j + dim - 1])
-                                                                      ,mark_size=sub_mark_size,  alpha=(q[i // dim, j // dim]) * alpha)))
+                                                                      ,mark_size=sub_mark_size,  alpha=(q[i // dim, j // dim]) * alpha, mode = "d")))
 
     for i in range( mark_size % np.count_nonzero(q), len(mark)):
         mark[i] = mark[i][:last_mark_size]

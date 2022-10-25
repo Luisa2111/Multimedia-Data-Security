@@ -13,6 +13,8 @@ version with svd on the dct domain broken by 1 and 2 (awgn and blur)
 
 in my opinion in texture area we have to do different embedding (these areas are less effected by awgn)
 
+version adaptive additive svd is broken by 2,4,5 but has good quality
+
 """
 
 def im_dct(image):
@@ -67,11 +69,18 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
         print('error mark',mark.size,'diag',s.size)
         return 123
 
-    mark_pad = np.pad(mark , (1, s.size - mark.size - 1) , 'constant')
+
     if mode == 'multiplicative':
+        mark_pad = np.pad(mark, (1, s.size - mark.size - 1), 'constant')
         s *= 1 + alpha * mark_pad
-    else :
+    elif mode == 'additive' :
+        mark_pad = np.pad(mark, (1, s.size - mark.size - 1), 'constant')
         s += alpha * mark_pad
+    else:
+        locations = np.argsort(-s)
+        for i in range(len(mark)):
+            s[locations[i+1]] += alpha * mark[i]
+
     watermarked = np.matrix(u) * np.diag(s) * np.matrix(v)
     return watermarked
 
@@ -79,7 +88,7 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
 import pywt
 
 
-def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', dim = 16):
+def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', dim = 8):
     # first level
     image = cv2.imread(name_image, 0)
 
@@ -110,7 +119,7 @@ def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', di
             #                                                               sub_mark.pop(),alpha=alpha)
             if q[i // dim, j // dim] != 0:
                 image[i:i+dim-1,j:j+dim-1] = im_idct(embedding_SVD(im_dct(image[i:i+dim-1,j:j+dim-1]),
-                                                             sub_mark.pop(0), alpha = (q[i // dim, j // dim])  *alpha))
+                                                             sub_mark.pop(0), alpha = (q[i // dim, j // dim])*alpha , mode = "d"))
 
 
 
