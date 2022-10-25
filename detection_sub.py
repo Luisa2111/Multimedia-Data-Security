@@ -1,6 +1,7 @@
 from scipy.fft import dct, idct
 import numpy as np
 from psnr import wpsnr,similarity
+import hvs
 import embedding_sub as em
 
 def im_dct(image):
@@ -44,20 +45,31 @@ def extraction(image, watermarked, mark_size, alpha, dim = 16):
     # extraction phase
     # first level
     mark = []
+
+    q = hvs.hvs_blocks(image, dim = dim)
+
     # SUB LEVEL EMBEDDING
 
     # first level
     image, (LH_ori, HL_ori, HH_ori) = pywt.dwt2(image, 'haar')
     sh = image.shape
     watermarked, (LH_wat, HL_wat, HH_wat) = pywt.dwt2(watermarked, 'haar')
-    sub_mark_size = mark_size // ((sh[0]//dim)*(sh[1]//dim))
-    print(sub_mark_size)
+    sub_mark_size = mark_size // np.count_nonzero(q) + 1
+    last_mark_size = mark_size % sub_mark_size + 1
     for i in range(0, sh[0], dim):
         for j in range(0, sh[1], dim):
-             mark.append((extraction_SVD(im_dct(image[i:i + dim - 1, j:j + dim - 1]), im_dct(watermarked[i:i + dim - 1, j:j + dim - 1])
-                                                                      ,mark_size=sub_mark_size,  alpha=alpha)))
-    mark.reverse()
-    return np.concatenate(mark)
+            #if q[i//dim,j//dim] == 0:
+                # mark.append(extraction_DCT(image[i:i + dim - 1, j:j + dim - 1], watermarked[i:i + dim - 1, j:j + dim - 1],
+                #                           mark_size = sub_mark_size,  alpha=alpha))
+            if q[i // dim, j // dim] != 0:
+                mark.append((extraction_SVD(im_dct(image[i:i + dim - 1, j:j + dim - 1]), im_dct(watermarked[i:i + dim - 1, j:j + dim - 1])
+                                                                      ,mark_size=sub_mark_size,  alpha=q[i//dim,j//dim] *0.1*alpha)))
+
+    for i in range( mark_size % np.count_nonzero(q), len(mark)):
+        mark[i] = mark[i][:last_mark_size]
+
+    mark = np.concatenate(mark)
+    return mark
 
 def detection(name_original, name_watermarked, name_attacked, mark,  threeshold = 12, alpha = 0.1,  v = 'multiplicative', ):
     mark_size = mark.size

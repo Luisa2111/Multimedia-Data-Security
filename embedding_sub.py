@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import matplotlib.pyplot as plt
 import image_processing as ip
+import hvs
 
 """ 
 NOTES:
@@ -82,6 +83,8 @@ def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', di
     # first level
     image = cv2.imread(name_image, 0)
 
+    q = hvs.hvs_blocks(image, dim = dim)
+
     coeffs2 = pywt.dwt2(image, 'haar')
     image, (LH, HL, HH) = coeffs2
 
@@ -91,15 +94,23 @@ def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', di
     if sh[0] % dim != 0:
         return 'img size not div by ' + str(dim)
 
-    if mark.size % ((sh[0]//dim)*(sh[1]//dim)) != 0:
-        return 'mark size not div by ' + str(dim)
+    #if mark.size % ((sh[0]//dim)*(sh[1]//dim)) != 0:
+    #    return 'mark size not div by ' + str(dim)
 
     # watermarked = image.copy()
-    sub_mark = np.split(mark, (sh[0]//dim)*(sh[1]//dim) )
+    sub_mark = np.array_split(mark, np.count_nonzero(q))
+    sub_mark_size = mark.size // np.count_nonzero(q) + 1
+    last_mark_size = mark.size % sub_mark_size
+    for i in range(len(sub_mark)):
+        sub_mark[i] = np.pad(sub_mark[i], (0,sub_mark_size - sub_mark[i].size), 'constant')
     for i in range(0,sh[0],dim):
         for j in range(0,sh[1],dim):
-            image[i:i+dim-1,j:j+dim-1] = im_idct(embedding_SVD(im_dct(image[i:i+dim-1,j:j+dim-1]),
-                                                             sub_mark.pop(), alpha = alpha))
+            #if q[i//dim,j//dim] == 0 :
+            #   image[i:i + dim - 1, j:j + dim - 1] = embedding_DCT((image[i:i + dim - 1, j:j + dim - 1]),
+            #                                                               sub_mark.pop(),alpha=alpha)
+            if q[i // dim, j // dim] != 0:
+                image[i:i+dim-1,j:j+dim-1] = im_idct(embedding_SVD(im_dct(image[i:i+dim-1,j:j+dim-1]),
+                                                             sub_mark.pop(0), alpha = q[i//dim,j//dim] *0.1*alpha))
 
 
 
