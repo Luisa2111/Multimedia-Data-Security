@@ -15,7 +15,7 @@ def hvs_quantization(image):
     matrix = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
 
     I = [[I_00, I_10, I_20], [I_01, I_11, I_21], [I_02, I_12, I_22], [I_03, I_13, I_23, I_33]]
-    print(I[3][3].shape)
+
 
     for i in range((sh[0] // 2) ):
         for j in range((sh[1] // 2)):
@@ -52,18 +52,41 @@ def hvs_quantization(image):
                             Xi = Xi + (I[k + l][theta][y + (i // (2 ** k)), x + (j // (2 ** k))])**2
                 Xi = Xi * 1 // (16 ** k)
             Xi = Xi * np.var([[I[3][3][y + i // (2 ** (3 - l)), x + j // (2 ** (3 - l))]
-                               for x in [0, 1] if x + j // (2 ** (3 - l)) < 32] for y in [0, 1] if y + i // (2 ** (3 - l)) < 32])
+                                for x in [-1, 0, 1] if (x + j // (2 ** (3 - l)) < 32 and x + j // (2 ** (3 - l)) >= 0)]
+                                for y in [-1, 0, 1] if (y + i // (2 ** (3 - l)) < 32 and y + i // (2 ** (3 - l)) >= 0)])
 
             #if Xi > 1000 : Xi = 1000
 
             matrix[i, j] = Xi**0.2
+    return matrix
 
-    plt.figure(figsize=(15, 6))
-    plt.subplot(121)
-    plt.title('Original')
-    plt.imshow(image, cmap='gray')
-    plt.subplot(122)
-    plt.title('Matrix')
-    plt.imshow(matrix, cmap='gray')
-    plt.show()
-
+def hvs_blocks(image, dim = 16):
+    """ dim is the dimension of block in wavelet domain first level, so we need to double it """
+    hvs = hvs_quantization(image)
+    sh = image.shape
+    sh_hvs = hvs.shape
+    dim_out = (sh[0] // (2*dim))
+    matrix = np.zeros((dim_out, sh[1] // (2*dim)), dtype=np.float64)
+    dim_hvs = sh_hvs[0] // (dim_out)
+    for i in range(dim_out):
+        for j in range(sh[1] // (2*dim)):
+            matrix[i,j] = np.mean(hvs[i*dim_hvs:(i+1)*dim_hvs-1,j*dim_hvs:(j+1)*dim_hvs-1])
+    return matrix
+"""
+import cv2
+image = cv2.imread('lena.bmp', 0)
+plt.figure(figsize=(15, 6))
+plt.subplot(131)
+plt.title('Original')
+plt.imshow(image, cmap='gray')
+plt.subplot(132)
+plt.title('Matrix')
+matrix = hvs_quantization(image)
+plt.imshow(matrix, cmap='gray')
+plt.subplot(133)
+plt.title('Mean')
+hvs = hvs_blocks(image)
+print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
+plt.imshow(hvs, cmap='gray')
+plt.show()
+"""
