@@ -32,7 +32,7 @@ def extraction_DCT(image, watermarked, mark_size, alpha, v='multiplicative'):
 
 import cv2, pywt
 
-def extraction_SVD(image, watermarked, alpha, mark_size, mode='multiplicative'):
+def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
     u, s, v = np.linalg.svd(image)
     uu, s_wat, vv = np.linalg.svd(watermarked)
     if mode == 'multiplicative':
@@ -46,7 +46,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 16):
     # first level
     mark = []
 
-    q = hvs.hvs_blocks(image, dim = dim)
+    q = hvs.hvs_step(image, dim = dim, step = 15)
 
     # SUB LEVEL EMBEDDING
 
@@ -63,7 +63,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 16):
                 #                           mark_size = sub_mark_size,  alpha=alpha))
             if q[i // dim, j // dim] != 0:
                 mark.append((extraction_SVD(im_dct(image[i:i + dim - 1, j:j + dim - 1]), im_dct(watermarked[i:i + dim - 1, j:j + dim - 1])
-                                                                      ,mark_size=sub_mark_size,  alpha=q[i//dim,j//dim] *0.1*alpha)))
+                                                                      ,mark_size=sub_mark_size,  alpha=(q[i // dim, j // dim]) * alpha)))
 
     for i in range( mark_size % np.count_nonzero(q), len(mark)):
         mark[i] = mark[i][:last_mark_size]

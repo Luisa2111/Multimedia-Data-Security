@@ -61,7 +61,7 @@ def embedding_DCT(image, mark, alpha = 0.1, v='multiplicative', plot_mark = Fals
     return watermarked
 
 
-def embedding_SVD(image,mark, alpha = 1, mode = 'multiplicative'):
+def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
     u, s, v = np.linalg.svd(image)
     if mark.size >= s.size :
         print('error mark',mark.size,'diag',s.size)
@@ -83,7 +83,7 @@ def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', di
     # first level
     image = cv2.imread(name_image, 0)
 
-    q = hvs.hvs_blocks(image, dim = dim)
+    q = hvs.hvs_step(image, dim = dim, step = 15)
 
     coeffs2 = pywt.dwt2(image, 'haar')
     image, (LH, HL, HH) = coeffs2
@@ -110,7 +110,7 @@ def embedding(name_image, mark, alpha = 0.1, name_output = 'watermarked.bmp', di
             #                                                               sub_mark.pop(),alpha=alpha)
             if q[i // dim, j // dim] != 0:
                 image[i:i+dim-1,j:j+dim-1] = im_idct(embedding_SVD(im_dct(image[i:i+dim-1,j:j+dim-1]),
-                                                             sub_mark.pop(0), alpha = q[i//dim,j//dim] *0.1*alpha))
+                                                             sub_mark.pop(0), alpha = (q[i // dim, j // dim])  *alpha))
 
 
 
