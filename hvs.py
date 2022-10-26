@@ -85,14 +85,18 @@ def hvs_step(image, dim = 16, step = 10):
         for j in range(sh[1] // (2 * dim)):
             matrix[i, j] = np.mean(hvs[i * dim_hvs:(i + 1) * dim_hvs - 1, j * dim_hvs:(j + 1) * dim_hvs - 1])
             if matrix[i,j] != 0:
-                matrix[i,j] = np.ceil(matrix[i,j]/step)
+                matrix[i,j] = np.rint(matrix[i,j]/step)
+
 
     return matrix
+
+#def low_flat(image, dim = 16):
+
 
 
 if __name__ == "__main__":
     import cv2
-    image = cv2.imread('sample-images-roc/0004.bmp', 0)
+    image = cv2.imread('sample-images-roc/0031.bmp', 0)
     plt.figure(figsize=(15, 6))
     plt.subplot(131)
     plt.title('Original')
