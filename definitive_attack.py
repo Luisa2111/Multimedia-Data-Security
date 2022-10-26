@@ -4,10 +4,8 @@ from scipy.fft import dct, idct
 import hvs as hvs
 import cv2
 import matplotlib.pyplot as plt
-import embedding_sub as emb
+import embedding_sub_cap_flat1 as emb
 import psnr as psnr
-import image_processing as ip
-import detection_sub as det
 
 def printer_of_best(nameOfAttack, nameOfvariable, valueOfvariable, wpsnr, attackedImage):
 	if hasattr(attackedImage, "__len__"):
@@ -57,12 +55,7 @@ MARK = np.load('ef26420c.npy')
 mark = np.array([(-1) ** m for m in MARK])
 #Embedding
 watermarked = emb.embedding(name_originalImage, mark, alpha = 10, name_output = 'watermarked.bmp')
-originalImage = cv2.imread(name_originalImage, 0)
-watermarkedImage = cv2.imread('watermarked.bmp', 0)
-
-
 definitive_attack(name_originalImage, 'watermarked.bmp')
-
 
 
 
