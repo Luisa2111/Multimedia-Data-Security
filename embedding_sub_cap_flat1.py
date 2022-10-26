@@ -1,7 +1,7 @@
 from scipy.fft import dct, idct
 import numpy as np
 import image_processing as ip
-import hvs_2 as hvs
+import hvs_lambda as hvs
 import embedding_flat_file as fl
 import attack as at
 from psnr import similarity, wpsnr

@@ -1,7 +1,7 @@
 from scipy.fft import dct, idct
 import numpy as np
 from psnr import wpsnr,similarity
-import hvs_2 as hvs
+import hvs_lambda as hvs
 import embedding_flat_file as fl
 import embedding_sub as em
 
