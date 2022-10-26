@@ -1,7 +1,7 @@
 from scipy.fft import dct, idct
 import numpy as np
 from psnr import wpsnr,similarity
-import hvs
+import hvs_2 as hvs
 import embedding_flat_file as fl
 import embedding_sub as em
 
@@ -30,7 +30,7 @@ def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
             w_ex[i] = (s_wat[locations[i+1]] - s[locations[i+1]])/alpha
         return w_ex
 
-def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_splits = 500, min_splits = 180, sub_size = 6):
+def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6):
     # extraction phase
     # first level
     mark = []

@@ -1,7 +1,7 @@
 from scipy.fft import dct, idct
 import numpy as np
 import image_processing as ip
-import hvs
+import hvs_2 as hvs
 import embedding_flat_file as fl
 import attack as at
 from psnr import similarity, wpsnr
@@ -52,7 +52,7 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
 import pywt
 
 
-def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim = 8 , step = 15, max_splits = 500, min_splits = 180, sub_size = 6):
+def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim = 8 , step = 15, max_splits = 500, min_splits = 170, sub_size = 6):
     # first level
     image = cv2.imread(name_image, 0)
 
@@ -93,17 +93,7 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
         rows = dc_coeff.shape[0]
         dark_locations = [(val // rows, val % rows) for val in dark_locations]
         mark_pos = 0
-        """plt.figure(figsize=(15, 6))
-        plt.subplot(131)
-        plt.title('Original')
-        plt.imshow(image, cmap='gray')
-        plt.subplot(132)
-        plt.title('Texture')
-        plt.imshow(q, cmap='gray')
-        plt.subplot(133)
-        plt.title('Darkness')
-        plt.imshow(dc_coeff, cmap='gray')
-        plt.draw()"""
+
         for loc in dark_locations:
             i = loc[0]
             j = loc[1]
