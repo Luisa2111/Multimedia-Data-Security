@@ -48,7 +48,7 @@ def hvs_quantization_L(image):
             if 1 + floor(i // (2 ** (3 - l))) < 32 and 1 + floor(j // (2 ** (3 - l))) < 32:
                 L = 1 / 256 * I[3][3][1 + floor(i // (2 ** (3 - l))), 1 + floor(j // (2 ** (3 - l)))]
             if L < 0.5 : L = 1 - L
-            matrix[i, j] = L
+            matrix[i, j] = L*2
 
     return matrix
 
@@ -63,7 +63,6 @@ def hvs_quantization_Xi(image):
 
     I = [[I_00, I_10, I_20], [I_01, I_11, I_21], [I_02, I_12, I_22], [I_03, I_13, I_23, I_33]]
     print(I[3][3].shape)
-
     for i in range((sh[0] // 2)):
         for j in range((sh[1] // 2)):
             l = 0
@@ -79,24 +78,27 @@ def hvs_quantization_Xi(image):
                 for theta in range(0, 2):
                     for x in range(0, 1):
                         for y in range(0, 1):
-                            # if y + (i // (2 ** k)) < 64 and x + (j // (2 ** k)) < 64:
                             Xi = Xi + (I[k + l][theta][y + (i // (2 ** k)), x + (j // (2 ** k))]) ** 2
-                    Xi = Xi * 1 // (16 ** k)
+                Xi = Xi * 1 // (16 ** k)
             Xi = Xi * np.var([[I[3][3][y + i // (2 ** (3 - l)), x + j // (2 ** (3 - l))]
-                               for x in [0, 1] if x + j // (2 ** (3 - l)) < 32] for y in [0, 1] if
-                              y + i // (2 ** (3 - l)) < 32])
+                               for x in [-1, 0, 1] if (x + j // (2 ** (3 - l)) < 32 and x + j // (2 ** (3 - l)) >= 0)]
+                              for y in [-1, 0, 1] if (y + i // (2 ** (3 - l)) < 32 and y + i // (2 ** (3 - l)) >= 0)])
 
             matrix[i, j] = (Xi ** 0.2)
-
     return matrix
 
 def hvs_blocks(image, dim = 16):
     """ dim is the dimension of block in wavelet domain first level, so we need to double it """
-    hvs = hvs_quantization_Xi(image)
     sh = image.shape
-    sh_hvs = hvs.shape
+    hvs = hvs_quantization_Xi(image)
+    #matrix2 = hvs_quantization_L(image)
+    #hvs = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
+    #for i in range((sh[0] // 2)):
+        #for j in range((sh[1] // 2)):
+            #hvs[i, j] = matrix[i, j] * matrix2[i, j]
     dim_out = (sh[0] // (2*dim))
     matrix = np.zeros((dim_out, sh[1] // (2*dim)), dtype=np.float64)
+    sh_hvs = hvs.shape
     dim_hvs = sh_hvs[0] // (dim_out)
     for i in range(dim_out):
         for j in range(sh[1] // (2*dim)):
@@ -105,8 +107,14 @@ def hvs_blocks(image, dim = 16):
 
 def hvs_step(image, dim = 16, step = 10):
     """ dim is the dimension of block in wavelet domain first level, so we need to double it """
-    hvs = hvs_quantization_Xi(image)
     sh = image.shape
+    matrix = hvs_quantization_Xi(image)
+    matrix2 = hvs_quantization_L(image)
+    hvs = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
+    for i in range((sh[0] // 2)):
+        for j in range((sh[1] // 2)):
+            hvs[i,j] = matrix[i,j]+matrix2[i,j]
+
     sh_hvs = hvs.shape
     dim_out = (sh[0] // (2 * dim))
     matrix = np.zeros((dim_out, sh[1] // (2 * dim)), dtype=np.float64)
@@ -124,23 +132,24 @@ if __name__ == "__main__":
     import cv2
     image = cv2.imread('lena.bmp', 0)
     plt.figure(figsize=(15, 6))
-    plt.subplot(141)
+    plt.subplot(131)
     plt.title('Original')
     plt.imshow(image, cmap='gray')
-    plt.subplot(142)
+    plt.subplot(132)
     plt.title('Matrix')
-    matrix = hvs_quantization_Xi(image)
-    plt.imshow(matrix, cmap='gray')
-    plt.subplot(143)
+    sh = image.shape
+    matrix = hvs_quantization_L(image)
+    matrix2 = hvs_quantization_Xi(image)
+    matrix3 = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
+    for i in range((sh[0] // 2)):
+        for j in range((sh[1] // 2)):
+            matrix3[i,j] = matrix[i,j]+matrix2[i,j]
+    plt.imshow(matrix3, cmap='gray')
+    plt.subplot(133)
     plt.title('Mean')
     hvs = hvs_blocks(image)
     print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
     print(hvs)
     plt.imshow(hvs, cmap='gray')
-    plt.subplot(144)
-    matrix = hvs_quantization_Lambda(image)
-    plt.title('Matrix Lambda')
-    plt.imshow(matrix, cmap='gray')
-    plt.show()
     plt.show()
 
