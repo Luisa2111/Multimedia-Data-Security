@@ -29,3 +29,8 @@ def embedding_flat(block, wat):
     else:
         print("wat must be an integer not a list")
     return im_idct(block)
+
+        
+def extraction_flat(block):
+    average=(block[0,1]+block[1,1]+block[1,0])/3
+    return np.sign(average)
