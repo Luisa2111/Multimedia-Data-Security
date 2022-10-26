@@ -46,6 +46,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
 
     splits = min(np.count_nonzero(q), max_splits)
     locations = np.argsort(-q, axis=None)
+    mark_flat = []
     if splits < min_splits :
         new_mark_size = int(splits * sub_size - 1)
         flat_mark_size = mark_size - new_mark_size
@@ -69,7 +70,14 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
             i = loc[0]
             j = loc[1]
             mark_flat[mark_pos] = fl.extraction_flat(watermarked[i * dim:(i + 1) * dim , j * dim:(j + 1) * dim])
+            # mark_flat[mark_pos] = np.mean(fl.extraction_DCT(
+            #     image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
+            #     watermarked[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
+            #     mark_size=5, alpha=0.1
+            # ))
             mark_pos += 1
+    else:
+        new_mark_size = mark_size
 
     if new_mark_size % splits == 0 :
         sub_mark_size = new_mark_size // splits
@@ -92,6 +100,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
             mark[i] = mark[i][:last_mark_size]
 
     # print('num of submarks' ,len(mark))
+
     mark.append(mark_flat)
     mark = np.concatenate(mark)
 
@@ -112,39 +121,3 @@ def detection(name_original, name_watermarked, name_attacked, mark_size=1024,  t
         out1 = 0
     return out1, wpsnr(wat_original,wat_attacked)
 
-
-"""
-Computes the similarity measure between the original and the new watermarks.
-"""
-
-def compute_thr(sim, mark_size, w):
-    SIM = np.zeros(1000)
-    SIM[0] = abs(sim)
-    for i in range(1, 1000):
-        r = np.random.uniform(0.0, 1.0, mark_size)
-        SIM[i] = abs(similarity(w, r))
-
-    SIM.sort()
-    t = SIM[-2]
-    T = t + (0.1 * t)
-    print(T)
-    return T
-
-
-"""
-Computes the similarity measure between the original and the new watermarks.
-"""
-
-"""
-This function computes the decision whether mark was destroyed or not.
-"""
-
-
-def decision(mark, mark_size, w_ex):
-    sim = similarity(mark, w_ex)
-    threshold = compute_thr(sim, mark_size, mark)
-
-    if sim > threshold:
-        print('Mark has been found. SIM = %f' % sim)
-    else:
-        print('Mark has been lost. SIM = %f' % sim)

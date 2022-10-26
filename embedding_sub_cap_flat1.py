@@ -109,6 +109,10 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
             j = loc[1]
             image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim ] = fl.embedding_flat(image[i * dim:(i + 1) * dim , j * dim:(j + 1) * dim],
                                                                               wat = mark_flat[mark_pos])
+            # image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim] = fl.embedding_DCT(
+            #     image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
+            #     mark = np.repeat(mark_flat[mark_pos], 5), alpha= 0.1
+            # )
             mark_pos += 1
 
 
