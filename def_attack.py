@@ -2,7 +2,7 @@
 #So I am interested only in that value of std that break the watermark
 #Remember: we want that the watermark will be not present
 import image_processing as ip
-import detection_sub as det
+import detection_sub_cap_flat1 as det
 import numpy as np
 import cv2
 
@@ -272,7 +272,6 @@ def sharpening_bf_best(name_originalImage, name_watermarkedImage):
 				#Definitve decision
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha
 	return 0, "Something wrong in general", "Something wrong in general", "Something wrong in general"
-
 
 
 
