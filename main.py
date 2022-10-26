@@ -1,5 +1,4 @@
 import numpy as np
-
 import embedding_sub_cap_flat1 as em
 import detection_sub_cap_flat1 as dt
 import attack as at
@@ -10,9 +9,9 @@ import matplotlib.pyplot as plt
 
 def main():
     # settings
-    alpha = 10
+    alpha = 5
     dim = 8
-    step = 13
+    step = 15
     max_splits = 500
     # generate a watermark (in the challenge, we will be provided a mark)
     MARK = np.load('ef26420c.npy')
@@ -20,13 +19,14 @@ def main():
 
     # embed watermark into three different pictures of 512x512 (as it will be in the challenge)
     pictures = ['watermarking-images/lena.bmp', 'watermarking-images/baboon.bmp', 'watermarking-images/cameraman.tif']
-    # name_image = 'sample-images-roc/0031.bmp'
-    name_image = 'lena.bmp'
+    name_image = 'sample-images-roc/0041.bmp'
+    # name_image = 'lena.bmp'
     image = cv2.imread(name_image,0)
-    # name_out = 'wat_0031.bmp'
-    name_out = 'wat_lena.bmp'
+    name_out = 'wat_0041.bmp'
+    # name_out = 'wat_lena.bmp'
     em.embedding(name_image, mark, alpha, name_output=name_out, dim = dim, step = step, max_splits=max_splits)
     watermarked = cv2.imread(name_out,0)
+    print("wpsnr :",wpsnr(image,watermarked) )
     mark_ex = dt.extraction(image = cv2.imread(name_image, 0), watermarked=watermarked, mark_size=mark.size,alpha=alpha, dim = dim, step = step, max_splits=max_splits)
     print('mark ex', (mark_ex), len(mark_ex))
     print('mark   ', mark, len(mark))
@@ -46,10 +46,10 @@ def main():
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat0_lena.bmp'))
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat1_lena.bmp'))
     print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat2_lena.bmp'))
-    print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat3_lena.bmp'))
-    plt.hist(np.concatenate(FAKE), bins=50)
+    # print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat3_lena.bmp'))
+    """plt.hist(np.concatenate(FAKE), bins=50)
     plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
-    plt.show()
+    plt.show()"""
 
 
     problem = set({})
@@ -75,7 +75,7 @@ def main():
     print((problem))
 
     atk = at.attack_num(watermarked, 2)
-    name_atk = 'atk_lena.bmp'
+    name_atk = 'atk.bmp'
     cv2.imwrite(name_atk, atk)
     # print(dt.detection(name_image,name_out,name_atk,mark,T,alpha))
     plt.figure(figsize=(15, 6))
