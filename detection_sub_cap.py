@@ -76,8 +76,8 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
     for loc in locations:
         i = loc[0]
         j = loc[1]
-        mark.append((extraction_SVD(im_dct(image[i * dim:(i + 1) * dim - 1, j * dim:(j + 1) * dim - 1]),
-                                    im_dct(watermarked[i * dim:(i + 1) * dim - 1, j * dim:(j + 1) * dim - 1])
+        mark.append((extraction_SVD(im_dct(image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim]),
+                                    im_dct(watermarked[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim])
                                     , mark_size=sub_mark_size, alpha=(q[i, j]) * alpha, mode="d")))
 
 

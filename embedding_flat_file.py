@@ -32,5 +32,7 @@ def embedding_flat(block, wat):
 
         
 def extraction_flat(block):
+    block = im_dct(block)
     average=(block[0,1]+block[1,1]+block[1,0])/3
+    # if average == 0 : print('average = 0')
     return np.sign(average)

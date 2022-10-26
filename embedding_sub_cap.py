@@ -110,7 +110,7 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
     for loc in locations:
         i = loc[0]
         j = loc[1]
-        image[i*dim:(i+1)*dim -1,j*dim:(j+1)*dim -1] = im_idct(embedding_SVD(im_dct(image[i*dim:(i+1)*dim -1,j*dim:(j+1)*dim -1]),
+        image[i*dim:(i+1)*dim,j*dim:(j+1)*dim] = im_idct(embedding_SVD(im_dct(image[i*dim:(i+1)*dim,j*dim:(j+1)*dim]),
                                                              sub_mark.pop(0), alpha = (q[i, j])*alpha , mode = "d"))
 
 
