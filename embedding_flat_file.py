@@ -20,3 +20,8 @@ def embedding_flat(block, wat):
             print("the wat value must be -1 or 1. Not", wat)
     else:
         print("wat must be an integer not a list")
+
+        
+def extraction_flat(block):
+    average=(block[0,1]+block[1,1]+block[1,0])/3
+	return np.sign(average)
