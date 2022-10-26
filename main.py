@@ -46,7 +46,8 @@ def main():
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat0_lena.bmp'))
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat1_lena.bmp'))
     print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat2_lena.bmp'))
-    # print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat3_lena.bmp'))
+    print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat3_lena.bmp'))
+    print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat4_lena.bmp'))
     """plt.hist(np.concatenate(FAKE), bins=50)
     plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
     plt.show()"""
