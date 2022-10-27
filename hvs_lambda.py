@@ -131,7 +131,7 @@ if __name__ == "__main__":
     plt.imshow(matrix, cmap='gray')
     plt.subplot(143)
     plt.title('Mean')
-    hvs = hvs_blocks(image)
+    hvs = hvs_step(image, dim=8, step=15, Xi_exp = 0.2, Lambda_exp = 0.3, L_exp = 0.2)
     print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
     print(hvs)
     plt.imshow(hvs, cmap='gray')
