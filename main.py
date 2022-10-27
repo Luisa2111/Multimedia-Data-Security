@@ -11,11 +11,11 @@ def main():
     # settings
     alpha = 5
     dim = 8
-    step = 15
+    step = 20
     max_splits = 500
     Xi_exp = 0.2
-    Lambda_exp = 0.5
-    L_exp = 0
+    Lambda_exp = 0.3
+    L_exp = 0.2
     min_splits = 170
     sub_size = 6
     threeshold = 2
@@ -28,8 +28,7 @@ def main():
     # name_image = 'sample-images-roc/0031.bmp'
     name_image = 'lena.bmp'
     image = cv2.imread(name_image,0)
-    # name_out = 'wat_0031.bmp'
-    name_out = 'wat_lena.bmp'
+    name_out = 'watermarked.bmp'
     em.embedding(name_image, mark, alpha = alpha, name_output=name_out,
                  dim = dim, step = step, max_splits=max_splits,
                  min_splits=min_splits, sub_size=sub_size,
@@ -44,6 +43,33 @@ def main():
     # print('mark   ', mark, len(mark))
     sim = (similarity(mark,mark_ex))
     print('sim', sim)
+
+    problem = set({})
+    print('starting attacks')
+    for i in range(1, 7):
+        atk = at.attack_num(watermarked, i)
+        # for _ in range(1):
+        #    atk = at.random_attack(atk)
+        mark_atk = dt.extraction(image=cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size, alpha=alpha,
+                                 dim=dim, step=step, max_splits=max_splits,
+                                 min_splits=min_splits, sub_size=sub_size,
+                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)
+        sim = similarity(mark_ex, mark_atk)
+        print(i, sim, wpsnr(watermarked, atk))
+        if sim < 4:
+            problem.add(i)
+            # print(i, wpsnr(watermarked,atk))
+        """print('mark atk :',mark_atk)
+        print('positive >1 :', len([m for m in mark_atk if ( m > 1)]))
+        print('positive 1> x > 0 :', len([m for m in mark_atk if (m > 0 and m < 1)]))
+        print('negative < 0 :', len([m for m in mark_atk if (m < 0)]))
+        print('similiarity :', similarity(mark,mark_atk))"""
+
+    from collections import Counter
+    print(problem)
+
+
+    print('analizing fake watermarked image')
     FAKE = []
     """for i in range(1,7):
         fakemark = dt.extraction(image, at.attack_num(image,i), mark_size=mark.size,alpha=alpha, step = step, max_splits=max_splits)
@@ -51,6 +77,10 @@ def main():
         fake_s = similarity(mark_ex,fakemark)
         print('false sim', fake_s)"""
 
+    em.embedding('lena.bmp', mark, alpha=alpha, name_output='wat_lena.bmp',
+                 dim=dim, step=step, max_splits=max_splits,
+                 min_splits=min_splits, sub_size=sub_size,
+                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat0_lena.bmp',
                        threeshold= threeshold,
                        mark_size=mark.size, alpha=alpha,
@@ -91,30 +121,6 @@ def main():
     plt.show()"""
 
 
-    problem = set({})
-    print('starting attacks')
-    for i in range(1,7):
-        atk = at.attack_num(watermarked,i)
-        #for _ in range(1):
-        #    atk = at.random_attack(atk)
-        mark_atk = dt.extraction(image = cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size,alpha=alpha,
-                                 dim=dim, step=step, max_splits=max_splits,
-                                 min_splits=min_splits, sub_size=sub_size,
-                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)
-        sim = similarity(mark_ex,mark_atk)
-        print(i, sim, wpsnr(watermarked, atk))
-        if sim < 4 :
-            problem.add(i)
-            # print(i, wpsnr(watermarked,atk))
-        """print('mark atk :',mark_atk)
-        print('positive >1 :', len([m for m in mark_atk if ( m > 1)]))
-        print('positive 1> x > 0 :', len([m for m in mark_atk if (m > 0 and m < 1)]))
-        print('negative < 0 :', len([m for m in mark_atk if (m < 0)]))
-        print('similiarity :', similarity(mark,mark_atk))"""
-
-    # print(problem)
-    from collections import Counter
-    print((problem))
 
     atk = at.attack_num(watermarked, 2)
     name_atk = 'atk.bmp'
