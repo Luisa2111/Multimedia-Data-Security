@@ -13,7 +13,7 @@ def generate_mark(mark_size):
     # Generate a watermark
     mark = np.random.uniform(0.0, 1.0, mark_size)
     mark = np.uint8(np.rint(mark))
-    np.save('mark.npy', mark)
+    np.save('../mark.npy', mark)
     return mark
 
 # here we will insert differnt possibilities for embedding

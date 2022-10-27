@@ -1,11 +1,7 @@
 import def_attack as da
 import numpy as np
-from scipy.fft import dct, idct
-import hvs as hvs
-import cv2
-import matplotlib.pyplot as plt
 import embedding_sub_cap_flat1 as emb
-import psnr as psnr
+
 
 def printer_of_best(nameOfAttack, nameOfvariable, valueOfvariable, wpsnr, attackedImage):
 	if hasattr(attackedImage, "__len__"):

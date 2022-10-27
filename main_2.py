@@ -5,7 +5,6 @@ import detection_sub_cap as dt
 import attack as at
 from psnr import similarity, wpsnr
 import cv2
-import threshold_roc_curve as roc
 import matplotlib.pyplot as plt
 import os
 
@@ -79,7 +78,6 @@ def main():
             print('similiarity :', similarity(mark,mark_atk))"""
 
             # print(problem)
-            from collections import Counter
 
             # atk = at.attack_num(watermarked, 2)
             # name_atk = 'atk_0004.bmp'

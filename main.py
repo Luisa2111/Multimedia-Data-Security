@@ -52,8 +52,6 @@ def main():
     SIM = []
     for i in range(1, 7):
         atk = at.attack_num(watermarked, i)
-        # for _ in range(1):
-        #    atk = at.random_attack(atk)
         mark_atk = dt.extraction(image=cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size, alpha=alpha,
                                  dim=dim, step=step, max_splits=max_splits,
                                  min_splits=min_splits, sub_size=sub_size,
