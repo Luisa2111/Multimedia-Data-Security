@@ -10,13 +10,15 @@ import attack as at
 import psnr as ps
 
 
-# mark_size, alpha and v are parameters for generating mark (which we do not have to do in the challenge)
-# and the spread spectrum (depending on our embedding function, these might be unnecessary)
-
 def compute_roc(mark_size, alpha, mark, dim, step,
                 max_splits, min_splits, sub_size
-                , Xi_exp, Lambda_exp, L_exp, ceil, files_used = 0
+                , Xi_exp, Lambda_exp, L_exp, ceil,
+                files_used = 0
                 ):
+    """
+    the roc curve take as input all the parameters for the embedding
+    files_used is necessary to decide on how many images test the roc
+    """
     # get all sample images
     files = []
     for root, dirs, filenames in os.walk('sample-images-roc'):
@@ -29,6 +31,7 @@ def compute_roc(mark_size, alpha, mark, dim, step,
     for i in range(0, files_used):
         print(i, ':', files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
+        # real image embedding
         watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]),
                                    mark=mark, alpha=alpha,
                                    dim = dim, step = step, max_splits=max_splits,
@@ -36,15 +39,18 @@ def compute_roc(mark_size, alpha, mark, dim, step,
                                    Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                                    )
         print('wpsnr of ' + files[i] + ' :',ps.wpsnr(image,watermarked))
+        # extraction of the mark, we use it for the comparison
+        # because it was requested for the detection function,
+        # and we want our roc curve to mimic a real situation
         mark1 = dt.extraction(image, watermarked, mark_size=mark.size, alpha=alpha,
                               dim = dim, step = step, max_splits=max_splits,
                               min_splits=min_splits, sub_size=sub_size,
                               Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                               )
-        # code added to complain with the fact that we should not use the mark
         sample = 0
         while sample < 16:
-            # fakemark = np.random.standard_normal(mark_size)
+            # creation of the fakemarks from random images
+            # obtained by old embeddings and random attacks on the ORIGINAL image
             fakemark = dt.extraction(image, cv2.imread('fakemarks/wat_' + files[i].rsplit( ".", 1 )[ 0 ] + '-' + str(sample).zfill(2) + '.bmp',0),
                                      mark_size, alpha=alpha,
                                      dim = dim, step = step, max_splits=max_splits,
@@ -83,7 +89,7 @@ def compute_roc(mark_size, alpha, mark, dim, step,
     e = datetime.datetime.now()
     plt.savefig("roc_out/roc_curve_%s%s%s-%s%s.png" % (e.year, e.month, e.day, e.hour, e.minute))
 
-
+    # saving of the output
     import sys
     # f = open("roc_out/roc_curve_%s%s%s-%s%s.txt" % (e.year, e.month, e.day, e.hour, e.minute), "a")
     # f.close()
