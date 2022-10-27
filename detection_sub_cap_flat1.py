@@ -32,12 +32,12 @@ def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
 
 
 def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6
-               , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0):
+               , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0, ceil = True):
     # extraction phase
     # first level
     mark = []
 
-    q = hvs.hvs_step(image, dim = dim, step = step, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp)
+    q = hvs.hvs_step(image, dim = dim, step = step, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp, ceil = ceil)
 
     # SUB LEVEL EMBEDDING
 
@@ -105,14 +105,14 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
 
 def detection(name_original, name_watermarked, name_attacked, mark_size=1024,  threeshold = 2, alpha = 10,
             dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6
-                , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0 ):
+                , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0 , ceil = True):
     image = cv2.imread(name_original, 0)
     wat_original = cv2.imread(name_watermarked,0)
     wat_attacked = cv2.imread(name_attacked,0)
     extracted_mark = extraction(image, wat_attacked, mark_size, alpha, dim = dim, step = step, max_splits = max_splits, min_splits = min_splits,
-                                sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp )
+                                sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp , ceil = ceil)
     mark = extraction(image, wat_original,mark_size,alpha, dim = dim, step = step, max_splits = max_splits, min_splits = min_splits,
-                                sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp )
+                                sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp , ceil = ceil)
     # threeshold and similiarity
     sim = similarity(mark,extracted_mark)
     if sim > threeshold:

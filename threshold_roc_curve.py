@@ -15,7 +15,7 @@ import psnr as ps
 
 def compute_roc(mark_size, alpha, mark, dim, step,
                 max_splits, min_splits, sub_size
-                , Xi_exp, Lambda_exp, L_exp
+                , Xi_exp, Lambda_exp, L_exp, ceil
                 ):
     # get all sample images
     files = []
@@ -31,13 +31,13 @@ def compute_roc(mark_size, alpha, mark, dim, step,
                                    mark=mark, alpha=alpha,
                                    dim = dim, step = step, max_splits=max_splits,
                                    min_splits=min_splits, sub_size=sub_size,
-                                   Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                                   Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                                    )
         print('wpsnr of ' + files[i] + ' :',ps.wpsnr(image,watermarked))
         mark1 = dt.extraction(image, watermarked, mark_size=mark.size, alpha=alpha,
                               dim = dim, step = step, max_splits=max_splits,
                               min_splits=min_splits, sub_size=sub_size,
-                              Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                              Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                               )
         # code added to complain with the fact that we should not use the mark
         sample = 0
@@ -47,14 +47,14 @@ def compute_roc(mark_size, alpha, mark, dim, step,
                                      mark_size, alpha=alpha,
                                      dim = dim, step = step, max_splits=max_splits,
                                      min_splits=min_splits, sub_size=sub_size,
-                                     Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                                     Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                                      )
             res_att,i = at.random_attack(watermarked, output=True)
             w_ex = dt.extraction(image, res_att, mark_size,
                                  alpha=alpha, dim = dim, step = step,
                                  max_splits=max_splits,
                                  min_splits=min_splits, sub_size=sub_size,
-                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                                  )
             scores.append((ps.similarity(mark1, w_ex)))
             labels.append(1)
@@ -112,9 +112,10 @@ if __name__ == "__main__":
     L_exp = 0
     min_splits = 170
     sub_size = 6
+    ceil = True
     MARK = np.load('ef26420c.npy')
     mark = np.array([(-1) ** m for m in MARK])
     compute_roc(mark.size, alpha=alpha, mark=mark,dim=dim,
                 step=step, max_splits=max_splits,
                 min_splits=min_splits, sub_size=sub_size,
-                Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)
+                Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)

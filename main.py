@@ -18,7 +18,9 @@ def main():
     L_exp = 0.2
     min_splits = 170
     sub_size = 6
+    ceil = True
     threeshold = 2
+
 
     # generate a watermark (in the challenge, we will be provided a mark)
     MARK = np.load('ef26420c.npy')
@@ -32,13 +34,13 @@ def main():
     em.embedding(name_image, mark, alpha = alpha, name_output=name_out,
                  dim = dim, step = step, max_splits=max_splits,
                  min_splits=min_splits, sub_size=sub_size,
-                 Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp )
+                 Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp , ceil = ceil)
     watermarked = cv2.imread(name_out,0)
     print("wpsnr :",wpsnr(image,watermarked) )
     mark_ex = dt.extraction(image = cv2.imread(name_image, 0), watermarked=watermarked, mark_size=mark.size,alpha=alpha,
                             dim = dim, step = step, max_splits=max_splits,
                             min_splits = min_splits, sub_size = sub_size,
-                            Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp )
+                            Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp , ceil = ceil)
     # print('mark ex', (mark_ex), len(mark_ex))
     # print('mark   ', mark, len(mark))
     sim = (similarity(mark,mark_ex))
@@ -53,7 +55,7 @@ def main():
         mark_atk = dt.extraction(image=cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size, alpha=alpha,
                                  dim=dim, step=step, max_splits=max_splits,
                                  min_splits=min_splits, sub_size=sub_size,
-                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)
+                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
         sim = similarity(mark_ex, mark_atk)
         print(i, sim, wpsnr(watermarked, atk))
         if sim < 4:
@@ -80,41 +82,41 @@ def main():
     em.embedding('lena.bmp', mark, alpha=alpha, name_output='wat_lena.bmp',
                  dim=dim, step=step, max_splits=max_splits,
                  min_splits=min_splits, sub_size=sub_size,
-                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)
+                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat0_lena.bmp',
                        threeshold= threeshold,
                        mark_size=mark.size, alpha=alpha,
                        dim=dim, step=step, max_splits=max_splits,
                        min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                        ))
     print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat1_lena.bmp',
                        threeshold=threeshold,
                        mark_size=mark.size, alpha=alpha,
                        dim=dim, step=step, max_splits=max_splits,
                        min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                        ))
     print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat2_lena.bmp',
                        threeshold= threeshold,
                        mark_size=mark.size, alpha=alpha,
                        dim=dim, step=step, max_splits=max_splits,
                        min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                        ))
     print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat3_lena.bmp',
                        threeshold=threeshold,
                        mark_size=mark.size, alpha=alpha,
                        dim=dim, step=step, max_splits=max_splits,
                        min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                        ))
     print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat4_lena.bmp',
                        threeshold=threeshold,
                        mark_size=mark.size, alpha=alpha,
                        dim=dim, step=step, max_splits=max_splits,
                        min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                        ))
     """plt.hist(np.concatenate(FAKE), bins=50)
     plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
@@ -138,7 +140,7 @@ def main():
                        mark_size=mark.size, alpha=alpha,
                        dim=dim, step=step, max_splits=max_splits,
                        min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
                        )))
     plt.imshow(atk, cmap='gray')
     plt.show()

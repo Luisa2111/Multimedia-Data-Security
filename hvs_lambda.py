@@ -98,7 +98,7 @@ def hvs_blocks(image, dim = 16, Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0):
     return matrix
 
 
-def hvs_step(image, dim, step, Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0):
+def hvs_step(image, dim, step, Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0, ceil = True):
     """ dim is the dimension of block in wavelet domain first level, so we need to double it """
     hvs = (hvs_quantization_Xi(image)**Xi_exp)*(hvs_quantization_Lambda(image)**Lambda_exp)*(hvs_quantization_L(image)**L_exp)
     sh = image.shape
@@ -113,7 +113,10 @@ def hvs_step(image, dim, step, Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0):
                 # ceil does an over approximation,
                 # rint a better approximation, with better robustness
                 # but creates false positive
-                matrix[i,j] = np.ceil(matrix[i,j]/step)
+                if ceil:
+                    matrix[i,j] = np.ceil(matrix[i,j]/step)
+                else:
+                    matrix[i, j] = np.rint(matrix[i, j] / step)
 
     return matrix
 
