@@ -1,0 +1,9 @@
+For a FPR approximately equals to 0.05 corresponds a TPR equals to 1.00
+For a FPR approximately equals to 0.05 corresponds a threshold equals to 0.90
+Check FPR 0.20
+For a FPR approximately equals to 0.01 corresponds a TPR equals to 1.00
+For a FPR approximately equals to 0.01 corresponds a threshold equals to 0.90
+Check FPR 0.20
+For a FPR approximately equals to 0.1 corresponds a TPR equals to 1.00
+For a FPR approximately equals to 0.1 corresponds a threshold equals to 0.90
+Check FPR 0.20

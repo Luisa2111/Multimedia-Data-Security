@@ -88,6 +88,7 @@ def compute_roc(mark_size, alpha, mark, dim, step,
     # f = open("roc_out/roc_curve_%s%s%s-%s%s.txt" % (e.year, e.month, e.day, e.hour, e.minute), "a")
     # f.close()
     sys.stdout = open("roc_out/roc_curve_%s%s%s-%s%s.txt" % (e.year, e.month, e.day, e.hour, e.minute), "a")
+    print('roc curve evaluated on'+files_used+'files with mode sub_cap_flat1.\nParameters :')
     print('alpha',alpha)
     print('dim',dim)
     print('step',step)
@@ -143,4 +144,4 @@ if __name__ == "__main__":
                 step=step, max_splits=max_splits,
                 min_splits=min_splits, sub_size=sub_size,
                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil,
-                files_used= 0)
+                files_used= 3)

@@ -1,0 +1,20 @@
+alpha 5
+dim 8
+step 20
+max_splits 500
+Xi_exp 0.2
+Lambda_exp 0.3
+L_exp 0.2
+min_splits 170
+sub_size 6
+ceil True
+
+For a FPR approximately equals to 0.05 corresponds a TPR equals to 0.86
+For a FPR approximately equals to 0.05 corresponds a threshold equals to 1.71
+Check FPR 0.05
+For a FPR approximately equals to 0.01 corresponds a TPR equals to 0.82
+For a FPR approximately equals to 0.01 corresponds a threshold equals to 2.16
+Check FPR 0.01
+For a FPR approximately equals to 0.1 corresponds a TPR equals to 0.88
+For a FPR approximately equals to 0.1 corresponds a threshold equals to 1.31
+Check FPR 0.10
