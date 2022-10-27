@@ -48,7 +48,7 @@ def hvs_quantization_L(image):
             if 1 + floor(i // (2 ** (3 - l))) < 32 and 1 + floor(j // (2 ** (3 - l))) < 32:
                 L = 1 / 256 * I[3][3][1 + floor(i // (2 ** (3 - l))), 1 + floor(j // (2 ** (3 - l)))]
             if L < 0.5 : L = 1 - L
-            matrix[i, j] = L*2
+            matrix[i, j] = L
 
     return matrix
 
@@ -113,7 +113,7 @@ def hvs_step(image, dim = 16, step = 10):
     hvs = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
     for i in range((sh[0] // 2)):
         for j in range((sh[1] // 2)):
-            hvs[i,j] = matrix[i,j]+matrix2[i,j]
+            hvs[i,j] = matrix[i,j]+(matrix2[i,j])
 
     sh_hvs = hvs.shape
     dim_out = (sh[0] // (2 * dim))

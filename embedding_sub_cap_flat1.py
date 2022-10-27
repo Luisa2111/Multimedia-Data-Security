@@ -1,6 +1,5 @@
 from scipy.fft import dct, idct
 import numpy as np
-import image_processing as ip
 import hvs_lambda as hvs
 import embedding_flat_file as fl
 import attack as at
@@ -20,30 +19,30 @@ version adaptive additive svd is broken by 2,4,5 but has good quality
 
 """
 
+
 def im_dct(image):
-    return dct(dct(image,axis=0, norm='ortho'),axis=1, norm='ortho')
+    return dct(dct(image, axis=0, norm='ortho'), axis=1, norm='ortho')
+
 
 def im_idct(image):
     return (idct(idct(image, axis=1, norm='ortho'), axis=0, norm='ortho'))
 
 
-
-def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
-
+def embedding_SVD(image, mark, alpha=1, mode='additive'):
     u, s, v = np.linalg.svd(image)
-    if mark.size >= s.size :
-        print('error mark',mark.size,'diag',s.size)
+    if mark.size >= s.size:
+        print('error mark', mark.size, 'diag', s.size)
         return 123
     if mode == 'multiplicative':
         mark_pad = np.pad(mark, (1, s.size - mark.size - 1), 'constant')
         s *= 1 + alpha * mark_pad
-    elif mode == 'additive' :
+    elif mode == 'additive':
         mark_pad = np.pad(mark, (1, s.size - mark.size - 1), 'constant')
         s += alpha * mark_pad
     else:
         locations = np.argsort(-s)
         for i in range(len(mark)):
-            s[locations[i+1]] += alpha * mark[i]
+            s[locations[i + 1]] += alpha * mark[i]
 
     watermarked = np.matrix(u) * np.diag(s) * np.matrix(v)
     return watermarked
@@ -52,28 +51,24 @@ def embedding_SVD(image,mark, alpha = 1, mode = 'additive'):
 import pywt
 
 
-def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim = 8 , step = 15, max_splits = 500, min_splits = 170, sub_size = 6):
-    # first level
+def embedding(name_image, mark, alpha=10, name_output='watermarked.bmp', dim=8, step=15, max_splits=500, min_splits=170,
+              sub_size=6, Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0):
     image = cv2.imread(name_image, 0)
+    # evaluate parameters of Human visual system
+    q = hvs.hvs_step(image, dim=dim, step=step, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp)
 
-    q = hvs.hvs_step(image, dim = dim, step = step)
-
-    coeffs2 = pywt.dwt2(image, 'haar')
-    image, (LH, HL, HH) = coeffs2
-
+    # first level DWT
+    image, (LH, HL, HH) = pywt.dwt2(image, 'haar')
     sh = image.shape
-    # SUB LEVEL EMBEDDING
 
     if sh[0] % dim != 0:
         return 'img size not div by ' + str(dim)
 
-    #if mark.size % ((sh[0]//dim)*(sh[1]//dim)) != 0:
-    #    return 'mark size not div by ' + str(dim)
 
-    # watermarked = image.copy()
     splits = min(np.count_nonzero(q), max_splits)
-    locations = np.argsort(-q, axis=None)
-    if splits < min_splits :
+
+    # case of flat images
+    if splits < min_splits:
         new_mark_size = int(splits * sub_size - 1)
         flat_mark_size = mark.size - new_mark_size
         mark_flat = mark[new_mark_size:]
@@ -82,11 +77,12 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
         dc_coeff[:] = 0
         for i in range(dc_coeff.shape[0]):
             for j in range(dc_coeff.shape[1]):
-                if q[i,j] != 0:
-                    dc_coeff[i,j] = 99999
+                if q[i, j] != 0:
+                    dc_coeff[i, j] = 99999
                 else:
-                    dct = im_dct(image[i*dim:(i+1)*dim,j*dim:(j+1)*dim])
-                    dc_coeff[i, j] = dct[0,0]**0.2 * np.var(np.squeeze(dct)[1:])
+                    dct = im_dct(image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim])
+                    # here we can try to change the exponents
+                    dc_coeff[i, j] = dct[0, 0] ** 0.2 * np.var(np.squeeze(dct)[1:])
 
         dark_locations = np.argsort(dc_coeff, axis=None)
         dark_locations = dark_locations[:flat_mark_size]
@@ -97,16 +93,12 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
         for loc in dark_locations:
             i = loc[0]
             j = loc[1]
-            image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim ] = fl.embedding_flat(image[i * dim:(i + 1) * dim , j * dim:(j + 1) * dim],
-                                                                              wat = mark_flat[mark_pos])
-            # image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim] = fl.embedding_DCT(
-            #     image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
-            #     mark = np.repeat(mark_flat[mark_pos], 5), alpha= 0.1
-            # )
+            image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim] = fl.embedding_flat(
+                image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
+                wat=mark_flat[mark_pos])
             mark_pos += 1
 
-
-
+    locations = np.argsort(-q, axis=None)
     locations = locations[:splits]
     rows = q.shape[0]
     locations = [(val // rows, val % rows) for val in locations]
@@ -115,27 +107,19 @@ def embedding(name_image, mark, alpha = 10, name_output = 'watermarked.bmp', dim
     # print('num of submarks', len(sub_mark))
     sub_mark_size = sub_mark[0].size
     for i in range(len(sub_mark)):
-        sub_mark[i] = np.pad(sub_mark[i], (0,sub_mark_size - sub_mark[i].size), 'constant')
+        sub_mark[i] = np.pad(sub_mark[i], (0, sub_mark_size - sub_mark[i].size), 'constant')
 
     for loc in locations:
         i = loc[0]
         j = loc[1]
-        image[i*dim:(i+1)*dim,j*dim:(j+1)*dim] = im_idct(embedding_SVD(im_dct(image[i*dim:(i+1)*dim,j*dim:(j+1)*dim]),
-                                                             sub_mark.pop(0), alpha = (q[i, j])*alpha , mode = "d"))
-
+        image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim] = im_idct(
+            embedding_SVD(
+                im_dct(image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim]),
+                          sub_mark.pop(0), alpha=(q[i, j]) * alpha, mode="d"))
 
     # print('em splits', splits, '| submarksize', sub_mark_size, '| flat size',flat_mark_size)
-    # second level
-    coeffs2_2 = pywt.dwt2(image, 'haar')
-    LL2, (LH2, HL2, HH2) = coeffs2_2
 
-    # third level
-    LL3, (LH3, HL3, HH3) = pywt.dwt2(LL2, 'haar')
-
-    watermarked =  pywt.idwt2((image, (LH, HL, HH)), 'haar')
-    # watermarked =  pywt.idwt2((pywt.idwt2((LL2, (LH2, HL2, HH2)), 'haar'), (LH, HL, HH)), 'haar')
-    # return pywt.idwt2((pywt.idwt2((pywt.idwt2((LL3, (LH3, HL3, HH3)), (LH2, HL2, HH2)), 'haar'), (LH, HL, HH)), 'haar')
-
+    watermarked = pywt.idwt2((image, (LH, HL, HH)), 'haar')
     cv2.imwrite(name_output, watermarked)
     return watermarked
 

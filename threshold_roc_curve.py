@@ -13,7 +13,10 @@ import psnr as ps
 # mark_size, alpha and v are parameters for generating mark (which we do not have to do in the challenge)
 # and the spread spectrum (depending on our embedding function, these might be unnecessary)
 
-def compute_roc(mark_size, alpha, mark):
+def compute_roc(mark_size, alpha, mark, dim, step,
+                max_splits, min_splits, sub_size
+                , Xi_exp, Lambda_exp, L_exp
+                ):
     # get all sample images
     files = []
     for root, dirs, filenames in os.walk('sample-images-roc'):
@@ -24,23 +27,38 @@ def compute_roc(mark_size, alpha, mark):
     for i in range(0, len(files)):
         print(i, ':', files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
-        watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]), mark=mark, alpha=alpha)
-        mark1 = dt.extraction(image, watermarked, mark_size=mark.size, alpha=alpha)
-        # print("sim normal",ps.similarity(mark,mark1))
+        watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]),
+                                   mark=mark, alpha=alpha,
+                                   dim = dim, step = step, max_splits=max_splits,
+                                   min_splits=min_splits, sub_size=sub_size,
+                                   Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                                   )
+        print('wpsnr of ' + files[i] + ' :',ps.wpsnr(image,watermarked))
+        mark1 = dt.extraction(image, watermarked, mark_size=mark.size, alpha=alpha,
+                              dim = dim, step = step, max_splits=max_splits,
+                              min_splits=min_splits, sub_size=sub_size,
+                              Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                              )
         # code added to complain with the fact that we should not use the mark
-        # mark = dt.extraction(image, watermarked, alpha = alpha, mark_size=1024)
         sample = 0
-        while sample < 5:  # unsure how many samples we should include in the dataset, gonna send Andrea an e-mail
-            # about it
+        while sample < 5:
             # fakemark = np.random.standard_normal(mark_size)
-            # fakemark = np.uint8(np.rint(fakemark))
-            fakemark = dt.extraction(image, cv2.imread('fakemarks/wat_' + files[i].rsplit( ".", 1 )[ 0 ] + '-' + str(sample).zfill(2) + '.bmp',0), mark_size, alpha=alpha)
+            fakemark = dt.extraction(image, cv2.imread('fakemarks/wat_' + files[i].rsplit( ".", 1 )[ 0 ] + '-' + str(sample).zfill(2) + '.bmp',0),
+                                     mark_size, alpha=alpha,
+                                     dim = dim, step = step, max_splits=max_splits,
+                                     min_splits=min_splits, sub_size=sub_size,
+                                     Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                                     )
             res_att,i = at.random_attack(watermarked, output=True)
-            w_ex = dt.extraction(image, res_att, mark_size, alpha=alpha)
+            w_ex = dt.extraction(image, res_att, mark_size,
+                                 alpha=alpha, dim = dim, step = step,
+                                 max_splits=max_splits,
+                                 min_splits=min_splits, sub_size=sub_size,
+                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp
+                                 )
             scores.append((ps.similarity(mark1, w_ex)))
             labels.append(1)
             scores.append((ps.similarity(mark1, fakemark)))
-            # print('scores ',scores[-2:],'atk',i)
             labels.append(0)
             sample += 1
 
@@ -85,7 +103,18 @@ def compute_roc(mark_size, alpha, mark):
     print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])"""
 
 if __name__ == "__main__":
-    alpha = 10
+    alpha = 5
+    dim = 8
+    step = 15
+    max_splits = 500
+    Xi_exp = 0.2
+    Lambda_exp = 0.5
+    L_exp = 0
+    min_splits = 170
+    sub_size = 6
     MARK = np.load('ef26420c.npy')
     mark = np.array([(-1) ** m for m in MARK])
-    compute_roc(mark.size, alpha=alpha, mark=mark)
+    compute_roc(mark.size, alpha=alpha, mark=mark,dim=dim,
+                step=step, max_splits=max_splits,
+                min_splits=min_splits, sub_size=sub_size,
+                Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp)

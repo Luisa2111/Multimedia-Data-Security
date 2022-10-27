@@ -3,7 +3,6 @@ import numpy as np
 from psnr import wpsnr,similarity
 import hvs_lambda as hvs
 import embedding_flat_file as fl
-import embedding_sub as em
 
 def im_dct(image):
     return dct(dct(image,axis=0, norm='ortho'),axis=1, norm='ortho')
@@ -13,6 +12,7 @@ def im_idct(image):
 
 
 import cv2, pywt
+
 
 def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
     u, s, v = np.linalg.svd(image)
@@ -30,18 +30,19 @@ def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
             w_ex[i] = (s_wat[locations[i+1]] - s[locations[i+1]])/alpha
         return w_ex
 
-def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6):
+
+def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6
+               , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0):
     # extraction phase
     # first level
     mark = []
 
-    q = hvs.hvs_step(image, dim = dim, step = step)
+    q = hvs.hvs_step(image, dim = dim, step = step, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp)
 
     # SUB LEVEL EMBEDDING
 
     # first level
     image, (LH_ori, HL_ori, HH_ori) = pywt.dwt2(image, 'haar')
-    sh = image.shape
     watermarked, (LH_wat, HL_wat, HH_wat) = pywt.dwt2(watermarked, 'haar')
 
     splits = min(np.count_nonzero(q), max_splits)
@@ -70,11 +71,6 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
             i = loc[0]
             j = loc[1]
             mark_flat[mark_pos] = fl.extraction_flat(watermarked[i * dim:(i + 1) * dim , j * dim:(j + 1) * dim])
-            # mark_flat[mark_pos] = np.mean(fl.extraction_DCT(
-            #     image[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
-            #     watermarked[i * dim:(i + 1) * dim, j * dim:(j + 1) * dim],
-            #     mark_size=5, alpha=0.1
-            # ))
             mark_pos += 1
     else:
         new_mark_size = mark_size
@@ -107,12 +103,16 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
     # print('ex splits', splits, '| submarksize', sub_mark_size, '| flat size', np.count_nonzero(mark_flat))
     return mark
 
-def detection(name_original, name_watermarked, name_attacked, mark_size=1024,  threeshold = 2, alpha = 10):
+def detection(name_original, name_watermarked, name_attacked, mark_size=1024,  threeshold = 2, alpha = 10,
+            dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6
+                , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0 ):
     image = cv2.imread(name_original, 0)
     wat_original = cv2.imread(name_watermarked,0)
     wat_attacked = cv2.imread(name_attacked,0)
-    extracted_mark = extraction(image, wat_attacked, mark_size, alpha)
-    mark = extraction(image, wat_original,mark_size,alpha)
+    extracted_mark = extraction(image, wat_attacked, mark_size, alpha, dim = dim, step = step, max_splits = max_splits, min_splits = min_splits,
+                                sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp )
+    mark = extraction(image, wat_original,mark_size,alpha, dim = dim, step = step, max_splits = max_splits, min_splits = min_splits,
+                                sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp )
     # threeshold and similiarity
     sim = similarity(mark,extracted_mark)
     if sim > threeshold:
