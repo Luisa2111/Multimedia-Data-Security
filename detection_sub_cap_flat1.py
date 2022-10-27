@@ -3,6 +3,7 @@ import numpy as np
 from psnr import wpsnr,similarity
 import hvs_lambda as hvs
 import embedding_flat_file as fl
+import cv2, pywt
 
 def im_dct(image):
     return dct(dct(image,axis=0, norm='ortho'),axis=1, norm='ortho')
@@ -11,10 +12,17 @@ def im_idct(image):
     return (idct(idct(image, axis=1, norm='ortho'), axis=0, norm='ortho'))
 
 
-import cv2, pywt
-
 
 def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
+    """
+    Extraction of the mark from the singular values of image
+    :param image: original image as nxn numpy matrix
+    :param watermarked: watermarked image as nxn numpy matrix
+    :param alpha: strength of the embedding
+    :param mark_size: expected size of the mark
+    :param mode:  multiplicative, additive and the third option is an adaptive version of the additive
+    :return: mark
+    """
     u, s, v = np.linalg.svd(image)
     uu, s_wat, vv = np.linalg.svd(watermarked)
     if mode == 'multiplicative':
@@ -33,6 +41,23 @@ def extraction_SVD(image, watermarked, alpha, mark_size, mode='additive'):
 
 def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6
                , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0, ceil = True):
+    """
+    Extraction of the mark. See embedding to have more information
+    :param image: original image as nxn numpy matrix
+    :param watermarked: watermarked image as nxn numpy matrix
+    :param mark_size: size of the mark
+    :param alpha: strength of embedding
+    :param dim: dimension of blocks in first level DWT
+    :param step: quantization steps for hws function
+    :param max_splits: max number of blocks to be embedded
+    :param min_splits: min number of blocks to be embedded
+    :param sub_size: max dimension of submarks
+    :param Xi_exp: represent how much we weight Xi from HVS
+    :param Lambda_exp: represent how much we weight Lambda from HVS
+    :param L_exp: represent how much we weight L from HVS
+    :param ceil: if we use ceil or rint when quantizing the HVS
+    :return: the extracted mark as numpy array
+    """
     # extraction phase
     # first level
     mark = []
@@ -48,6 +73,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
     splits = min(np.count_nonzero(q), max_splits)
     locations = np.argsort(-q, axis=None)
     mark_flat = []
+    # case of flat images
     if splits < min_splits :
         new_mark_size = int(splits * sub_size - 1)
         flat_mark_size = mark_size - new_mark_size
@@ -61,7 +87,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
                 else:
                     dct = im_dct(image[i*dim:(i+1)*dim,j*dim:(j+1)*dim])
                     dc_coeff[i, j] = dct[0,0]**0.2 * np.var(np.squeeze(dct)[1:])
-
+        #extraction from the dark locations
         dark_locations = np.argsort(dc_coeff, axis=None)
         dark_locations = dark_locations[:flat_mark_size]
         rows = dc_coeff.shape[0]
@@ -81,6 +107,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
         sub_mark_size = new_mark_size // splits + 1
         last_mark_size = sub_mark_size - 1
 
+    # selection of the locations with the embedding
     locations = locations[:splits]
     rows = q.shape[0]
     locations = [(val // rows, val % rows) for val in locations]

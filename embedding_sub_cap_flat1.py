@@ -25,7 +25,7 @@ def embedding_SVD(image, mark, alpha, mode='additive'):
     :param mark: mark as numpy array, of dimension < n
     :param alpha: strength of the embedding
     :param mode: multiplicative, additive and the third option is an adaptive version of the additive
-    :return:
+    :return: watermarked image as nxn numpy matrix
     """
     # diagonalization
     u, s, v = np.linalg.svd(image)

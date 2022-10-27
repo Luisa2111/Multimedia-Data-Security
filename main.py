@@ -28,7 +28,7 @@ def main():
 
     # embed watermark into three different pictures of 512x512 (as it will be in the challenge)
     # name_image = 'sample-images-roc/0031.bmp'
-    img = '0037'
+    img = 'lena'
     name_image = 'sample-images-roc/' + img +'.bmp'
     image = cv2.imread(name_image,0)
     name_out = 'watermarked.bmp'
@@ -46,6 +46,16 @@ def main():
     # print('mark   ', mark, len(mark))
     sim = (similarity(mark,mark_ex))
     print('sim', sim)
+
+    def check_mark(X, X_star):
+        X_star = np.rint((X_star)).astype(int)
+        # print(X_star)
+        res = [1 for a, b in zip(X, X_star) if a == b]
+        if sum(res) != 1024:
+            print('The marks are different, please check your code')
+        print(sum(res))
+
+    check_mark(mark, mark_ex)
 
     problem = set({})
     print('starting attacks')
@@ -72,6 +82,13 @@ def main():
 
 
     print('analizing fake watermarked image')
+    fakemark = dt.extraction(image, image,
+                             mark.size, alpha=alpha,
+                             dim=dim, step=step, max_splits=max_splits,
+                             min_splits=min_splits, sub_size=sub_size,
+                             Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil=ceil
+                             )
+    print('fakemark from original',similarity(mark_ex,fakemark))
     FAKE = []
     """for i in range(1,7):
         fakemark = dt.extraction(image, at.attack_num(image,i), mark_size=mark.size,alpha=alpha, step = step, max_splits=max_splits)
