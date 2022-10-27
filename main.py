@@ -28,7 +28,8 @@ def main():
 
     # embed watermark into three different pictures of 512x512 (as it will be in the challenge)
     # name_image = 'sample-images-roc/0031.bmp'
-    name_image = 'lena.bmp'
+    img = '0037'
+    name_image = 'sample-images-roc/' + img +'.bmp'
     image = cv2.imread(name_image,0)
     name_out = 'watermarked.bmp'
     em.embedding(name_image, mark, alpha = alpha, name_output=name_out,
@@ -48,6 +49,7 @@ def main():
 
     problem = set({})
     print('starting attacks')
+    SIM = []
     for i in range(1, 7):
         atk = at.attack_num(watermarked, i)
         # for _ in range(1):
@@ -57,6 +59,7 @@ def main():
                                  min_splits=min_splits, sub_size=sub_size,
                                  Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
         sim = similarity(mark_ex, mark_atk)
+        SIM.append(sim)
         print(i, sim, wpsnr(watermarked, atk))
         if sim < 4:
             problem.add(i)
@@ -67,8 +70,7 @@ def main():
         print('negative < 0 :', len([m for m in mark_atk if (m < 0)]))
         print('similiarity :', similarity(mark,mark_atk))"""
 
-    from collections import Counter
-    print(problem)
+    print('problems in',problem, '| min sim',min(SIM))
 
 
     print('analizing fake watermarked image')
@@ -78,50 +80,20 @@ def main():
         FAKE.append(fakemark)
         fake_s = similarity(mark_ex,fakemark)
         print('false sim', fake_s)"""
+    for i in range(16):
+        fakemark = dt.extraction(image, cv2.imread('fakemarks/wat_' + img + '-' + str(i).zfill(2) + '.bmp', 0),
+                                 mark.size, alpha=alpha,
+                                 dim=dim, step=step, max_splits=max_splits,
+                                 min_splits=min_splits, sub_size=sub_size,
+                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil=ceil
+                                 )
+        FAKE.append(similarity(mark_ex,fakemark))
 
-    em.embedding('lena.bmp', mark, alpha=alpha, name_output='wat_lena.bmp',
-                 dim=dim, step=step, max_splits=max_splits,
-                 min_splits=min_splits, sub_size=sub_size,
-                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
-    print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat0_lena.bmp',
-                       threeshold= threeshold,
-                       mark_size=mark.size, alpha=alpha,
-                       dim=dim, step=step, max_splits=max_splits,
-                       min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
-                       ))
-    print(dt.detection('lena.bmp','wat_lena.bmp' ,'fakemarks/wat1_lena.bmp',
-                       threeshold=threeshold,
-                       mark_size=mark.size, alpha=alpha,
-                       dim=dim, step=step, max_splits=max_splits,
-                       min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
-                       ))
-    print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat2_lena.bmp',
-                       threeshold= threeshold,
-                       mark_size=mark.size, alpha=alpha,
-                       dim=dim, step=step, max_splits=max_splits,
-                       min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
-                       ))
-    print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat3_lena.bmp',
-                       threeshold=threeshold,
-                       mark_size=mark.size, alpha=alpha,
-                       dim=dim, step=step, max_splits=max_splits,
-                       min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
-                       ))
-    print(dt.detection('lena.bmp', 'wat_lena.bmp', 'fakemarks/wat4_lena.bmp',
-                       threeshold=threeshold,
-                       mark_size=mark.size, alpha=alpha,
-                       dim=dim, step=step, max_splits=max_splits,
-                       min_splits=min_splits, sub_size=sub_size,
-                       Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
-                       ))
+    print(max(FAKE))
+
     """plt.hist(np.concatenate(FAKE), bins=50)
     plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
     plt.show()"""
-
 
 
     atk = at.attack_num(watermarked, 2)
