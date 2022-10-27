@@ -28,7 +28,7 @@ def main():
 
     # embed watermark into three different pictures of 512x512 (as it will be in the challenge)
     # name_image = 'sample-images-roc/0031.bmp'
-    img = '0037'
+    img = '0008'
     name_image = 'sample-images-roc/' + img +'.bmp'
     image = cv2.imread(name_image,0)
     name_out = 'watermarked.bmp'
@@ -59,7 +59,7 @@ def main():
         sim = similarity(mark_ex, mark_atk)
         SIM.append(sim)
         print(i, sim, wpsnr(watermarked, atk))
-        if sim < 4:
+        if sim < 0.05:
             problem.add(i)
             # print(i, wpsnr(watermarked,atk))
         """print('mark atk :',mark_atk)
@@ -85,6 +85,7 @@ def main():
                                  min_splits=min_splits, sub_size=sub_size,
                                  Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil=ceil
                                  )
+        print('false sim',similarity(mark_ex,fakemark))
         FAKE.append(similarity(mark_ex,fakemark))
 
     print(max(FAKE))

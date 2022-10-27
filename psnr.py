@@ -9,7 +9,7 @@ def similarity(X, X_star):
   # Computes the similarity measure between the original and the new watermarks.
   # X = np.rint(X)
   # X_star = np.rint(X_star)
-  s = np.sum(np.multiply(X, X_star)) / np.sqrt(np.sum(np.multiply(X_star, X_star)))
+  s = np.sum(np.multiply(X, X_star)) / (np.sqrt(np.sum(np.multiply(X_star, X_star))))
   return s
 
 def wpsnr(img1, img2):
