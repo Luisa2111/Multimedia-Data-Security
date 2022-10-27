@@ -15,7 +15,7 @@ import psnr as ps
 
 def compute_roc(mark_size, alpha, mark, dim, step,
                 max_splits, min_splits, sub_size
-                , Xi_exp, Lambda_exp, L_exp, ceil
+                , Xi_exp, Lambda_exp, L_exp, ceil, files_used = 0
                 ):
     # get all sample images
     files = []
@@ -24,7 +24,9 @@ def compute_roc(mark_size, alpha, mark, dim, step,
     # compute scores and labels
     scores = []
     labels = []
-    for i in range(0, len(files)):
+    if files_used <= 0:
+        files_used = len(files)
+    for i in range(0, files_used):
         print(i, ':', files[i])
         image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
         watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]),
@@ -77,10 +79,28 @@ def compute_roc(mark_size, alpha, mark, dim, step,
     plt.ylabel('True Positive Rate')
     plt.title('Receiver operating characteristic example')
     plt.legend(loc="lower right")
-    plt.show()
+    import datetime
+    e = datetime.datetime.now()
+    plt.savefig("roc_out/roc_curve_%s%s%s-%s%s.png" % (e.year, e.month, e.day, e.hour, e.minute))
 
+
+    import sys
+    # f = open("roc_out/roc_curve_%s%s%s-%s%s.txt" % (e.year, e.month, e.day, e.hour, e.minute), "a")
+    # f.close()
+    sys.stdout = open("roc_out/roc_curve_%s%s%s-%s%s.txt" % (e.year, e.month, e.day, e.hour, e.minute), "a")
+    print('alpha',alpha)
+    print('dim',dim)
+    print('step',step)
+    print('max_splits', max_splits)
+    print('Xi_exp',Xi_exp)
+    print('Lambda_exp',Lambda_exp)
+    print('L_exp', L_exp)
+    print('min_splits' , min_splits)
+    print('sub_size',sub_size)
+    print('ceil' ,ceil)
     p_value = 0.05
     idx_tpr = np.where((fpr - p_value) == min(i for i in (fpr - p_value) if i > 0))
+    print()
     print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
     print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
     print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])
@@ -97,19 +117,23 @@ def compute_roc(mark_size, alpha, mark, dim, step,
     print('For a FPR approximately equals to 0.1 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
     print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])
 
+    sys.stdout.close()
+
     """idx_tpr = np.where((fpr - 0.05) == min(i for i in (fpr - 0.05) if i > 0))
     print('For a FPR approximately equals to 0.05 corresponds a TPR equals to %0.2f' % tpr[idx_tpr[0][0]])
     print('For a FPR approximately equals to 0.05 corresponds a threshold equals to %0.2f' % tau[idx_tpr[0][0]])
     print('Check FPR %0.2f' % fpr[idx_tpr[0][0]])"""
 
+    plt.show()
+
 if __name__ == "__main__":
     alpha = 5
     dim = 8
-    step = 15
+    step = 20
     max_splits = 500
     Xi_exp = 0.2
-    Lambda_exp = 0.5
-    L_exp = 0
+    Lambda_exp = 0.3
+    L_exp = 0.2
     min_splits = 170
     sub_size = 6
     ceil = True
@@ -118,4 +142,5 @@ if __name__ == "__main__":
     compute_roc(mark.size, alpha=alpha, mark=mark,dim=dim,
                 step=step, max_splits=max_splits,
                 min_splits=min_splits, sub_size=sub_size,
-                Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
+                Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil,
+                files_used= 0)
