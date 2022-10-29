@@ -130,7 +130,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
     # print('ex splits', splits, '| submarksize', sub_mark_size, '| flat size', np.count_nonzero(mark_flat))
     return mark
 
-def detection(name_original, name_watermarked, name_attacked, mark_size=1024,  threeshold = 2, alpha = 10,
+def detection(name_original, name_watermarked, name_attacked, mark_size=1024,  threeshold = 1.62, alpha = 10,
             dim = 8, step = 15, max_splits = 500, min_splits = 170, sub_size = 6
                 , Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0 , ceil = True):
     image = cv2.imread(name_original, 0)
