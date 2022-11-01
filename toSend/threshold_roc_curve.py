@@ -21,7 +21,7 @@ def compute_roc(mark_size, alpha, mark, dim, step,
 	"""
 	# get all sample images
 	files = []
-	for root, dirs, filenames in os.walk('sample-images-roc'):
+	for root, dirs, filenames in os.walk('../sample-images-roc'):
 		files.extend(filenames)
 	# compute scores and labels
 	scores = []
@@ -30,14 +30,14 @@ def compute_roc(mark_size, alpha, mark, dim, step,
 		files_used = len(files)
 	for i in range(0, files_used):
 		print(i, ':', files[i])
-		image = cv2.imread("".join(['./sample-images-roc/', files[i]]), 0)
+		image = cv2.imread("".join(['../sample-images-roc/', files[i]]), 0)
 		# real image embedding
-		watermarked = em.embedding(name_image="".join(['./sample-images-roc/', files[i]]),
-								   mark=mark, alpha=alpha,
-								   dim = dim, step = step, max_splits=max_splits,
-								   min_splits=min_splits, sub_size=sub_size,
-								   Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
-								   )
+		watermarked = em.embedding(name_image="".join(['../sample-images-roc/', files[i]]),name_mark='ef26420c.npy',
+								alpha=alpha,
+								dim = dim, step = step, max_splits=max_splits,
+								min_splits=min_splits, sub_size=sub_size,
+								Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
+								)
 		print('wpsnr of ' + files[i] + ' :',ps.wpsnr(image,watermarked))
 		# extraction of the mark, we use it for the comparison
 		# because it was requested for the detection function,
@@ -51,13 +51,13 @@ def compute_roc(mark_size, alpha, mark, dim, step,
 		while sample < 16:
 			# creation of the fakemarks from random images
 			# obtained by old embeddings and random attacks on the ORIGINAL image
-			fakemark = dt.extraction(image, cv2.imread('fakemarks/wat_' + files[i].rsplit( ".", 1 )[ 0 ] + '-' + str(sample).zfill(2) + '.bmp',0),
+			fakemark = dt.extraction(image, cv2.imread('../fakemarks/wat_' + files[i].rsplit( ".", 1 )[ 0 ] + '-' + str(sample).zfill(2) + '.bmp',0),
 									 mark_size, alpha=alpha,
 									 dim = dim, step = step, max_splits=max_splits,
 									 min_splits=min_splits, sub_size=sub_size,
 									 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
 									 )
-			res_att,i = at.random_attack(watermarked, output=True)
+			res_att,i = at.random_attack_param(watermarked, output=True)
 			w_ex = dt.extraction(image, res_att, mark_size,
 								 alpha=alpha, dim = dim, step = step,
 								 max_splits=max_splits,
