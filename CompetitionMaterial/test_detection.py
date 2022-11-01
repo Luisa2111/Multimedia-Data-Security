@@ -23,6 +23,7 @@ watermarked = '%s_%s.%s' % (imName, groupname, ext)
 start_time = time.time()
 tr, w = mod.detection(original, watermarked, watermarked)
 end_time = time.time()
+print((end_time - start_time))
 if (end_time - start_time) > 5:
     print('ERROR! Takes too much to run: '+str(end_time - start_time))  
 

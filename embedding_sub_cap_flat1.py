@@ -51,8 +51,8 @@ def embedding_SVD(image, mark, alpha, mode='additive'):
 
 
 
-def embedding(name_image, mark, alpha=10, name_output='watermarked.bmp', dim=8, step=15, max_splits=500, min_splits=170,
-              sub_size=6, Xi_exp = 0.2, Lambda_exp = 0.5, L_exp = 0, ceil = True):
+def embedding(name_image, mark, alpha=5, name_output='watermarked.bmp', dim=8, step=20, max_splits=500, min_splits=170,
+              sub_size=6, Xi_exp = 0.2, Lambda_exp = 0.3, L_exp = 0.2, ceil = True):
     """
     Adaptive embedding function based on HVS (Human Visual System) to distinguish the good blocks for the embedding.
     Then it embeds the mark in dim x dim block in the LL level of DWT by doing an SVD embedding on the DCT
@@ -147,7 +147,7 @@ def embedding(name_image, mark, alpha=10, name_output='watermarked.bmp', dim=8, 
     watermarked = pywt.idwt2((image, (LH, HL, HH)), 'haar')
     # write of the output images
     cv2.imwrite(name_output, watermarked)
-    return watermarked
+    return np.uint8(watermarked)
 
 
 if __name__ == "__main__":

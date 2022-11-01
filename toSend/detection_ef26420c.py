@@ -4,6 +4,8 @@ import cv2
 import numpy as np
 from scipy.fft import dct, idct
 import pywt
+from scipy.signal import convolve2d
+from math import sqrt
 
 def similarity(X, X_star):
   # Computes the similarity measure between the original and the new watermarks.
@@ -269,7 +271,8 @@ def detection(name_original, name_watermarked, name_attacked):
 	min_splits = 170
 	sub_size = 6
 	ceil = True
-	threeshold = 1.62
+	threeshold = 2.18 # for FPR = 0.01
+	# threeshold = 1.62 # for a FPR = 0.05
 	mark_size = 1024
 
 	image = cv2.imread(name_original, 0)
@@ -282,6 +285,8 @@ def detection(name_original, name_watermarked, name_attacked):
 	
 	# threeshold and similiarity
 	sim = similarity(mark,extracted_mark)
+	# print(extracted_mark)
+	# print('sim for',name_attacked,':',sim)
 	if sim > threeshold:
 		out1 = 1
 	else:

@@ -15,18 +15,19 @@ def jpeg_compression(img, QF):
   return attacked
 
 
-watermarked = embedding_ef26420c.embedding('./sample-images-roc/0000.bmp', './ef26420c.npy')
-
+watermarked = embedding_ef26420c.embedding('../sample-images-roc/0000.bmp', './ef26420c.npy')
+#plt.imshow(watermarked, cmap='gray')
+#plt.show()
 
 #attack
 attacked = jpeg_compression(watermarked, 99)
+print(detection_ef26420c.wpsnr(watermarked,attacked))
 cv2.imwrite('attacked.bmp', attacked)
-plt.imshow(attacked)
-plt.show()
+#plt.imshow(attacked)
+#plt.show()
 #
 start = time.time()
-dec, wpsnr = detection_ef26420c.detection('Images/0000.bmp', 'watermarked.bmp', 'attacked.bmp')
+dec, wpsnr = detection_ef26420c.detection('../sample-images-roc/0000.bmp', 'watermarked.bmp', '../sample-images-roc/0000.bmp')
 print('time consumed: ', time.time() - start)
-
 print(dec)
 print(wpsnr)

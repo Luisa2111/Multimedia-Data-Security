@@ -52,7 +52,7 @@ def embedding_SVD(image, mark, alpha, mode='additive'):
 
 
 
-def embedding(name_image, name_mark, alpha=10, name_output='watermarked.bmp', dim=8, step=20, max_splits=500, min_splits=170,
+def embedding(name_image, name_mark, alpha=5, name_output='watermarked.bmp', dim=8, step=20, max_splits=500, min_splits=170,
 			  sub_size=6, Xi_exp = 0.2, Lambda_exp = 0.3, L_exp = 0.2, ceil = True):
 	"""
 	Adaptive embedding function based on HVS (Human Visual System) to distinguish the good blocks for the embedding.
@@ -78,6 +78,7 @@ def embedding(name_image, name_mark, alpha=10, name_output='watermarked.bmp', di
 	mark=np.array([(-1)**m for m in MARK])
 	
 	image = cv2.imread(name_image, 0)
+
 	# evaluate parameters of Human visual system
 	q = hvs.hvs_step(image, dim=dim, step=step, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp, ceil = ceil)
 
@@ -151,5 +152,6 @@ def embedding(name_image, name_mark, alpha=10, name_output='watermarked.bmp', di
 	watermarked = pywt.idwt2((image, (LH, HL, HH)), 'haar')
 	# write of the output images
 	cv2.imwrite(name_output, watermarked)
+	watermarked = cv2.imread(name_output, 0)
 	return watermarked
 

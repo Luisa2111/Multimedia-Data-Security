@@ -137,7 +137,7 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
     mark.append(mark_flat)
     mark = np.concatenate(mark)
     if not mark.any():
-        mark[0] = 1
+        mark[:] = 1
     # print('ex splits', splits, '| submarksize', sub_mark_size, '| flat size', np.count_nonzero(mark_flat))
     return mark
 
