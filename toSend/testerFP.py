@@ -36,14 +36,14 @@ cv2.imwrite('attacked.bmp', attacked)
 # plt.show()
 #
 # start = time.time()
-for i in range(100):
+"""for i in range(100):
   dec, wpsnr = detection_ef26420c.detection('../sample-images-roc/0000.bmp', 'watermarked.bmp',
                                             '../sample-images-roc/' + str(i).zfill(4)+ '.bmp')
 # print('time consumed: ', time.time() - start)
   if dec == 1:
     print('fp in',i)
     print(dec)
-    print(wpsnr)
+    print(wpsnr)"""
 
 print('attack')
 start = time.time()
