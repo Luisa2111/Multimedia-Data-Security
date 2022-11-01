@@ -1,5 +1,6 @@
 import random
 import image_processing as ip
+from psnr import wpsnr
 
 """
 This will just be used for our own testing purposes, not for the challenge. 
@@ -69,3 +70,36 @@ def combined_attack(original, watermarked, name_image):
     print("wPSNR of attacked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
     ip.plotting_images(original, attacked, title=('Attacked {image_name}').format(image_name=name_image))
     return attacked
+
+
+def random_attack_param(image, output = False):
+    ori = image.copy()
+    w = 0
+    while w < 35:
+        i = random.randint(1, 6)
+        if i == 1:
+            attacked = ip.awgn(image, random.uniform(0.5, 10), random.randint(0, 9999))
+        elif i == 2:
+            attacked = ip.blur(image, random.uniform(0.5, 3))
+        elif i == 3:
+            attacked = ip.sharpening(image, random.uniform(0.5, 3), random.uniform(0.5, 3))
+        elif i == 4:
+            attacked = ip.median(image, [random.randint(1, 5) * 2 + 1, random.randint(1, 5) * 2 + 1])
+        elif i == 5:
+            attacked = ip.resizing(image, random.uniform(0.1, 0.7))
+        elif i == 6:
+            attacked = ip.jpeg_compression(image, random.randint(1, 75))
+        w = wpsnr(ori, image)
+    if output:
+        # print('Attacked with attack :',i)
+        return attacked, i
+    # w = ip.wpsnr(original, attacked)
+    # print("wPSNR of attacked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
+    # ip.plotting_images(original, attacked, title=('Attacked {image_name}').format(image_name=name_image))
+    else:
+        return attacked
+
+if __name__ == "__main__":
+    import cv2
+    lena = cv2.imread('lena.bmp',0)
+    print(wpsnr(lena,random_attack_param(lena)))
