@@ -28,7 +28,7 @@ def compute_roc(mark_size, alpha, mark, dim, step,
 	labels = []
 	if files_used <= 0:
 		files_used = len(files)
-	for i in range(0, files_used):
+	for i in range(0,files_used):
 		print(i, ':', files[i])
 		image = cv2.imread("".join(['../sample-images-roc/', files[i]]), 0)
 		# real image embedding
@@ -51,13 +51,13 @@ def compute_roc(mark_size, alpha, mark, dim, step,
 		while sample < 16:
 			# creation of the fakemarks from random images
 			# obtained by old embeddings and random attacks on the ORIGINAL image
-			fakemark = dt.extraction(image, cv2.imread('../fakemarks/wat_' + files[i].rsplit( ".", 1 )[ 0 ] + '-' + str(sample).zfill(2) + '.bmp',0),
+			fakemark = dt.extraction(image, cv2.imread('../fakemarks/wat_' + files[i].rsplit( ".", 1 )[0] + '-' + str(sample).zfill(2) + '.bmp',0),
 									 mark_size, alpha=alpha,
 									 dim = dim, step = step, max_splits=max_splits,
 									 min_splits=min_splits, sub_size=sub_size,
 									 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil
 									 )
-			res_att,i = at.random_attack_param(watermarked, output=True)
+			res_att = at.random_attack(watermarked, output=False)
 			w_ex = dt.extraction(image, res_att, mark_size,
 								 alpha=alpha, dim = dim, step = step,
 								 max_splits=max_splits,
@@ -150,4 +150,4 @@ if __name__ == "__main__":
 				step=step, max_splits=max_splits,
 				min_splits=min_splits, sub_size=sub_size,
 				Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil,
-				files_used= 0)
+				files_used= 50)

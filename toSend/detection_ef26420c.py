@@ -69,8 +69,8 @@ def extraction(image, watermarked, mark_size, alpha, dim = 8, step = 15, max_spl
 		new_mark_size = int(splits * sub_size - 1)
 		flat_mark_size = mark_size - new_mark_size
 		mark_flat = np.zeros(flat_mark_size)
-		sh = image.shape
-		dc_coeff = np.zeros((sh[0] // 2, sh[1] // 2), dtype=np.float64)
+		dc_coeff = q.copy()
+		dc_coeff[:] = 0
 		for i in range(dc_coeff.shape[0]):
 			for j in range(dc_coeff.shape[1]):
 				if q[i,j] != 0:
