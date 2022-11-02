@@ -369,8 +369,8 @@ def detection(name_original, name_watermarked, name_attacked):
 	min_splits = 170
 	sub_size = 6
 	ceil = True
-	threeshold = 2.18 # for FPR = 0.01
-	# threeshold = 1.62 # for a FPR = 0.05
+	# threeshold = 2.53 # for FPR = 0.01
+	threeshold = 1.87 # for a FPR = 0.05
 	mark_size = 1024
 
 	image = cv2.imread(name_original, 0)
