@@ -1,0 +1,255 @@
+All the attacked are referred to lena watermarked with SVD with mark a 512 bit random generated
+awgn -> row 10 -> std=[0, 50]
+blur -> row 62 -> range_sigma=[0.0, 1.0]
+sharpening -> row 83 -> range_sigma=[0.2, 2.0], range_alpha=[0.2, 2.0]
+jpeg_compression -> row 
+resizing -> row 241 -> range_qf=[1, 10] This kind of attack is very slow
+median -> row 253 -> range_qf=   qf have to be odd.. Moreover, there are some problems beacuse it isn't able to destroy the watermark
+
+
+awgn: with std=2 there is no more the watermark
+std= 0 : wpsrn=  999999
+std= 1 : wpsrn=  63.315307944279375
+std= 2 : wpsrn=  57.29470834098098
+std= 3 : wpsrn=  53.772883066264974
+std= 4 : wpsrn=  51.274108419822056
+std= 5 : wpsrn=  49.33590815425126
+std= 6 : wpsrn=  47.75228322740845
+std= 7 : wpsrn=  46.41336214957903
+std= 8 : wpsrn=  45.25356483570136
+std= 9 : wpsrn=  44.23054566538585
+std= 10 : wpsrn=  43.315456129026344
+std= 11 : wpsrn=  42.487753817918886
+std= 12 : wpsrn=  41.73219428570559
+std= 13 : wpsrn=  41.03722199159655
+std= 14 : wpsrn=  40.39411607098185
+std= 15 : wpsrn=  39.79570531901352
+std= 16 : wpsrn=  39.23625556150833
+std= 17 : wpsrn=  38.71126293352209
+std= 18 : wpsrn=  38.216992175121376
+std= 19 : wpsrn=  37.7503175833703
+std= 20 : wpsrn=  37.30837450857178
+std= 21 : wpsrn=  36.88896457127598
+std= 22 : wpsrn=  36.48998693761286
+std= 23 : wpsrn=  36.10982375264929
+std= 24 : wpsrn=  35.74666551746449
+std= 25 : wpsrn=  35.399050205088
+std= 26 : wpsrn=  35.065936696909745
+std= 27 : wpsrn=  34.74597631010944
+std= 28 : wpsrn=  34.43841839124735
+std= 29 : wpsrn=  34.142670806562315
+std= 30 : wpsrn=  33.85782430441032
+std= 31 : wpsrn=  33.5831932787156
+std= 32 : wpsrn=  33.31824879214893
+std= 33 : wpsrn=  33.06245475873088
+std= 34 : wpsrn=  32.81489927833753
+std= 35 : wpsrn=  32.575131055413806
+std= 36 : wpsrn=  32.34281839279582
+std= 37 : wpsrn=  32.11750822469292
+std= 38 : wpsrn=  31.898890388989862
+std= 39 : wpsrn=  31.68656993900172
+std= 40 : wpsrn=  31.48042671461027
+std= 41 : wpsrn=  31.28006854487183
+std= 42 : wpsrn=  31.085203186190785
+std= 43 : wpsrn=  30.89570612097357
+std= 44 : wpsrn=  30.711378229257843
+std= 45 : wpsrn=  30.531752837830794
+std= 46 : wpsrn=  30.356562359251114
+std= 47 : wpsrn=  30.185816815310673
+std= 48 : wpsrn=  30.019285267964815
+std= 49 : wpsrn=  29.85674884932576
+
+blur: with sigma=0.2 there is no more the watermark
+sigma= 0 : wpsrn=  999999
+sigma= 0.1 : wpsrn=  999999
+sigma= 0.2 : wpsrn=  145.98271598090116
+sigma= 0.3 : wpsrn=  85.75691802280728
+sigma= 0.4 : wpsrn=  65.34610935995605
+sigma= 0.5 : wpsrn=  56.92896936182819
+sigma= 0.6 : wpsrn=  52.795733979918026
+sigma= 0.7 : wpsrn=  50.14657454701998
+sigma= 0.8 : wpsrn=  48.076268908507025
+sigma= 0.9 : wpsrn=  46.33035188549218
+sigma= 1 : wpsrn=  44.82483198187275
+sigma= 2 : wpsrn=  36.58752619664755
+sigma= 3 : wpsrn=  33.257023930762834
+sigma= 4 : wpsrn=  31.428572182492406
+sigma= 5 : wpsrn=  30.224634707242032
+sigma= 6 : wpsrn=  29.34086487154946
+sigma= 7 : wpsrn=  28.647924945138836
+sigma= 8 : wpsrn=  28.081004245023422
+sigma= 9 : wpsrn=  27.602798985732
+
+sharpening: with sigma=0.4 and alpha=0.5 there is no more the watermark
+sigma= 0  alpha= 0 : wpsrn=  999999
+sigma= 0  alpha= 1 : wpsrn=  999999
+sigma= 0  alpha= 2 : wpsrn=  999999
+sigma= 1  alpha= 0 : wpsrn=  999999
+sigma= 1  alpha= 1 : wpsrn=  44.82483191890002
+sigma= 1  alpha= 2 : wpsrn=  38.80423203099129
+sigma= 2  alpha= 0 : wpsrn=  999999
+sigma= 2  alpha= 1 : wpsrn=  36.587526209309814
+sigma= 2  alpha= 2 : wpsrn=  30.566926295943773
+sigma= 0.1  alpha= 0.1 : wpsrn=  999999
+sigma= 0.1  alpha= 0.2 : wpsrn=  999999
+sigma= 0.1  alpha= 0.3 : wpsrn=  999999
+sigma= 0.1  alpha= 0.4 : wpsrn=  999999
+sigma= 0.1  alpha= 0.5 : wpsrn=  999999
+sigma= 0.1  alpha= 0.6 : wpsrn=  999999
+sigma= 0.1  alpha= 0.7 : wpsrn=  999999
+sigma= 0.1  alpha= 0.8 : wpsrn=  999999
+sigma= 0.1  alpha= 0.9 : wpsrn=  999999
+sigma= 0.1  alpha= 1.0 : wpsrn=  999999
+sigma= 0.1  alpha= 1.1 : wpsrn=  999999
+sigma= 0.1  alpha= 1.2 : wpsrn=  999999
+sigma= 0.2  alpha= 0.1 : wpsrn=  164.63775696399793
+sigma= 0.2  alpha= 0.2 : wpsrn=  159.51571053716845
+sigma= 0.2  alpha= 0.3 : wpsrn=  156.2394723095677
+sigma= 0.2  alpha= 0.4 : wpsrn=  153.84041783343432
+sigma= 0.2  alpha= 0.5 : wpsrn=  151.93788791787807
+sigma= 0.2  alpha= 0.6 : wpsrn=  150.37889754403864
+sigma= 0.2  alpha= 0.7 : wpsrn=  149.05818116139716
+sigma= 0.2  alpha= 0.8 : wpsrn=  147.90984633906442
+sigma= 0.2  alpha= 0.9 : wpsrn=  146.89077546161752
+sigma= 0.2  alpha= 1.0 : wpsrn=  145.97930169241639
+sigma= 0.2  alpha= 1.1 : wpsrn=  145.15194526946092
+sigma= 0.2  alpha= 1.2 : wpsrn=  144.4036150115038
+sigma= 0.3  alpha= 0.1 : wpsrn=  105.75613516152055
+sigma= 0.3  alpha= 0.2 : wpsrn=  99.73558573025372
+sigma= 0.3  alpha= 0.3 : wpsrn=  96.21374084952467
+sigma= 0.3  alpha= 0.4 : wpsrn=  93.71498030382497
+sigma= 0.3  alpha= 0.5 : wpsrn=  91.77678100879172
+sigma= 0.3  alpha= 0.6 : wpsrn=  90.19315109757204
+sigma= 0.3  alpha= 0.7 : wpsrn=  88.85422428176153
+sigma= 0.3  alpha= 0.8 : wpsrn=  87.69438215478112
+sigma= 0.3  alpha= 0.9 : wpsrn=  86.67133520836066
+sigma= 0.3  alpha= 1.0 : wpsrn=  85.75618232620847
+sigma= 0.3  alpha= 1.1 : wpsrn=  84.92832823579579
+sigma= 0.3  alpha= 1.2 : wpsrn=  84.17255715056774
+sigma= 0.4  alpha= 0.1 : wpsrn=  85.34537883208506
+sigma= 0.4  alpha= 0.2 : wpsrn=  79.32478537355998
+sigma= 0.4  alpha= 0.3 : wpsrn=  75.80296233611547
+sigma= 0.4  alpha= 0.4 : wpsrn=  73.30418714272068
+sigma= 0.4  alpha= 0.5 : wpsrn=  71.36598688436308
+sigma= 0.4  alpha= 0.6 : wpsrn=  69.78236185402493
+sigma= 0.4  alpha= 0.7 : wpsrn=  68.44342663528741
+sigma= 0.4  alpha= 0.8 : wpsrn=  67.28358738320159
+sigma= 0.4  alpha= 0.9 : wpsrn=  66.26053681620549
+sigma= 0.4  alpha= 1.0 : wpsrn=  65.34538778590021
+sigma= 0.4  alpha= 1.1 : wpsrn=  64.51753437493632
+sigma= 0.4  alpha= 1.2 : wpsrn=  63.7617626993747
+sigma= 0.5  alpha= 0.1 : wpsrn=  76.92825669685084
+sigma= 0.5  alpha= 0.2 : wpsrn=  70.90765837444435
+sigma= 0.5  alpha= 0.3 : wpsrn=  67.38583232840075
+sigma= 0.5  alpha= 0.4 : wpsrn=  64.88705813171802
+sigma= 0.5  alpha= 0.5 : wpsrn=  62.948857556561734
+sigma= 0.5  alpha= 0.6 : wpsrn=  61.36523300042064
+sigma= 0.5  alpha= 0.7 : wpsrn=  60.02629718973442
+sigma= 0.5  alpha= 0.8 : wpsrn=  58.86645815908931
+sigma= 0.5  alpha= 0.9 : wpsrn=  57.843408098057026
+sigma= 0.5  alpha= 1.0 : wpsrn=  56.92825800336283
+sigma= 0.5  alpha= 1.1 : wpsrn=  56.10040439508785
+sigma= 0.5  alpha= 1.2 : wpsrn=  55.344633345346175
+sigma= 0.6  alpha= 0.1 : wpsrn=  72.79503112192293
+sigma= 0.6  alpha= 0.2 : wpsrn=  66.77443288120364
+sigma= 0.6  alpha= 0.3 : wpsrn=  63.2526080256895
+sigma= 0.6  alpha= 0.4 : wpsrn=  60.75383339268056
+sigma= 0.6  alpha= 0.5 : wpsrn=  58.81563292993232
+sigma= 0.6  alpha= 0.6 : wpsrn=  57.2320079917253
+sigma= 0.6  alpha= 0.7 : wpsrn=  55.89307245125251
+sigma= 0.6  alpha= 0.8 : wpsrn=  54.7332334103819
+sigma= 0.6  alpha= 0.9 : wpsrn=  53.71018306918817
+sigma= 0.6  alpha= 1.0 : wpsrn=  52.79503315209788
+sigma= 0.6  alpha= 1.1 : wpsrn=  51.96717949720938
+sigma= 0.6  alpha= 1.2 : wpsrn=  51.21140826955391
+sigma= 0.7  alpha= 0.1 : wpsrn=  70.14588493064538
+sigma= 0.7  alpha= 0.2 : wpsrn=  64.12528487967117
+sigma= 0.7  alpha= 0.3 : wpsrn=  60.60345978980773
+sigma= 0.7  alpha= 0.4 : wpsrn=  58.104685347335625
+sigma= 0.7  alpha= 0.5 : wpsrn=  56.16648494516083
+sigma= 0.7  alpha= 0.6 : wpsrn=  54.582860059783265
+sigma= 0.7  alpha= 0.7 : wpsrn=  53.24392428140045
+sigma= 0.7  alpha= 0.8 : wpsrn=  52.084085473378636
+sigma= 0.7  alpha= 0.9 : wpsrn=  51.06103490134377
+sigma= 0.7  alpha= 1.0 : wpsrn=  50.14588509433332
+sigma= 0.7  alpha= 1.1 : wpsrn=  49.31803139636047
+sigma= 0.7  alpha= 1.2 : wpsrn=  48.56226026097656
+sigma= 0.8  alpha= 0.1 : wpsrn=  68.07559160841399
+sigma= 0.8  alpha= 0.2 : wpsrn=  62.054991914830296
+sigma= 0.8  alpha= 0.3 : wpsrn=  58.53316700065666
+sigma= 0.8  alpha= 0.4 : wpsrn=  56.03439239898421
+sigma= 0.8  alpha= 0.5 : wpsrn=  54.09619195631094
+sigma= 0.8  alpha= 0.6 : wpsrn=  52.51256728072867
+sigma= 0.8  alpha= 0.7: wpsrn=  51.173631426861164
+sigma= 0.8  alpha= 0.8 : wpsrn=  50.01379256683662
+sigma= 0.8  alpha= 0.9 : wpsrn=  48.99074201136696
+sigma= 0.8  alpha= 1.0 : wpsrn=  48.07559210941666
+sigma= 0.8  alpha= 1.1 : wpsrn=  47.247738523182264
+sigma= 0.8  alpha= 1.2 : wpsrn=  46.491967318421985
+sigma= 0.9  alpha= 0.1 : wpsrn=  66.3296890755238
+sigma= 0.9  alpha= 0.2 : wpsrn=  60.30908915471834
+sigma= 0.9  alpha= 0.3 : wpsrn=  56.78726424794617
+sigma= 0.9  alpha= 0.4 : wpsrn=  54.288489454927884
+sigma= 0.9  alpha= 0.5 : wpsrn=  52.350289151223905
+sigma= 0.9  alpha= 0.6 : wpsrn=  50.76666433431156
+sigma= 0.9  alpha= 0.7 : wpsrn=  49.4277285684284
+sigma= 0.9  alpha= 0.8 : wpsrn=  48.2678896345662
+sigma= 0.9  alpha= 0.9 : wpsrn=  47.24483921509269
+sigma= 0.9  alpha= 1.0 : wpsrn=  46.3296893665738
+sigma= 0.9  alpha= 1.1 : wpsrn=  45.501835687576495
+sigma= 0.9  alpha= 1.2 : wpsrn=  44.746064428580404
+sigma= 1.0  alpha= 0.1 : wpsrn=  64.82418502270222
+sigma= 1.0  alpha= 0.2 : wpsrn=  58.80358517021196
+sigma= 1.0  alpha= 0.3 : wpsrn=  55.281759904836065
+sigma= 1.0  alpha= 0.4 : wpsrn=  52.78298501765529
+sigma= 1.0  alpha= 0.5 : wpsrn=  50.84478492747077
+sigma= 1.0  alpha= 0.6 : wpsrn=  49.26116001437486
+sigma= 1.0  alpha= 0.7 : wpsrn=  47.92222420622279
+sigma= 1.0  alpha= 0.8 : wpsrn=  46.76238534231696
+sigma= 1.0  alpha= 0.9 : wpsrn=  45.739334832823964
+sigma= 1.0  alpha= 1.0 : wpsrn=  44.82418509513778
+sigma= 1.0  alpha= 1.1 : wpsrn=  43.996331391392765
+sigma= 1.0  alpha= 1.2 : wpsrn=  43.24056012994006
+sigma= 1.1  alpha= 0.1 : wpsrn=  63.512511796173506
+sigma= 1.1  alpha= 0.2 : wpsrn=  57.49191226790277
+sigma= 1.1  alpha= 0.3 : wpsrn=  53.9700869281525
+sigma= 1.1  alpha= 0.4 : wpsrn=  51.47131230532609
+sigma= 1.1  alpha= 0.5 : wpsrn=  49.53311213427501
+sigma= 1.1  alpha= 0.6 : wpsrn=  47.94948713384903
+sigma= 1.1  alpha= 0.7 : wpsrn=  46.61055136964299
+sigma= 1.1  alpha= 0.8 : wpsrn=  45.45071241128505
+sigma= 1.1  alpha= 0.9 : wpsrn=  44.42766196619145
+sigma= 1.1  alpha= 1.0 : wpsrn=  43.51251213574844
+sigma= 1.1  alpha= 1.1 : wpsrn=  42.6846584133395
+sigma= 1.1  alpha= 1.2 : wpsrn=  41.928887221494975
+sigma= 1.2  alpha= 0.1 : wpsrn=  62.35759305397597
+sigma= 1.2  alpha= 0.2 : wpsrn=  56.33699315415215
+sigma= 1.2  alpha= 0.3 : wpsrn=  52.815167931423936
+sigma= 1.2  alpha= 0.4 : wpsrn=  50.31639317943136
+sigma= 1.2  alpha= 0.5 : wpsrn=  48.37819297641147
+sigma= 1.2  alpha= 0.6 : wpsrn=  46.794568110074486
+sigma= 1.2  alpha= 0.7 : wpsrn=  45.45563232602973
+sigma= 1.2  alpha= 0.8 : wpsrn=  44.295793332663614
+sigma= 1.2  alpha= 0.9 : wpsrn=  43.27274295040371
+sigma= 1.2  alpha= 1.0 : wpsrn=  42.35759310299663
+sigma= 1.2  alpha= 1.1 : wpsrn=  41.529739409926606
+sigma= 1.2  alpha= 1.2 : wpsrn=  40.77396820413672
+
+jpeg_compression: with qf= there is no more the watermark
+PROBLEMS
+
+resizing: with qf=2 there is no more the watermark
+qf= 0 : wpsrn=  9999999
+qf= 1 : wpsrn=  999999
+qf= 2 : wpsrn=  53.96192040847367
+qf= 3 : wpsrn=  55.879542519978294
+qf= 4 : wpsrn=  53.431698438658294
+qf= 5 : wpsrn=  53.67294373141799
+qf= 6 : wpsrn=  52.876581773504924
+qf= 7 : wpsrn=  52.94364042928929
+qf= 8 : wpsrn=  52.5442147163633
+qf= 9 : wpsrn=  52.57176680303044
+
+median: with std=2 there is no more the watermark
+PROBLEMS
+
