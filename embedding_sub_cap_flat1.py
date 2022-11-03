@@ -147,7 +147,8 @@ def embedding(name_image, mark, alpha=5, name_output='watermarked.bmp', dim=8, s
     watermarked = pywt.idwt2((image, (LH, HL, HH)), 'haar')
     # write of the output images
     cv2.imwrite(name_output, watermarked)
-    return np.uint8(watermarked)
+    watermarked = cv2.imread(name_output,0)
+    return (watermarked)
 
 
 if __name__ == "__main__":
