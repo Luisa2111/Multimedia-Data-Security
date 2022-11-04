@@ -5,13 +5,22 @@ import image_processing as ip
 import detection_ef26420c as det
 import numpy as np
 import cv2
+import os
+
+
+
+
+
+
+
+
 
 
 #AWGN
-def awgn_bf(name_originalImage, name_watermarkedImage, std_min, std_max, std_step, seed, direction):
+def awgn_bf(name_originalImage, name_watermarkedImage, name_attackedImage, std_min, std_max, std_step, seed, direction):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	name_attackedImage='./attacked/attacked_awgn.bmp'
+	name_attackedImage=name_attackedImage[:-4]+'_awgn.bmp'
 	if direction==1:
 	#go this way-> 
 		for std in np.arange(std_min, std_max+std_step, std_step):
@@ -21,6 +30,7 @@ def awgn_bf(name_originalImage, name_watermarkedImage, std_min, std_max, std_ste
 			#I want to destroy the watermark
 			if decisionMade==0:
 #				print("No: std=", std,"-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
+				os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'std'+str(std)[:5]+'.bmp')
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, std
 			if wpsnrWatermarkAttacked<35:
 				print("wpsnrWatermarkAttacked is less than 35...")
@@ -39,26 +49,33 @@ def awgn_bf(name_originalImage, name_watermarkedImage, std_min, std_max, std_ste
 #			print("No: std=", std, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
 	return 0, "awgn does not work", "awgn does not work", "awgn does not work"
 
-def awgn_bf_best(name_originalImage, name_watermarkedImage):
+def awgn_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
 	#it seems that the seed does not influence much the attack
-	attackedImage, wpsnrWatermarkAttacked, decisionMade, std = awgn_bf(name_originalImage, name_watermarkedImage, 0, 80 , 1   , 123, 1)
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, std = awgn_bf(name_originalImage, name_watermarkedImage, name_attackedImage, 0, 80 , 1   , 123, 1)
 	if hasattr(attackedImage, "__len__"):
 		#I'm sure that with std-1 the watermark will be present as I want
-		attackedImage, wpsnrWatermarkAttacked, decisionMade, std = awgn_bf(name_originalImage, name_watermarkedImage, std-1, std	, 0.1 , 123, -1)
+		attackedImage, wpsnrWatermarkAttacked, decisionMade, std = awgn_bf(name_originalImage, name_watermarkedImage, name_attackedImage, std-1, std	, 0.1 , 123, -1)
 		if hasattr(attackedImage, "__len__"):
 			#I'm sure that with std+0.1 the watermark will be NOT present as I want
-			attackedImage, wpsnrWatermarkAttacked, decisionMade, std = awgn_bf(name_originalImage, name_watermarkedImage, std  , std+0.1, 0.01, 123, 1)
+			attackedImage, wpsnrWatermarkAttacked, decisionMade, std = awgn_bf(name_originalImage, name_watermarkedImage, name_attackedImage, std  , std+0.1, 0.01, 123, 1)
 			if hasattr(attackedImage, "__len__"):
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, std
 	return 0, "awgn does not work", "awgn does not work", "awgn does not work"
 
 
 
+
+
+
+
+
+
+
 #BLUR
-def blur_bf(name_originalImage, name_watermarkedImage, sigma_min, sigma_max, sigma_step, direction):
+def blur_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma_min, sigma_max, sigma_step, direction):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	name_attackedImage='./attacked/attacked_blur.bmp'
+	name_attackedImage=name_attackedImage[:-4]+'_blur.bmp'
 	if direction==1:
 		#go this way-> 
 		for sigma in np.arange(sigma_min, sigma_max+sigma_step, sigma_step):
@@ -67,7 +84,8 @@ def blur_bf(name_originalImage, name_watermarkedImage, sigma_min, sigma_max, sig
 			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to destroy the watermark
 			if decisionMade==0:
-#				print("No: sigma=", sigma, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)				  
+#				print("No: sigma=", sigma, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
+				os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'sigma'+str(sigma)[:5]+'.bmp')
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma
 #			print("Yes: sigma=", sigma,"-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
 	elif direction==-1:
@@ -83,26 +101,33 @@ def blur_bf(name_originalImage, name_watermarkedImage, sigma_min, sigma_max, sig
 #			print("No: sigma=", sigma, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
 	return 0, "blur does not work", "blur does not work", "blur does not work"
   
-def blur_bf_best(name_originalImage, name_watermarkedImage):
+def blur_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
 	#it seems that the seed does not influence much the attack
-	attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma = blur_bf(name_originalImage, name_watermarkedImage, 0	, 50	 , 1   , 1)
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma = blur_bf(name_originalImage, name_watermarkedImage, name_attackedImage, 0	, 50	 , 1   , 1)
 	if hasattr(attackedImage, "__len__"):
 		#I'm sure that with std-1 the watermark will be present as I want
-		attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma = blur_bf(name_originalImage, name_watermarkedImage, sigma-1, sigma	, 0.1 , -1)
+		attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma = blur_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma-1, sigma	, 0.1 , -1)
 		if hasattr(attackedImage, "__len__"):
 			#I'm sure that with std+0.1 the watermark will be NOT present as I want
-			attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma = blur_bf(name_originalImage, name_watermarkedImage, sigma  , sigma+0.1, 0.01, 1)
+			attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma = blur_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma  , sigma+0.1, 0.01, 1)
 			if hasattr(attackedImage, "__len__"):
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma
 	return 0, "blur does not work", "blur does not work", "blur does not work"
 
 
 
+
+
+
+
+
+
+
 #JPEG_COMPRESSION
-def jpeg_compression_bf(name_originalImage, name_watermarkedImage, qf_min, qf_max, qf_step, direction):
+def jpeg_compression_bf(name_originalImage, name_watermarkedImage, name_attackedImage, qf_min, qf_max, qf_step, direction):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	name_attackedImage='./attacked/attacked_jpeg.bmp'
+	name_attackedImage=name_attackedImage[:-4]+'_jpeg.bmp'
 	if direction==-1:
 		#go the other way <-
 		for qf in np.flip(np.arange(qf_min-qf_step,qf_max, qf_step)):
@@ -111,7 +136,8 @@ def jpeg_compression_bf(name_originalImage, name_watermarkedImage, qf_min, qf_ma
 			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==0:
-#				print("No: qf=", qf, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked) 
+#				print("No: qf=", qf, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
+				os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'qf'+str(qf)[:5]+'.bmp')
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, qf
 #			print("Yes: qf=", qf, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
 	if direction==1:
@@ -127,24 +153,31 @@ def jpeg_compression_bf(name_originalImage, name_watermarkedImage, qf_min, qf_ma
 #			print("No: qf=", qf, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
 	return 0, "jpeg_compression does not work", "jpeg_compression does not work", "jpeg_compression does not work"
   
-def jpeg_compression_bf_best(name_originalImage, name_watermarkedImage):
+def jpeg_compression_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
 	#it seems that the seed does not influence much the attack
-	attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(name_originalImage, name_watermarkedImage, 1   , 70	, 5   , -1)
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(name_originalImage, name_watermarkedImage, name_attackedImage, 1   , 70	, 5   , -1)
 	if hasattr(attackedImage, "__len__"):
-		attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(name_originalImage, name_watermarkedImage, qf   , qf+5	, 1   , 1)
+		attackedImage, wpsnrWatermarkAttacked, decisionMade, qf = jpeg_compression_bf(name_originalImage, name_watermarkedImage, name_attackedImage, qf   , qf+5	, 1   , 1)
 		if hasattr(attackedImage, "__len__"):
 			return attackedImage, wpsnrWatermarkAttacked, decisionMade, qf
 	return 0, "jpeg_compression does not work", "jpeg_compression does not work", "jpeg_compression does not work"
 
 
 
+
+
+
+
+
+
+
 #RESIZING
-def resizing_bf(name_originalImage, name_watermarkedImage, scale_min, scale_max, scale_step, direction):
+def resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, scale_min, scale_max, scale_step, direction):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	name_attackedImage='./attacked/attacked_resizing.bmp'
+	name_attackedImage=name_attackedImage[:-4]+'_resizing.bmp'
 	if direction==1:
 		#go this way-> 
 		for scale in np.arange(scale_min, scale_max+scale_step, scale_step):
@@ -166,35 +199,44 @@ def resizing_bf(name_originalImage, name_watermarkedImage, scale_min, scale_max,
 			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==0:
-#				print("No: scale=", scale, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked) 
+#				print("No: scale=", scale, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
+				os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'scale'+str(scale)[:5]+'.bmp')
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, scale
 #			print("Yes: scale=", scale, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
 	return 0, "resizing does not work", "resizing does not work", "resizing does not work"
 
 
-def resizing_bf_best(name_originalImage, name_watermarkedImage):
+def resizing_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, 0, 4	 , 2   , -1)
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, 0, 4	 , 2   , -1)
 	if hasattr(attackedImage, "__len__"):
 		#I'm sure that with scale-1 the watermark will not be present as I want
 		if scale==0:
-			attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, scale+0.1, scale+1	, 0.1 , 1)
+			attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, scale+0.1, scale+1	, 0.1 , 1)
 		else:
-			attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, scale, scale+1	, 0.1 , 1)
+			attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, scale, scale+1	, 0.1 , 1)
 		if hasattr(attackedImage, "__len__"):
 			#in sttackedImage there is the watermark
-			attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, scale-0.1, scale, 0.01 , -1)
+			attackedImage, wpsnrWatermarkAttacked, decisionMade, scale = resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, scale-0.1, scale, 0.01 , -1)
 			if hasattr(attackedImage, "__len__"):
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, scale
 	return 0, "resizing does not work", "resizing does not work", "resizing does not work"
 
 
+
+
+
+
+
+
+
+
 #MEDIAN
-def median_bf(name_originalImage, name_watermarkedImage, kernel_size_min, kernel_size_max, kernel_size_step): #Remark: kernel_size must be odd integer
+def median_bf(name_originalImage, name_watermarkedImage, name_attackedImage, kernel_size_min, kernel_size_max, kernel_size_step): #Remark: kernel_size must be odd integer
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	name_attackedImage='./attacked/attacked_median.bmp'
+	name_attackedImage=name_attackedImage[:-4]+'_median.bmp'
 	for kernel_size in np.arange(kernel_size_min, kernel_size_max+kernel_size_step, kernel_size_step):
 		attackedImage = ip.median(watermarkedImage, kernel_size)
 		cv2.imwrite(name_attackedImage, attackedImage)
@@ -202,25 +244,33 @@ def median_bf(name_originalImage, name_watermarkedImage, kernel_size_min, kernel
 		#I want to destroy the watermark
 		if decisionMade==0 and wpsnrWatermarkAttacked<1000:
 #			print("No: kernel_size=", kernel_size, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
+			os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'ks'+str(kernel_size)[:5]+'.bmp')
 			return attackedImage, wpsnrWatermarkAttacked, decisionMade, kernel_size
 	return 0, "median does not work", "median does not work", "median does not work"
 
-def median_bf_best(name_originalImage, name_watermarkedImage):
+def median_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
 	#it seems that the seed does not influence much the attack
-	attackedImage, wpsnrWatermarkAttacked, decisionMade, kernel_size = median_bf(name_originalImage, name_watermarkedImage, 3   ,  101   , 2)
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, kernel_size = median_bf(name_originalImage, name_watermarkedImage, name_attackedImage, 3   ,  101   , 2)
 	if hasattr(attackedImage, "__len__"):
 		return attackedImage, wpsnrWatermarkAttacked, decisionMade, kernel_size
 	return 0, "median does not work", "median does not work", "median does not work"
 
 
 
+
+
+
+
+
+
+
 #SHARPENING
-def sharpening_bf(name_originalImage, name_watermarkedImage, sigma_min, sigma_max, sigma_step, alpha_min, alpha_max, alpha_step):
+def sharpening_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma_min, sigma_max, sigma_step, alpha_min, alpha_max, alpha_step):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
-	name_attackedImage='./attacked/attacked_sharpening.bmp'
+	name_attackedImage=name_attackedImage[:-4]+'_sharpening.bmp'
 	listwpsnrwatermark=[]
 	wpsnrValue=[]
 	#Evaluation of attacks
@@ -236,6 +286,9 @@ def sharpening_bf(name_originalImage, name_watermarkedImage, sigma_min, sigma_ma
 #				print("sigma=", sigma, "alpha=", alpha, "-> wpsnrWatermarkAttacked less then 30...")
 				break
 #			print("Yes: sigma=", sigma, "alpha=", alpha, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
+		if len(listwpsnrwatermark)>1:
+			if listwpsnrwatermark[-1][1] < listwpsnrwatermark[-2][1]:
+				break
 	#Unfortunately it takes to much time to search wrt the three best values.
 	#So, we will do wrt only to the best
 	# if time==1 or time==2:
@@ -256,24 +309,25 @@ def sharpening_bf(name_originalImage, name_watermarkedImage, sigma_min, sigma_ma
 		decisionMade=listwpsnrwatermark[indice][2]
 		sigma=listwpsnrwatermark[indice][3]
 		alpha=listwpsnrwatermark[indice][4]
+		os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'s'+str(sigma)[:5]+'a'+str(alpha)[:5]+'.bmp')
 		return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha
 	return 0, "Something wrong", "Something wrong", "Something wrong", "Something wrong"
 
-def sharpening_bf_best(name_originalImage, name_watermarkedImage):
+def sharpening_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
 	originalImage = cv2.imread(name_originalImage, 0)
 	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
 	#sharpening search
-	attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage,0.4, 1.0, 0.1,0.4, 1.0, 0.1)
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage, name_attackedImage,0.4, 1.0, 0.1,0.4, 1.0, 0.1)
 	if hasattr(attackedImage, "__len__"):
 		#sharpening search attackedImage, sigma, alpha
-		attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage, sigma-0.1, sigma, 0.01, alpha-0.1, alpha, 0.01)
+		attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma-0.1, sigma, 0.01, alpha-0.1, alpha, 0.01)
 		if hasattr(attackedImage, "__len__"):
 			#sharpening search
-			attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage, sigma-0.01, sigma, 0.001, alpha-0.01, alpha, 0.001)
+			attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma-0.01, sigma, 0.001, alpha-0.01, alpha, 0.001)
 			if hasattr(attackedImage, "__len__"):
 				#Definitve decision
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha
-	return 0, "Something wrong in general", "Something wrong in general", "Something wrong in general"
+	return 0, "Something wrong in general", "Something wrong in general", "Something wrong in general", "Something wrong in general"
 
 
 
