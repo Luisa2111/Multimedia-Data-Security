@@ -73,6 +73,7 @@ def combined_attack(original, watermarked, name_image):
 
 
 def random_attack_param(image, output = False):
+    state = random.getstate()
     ori = image.copy()
     w = 0
     while w < 35:
@@ -92,14 +93,25 @@ def random_attack_param(image, output = False):
         w = wpsnr(ori, image)
     if output:
         # print('Attacked with attack :',i)
-        return attacked, i
+        return attacked, i, state
     # w = ip.wpsnr(original, attacked)
     # print("wPSNR of attacked picture {image_name}: {decibel:.2f}dB".format(image_name=name_image, decibel=w))
     # ip.plotting_images(original, attacked, title=('Attacked {image_name}').format(image_name=name_image))
     else:
         return attacked
 
+
+def attack_jpeg_resize(img,scale,qf):
+    x, y = img.shape
+    _x = int(x * scale)
+    _y = int(y * scale)
+
+    attacked = cv2.resize(img, (_x, _y))
+    attacked = ip.jpeg_compression(attacked,qf)
+    attacked = cv2.resize(attacked, (x, y))
+    return attacked
+
 if __name__ == "__main__":
     import cv2
     lena = cv2.imread('lena.bmp',0)
-    print(wpsnr(lena,random_attack_param(lena)))
+    print(wpsnr(lena,attack_jpeg_resize(lena,0.5,70)))
