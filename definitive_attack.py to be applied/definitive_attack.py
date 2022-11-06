@@ -1,16 +1,9 @@
-import numpy as np
-from scipy.fft import dct, idct
-import hvs_lambda as hvs
-import cv2
-import matplotlib.pyplot as plt
-import embedding_ef26420c as emb
-import image_processing as ip
 import os
 
-import psnr as psnr
 import bf_attack as bf
-import localised_attack as la
 import composition_attack as ca
+import localised_attack as la
+import image_processing as ip
 
 def printer_of_best(nameOfAttack, nameOfvariable, valueOfvariable, wpsnr, attackedImage):
 	if hasattr(attackedImage, "__len__"):
@@ -19,33 +12,33 @@ def printer_of_best(nameOfAttack, nameOfvariable, valueOfvariable, wpsnr, attack
 		print(nameOfAttack, "_wpsnrWatermarkAttacked=", wpsnr)
 	else:
 		print(nameOfAttack, " does not work")
-	
+
 
 def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage):
 	#this function try first all the attacks alone
 	#then try to localise them
 	#then try to combine them
-	
+
 	#it should be returned the best wpsnr
 	bfflag=int(input("do you want to apply brute force? 1->yes, 0->no: "))
 	if bfflag==1:
-		print("AWGN: Is the watermark present?")
-		awgn_attackedImage, awgn_wpsnrWatermarkAttacked, awgn_decisionMade, awgn_std= bf.awgn_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
-		printer_of_best("awgn", "std", awgn_std, awgn_wpsnrWatermarkAttacked, awgn_attackedImage)
-		print("BLUR: Is the watermark present?")
-		blur_attackedImage, blur_wpsnrWatermarkAttacked, blur_decisionMade, blur_sigma = bf.blur_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
-		printer_of_best("blur", "sigma", blur_sigma, blur_wpsnrWatermarkAttacked, blur_attackedImage)
-		print("JPEG: Is the watermark present?")
-		jpeg_attackedImage, jpeg_wpsnrWatermarkAttacked, jpeg_decisionMade, jpeg_std = bf.jpeg_compression_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
-		printer_of_best("jpeg", "std", jpeg_std, jpeg_wpsnrWatermarkAttacked, jpeg_attackedImage)
-		print("RESIZING: Is the watermark present?")
-		resizing_attackedImage, resizing_wpsnrWatermarkAttacked, resizing_decisionMade, resizing_scale = bf.resizing_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
-		printer_of_best("resizing", "scale", resizing_scale, resizing_wpsnrWatermarkAttacked, resizing_attackedImage)
-		print("MEDIAN: Is the watermark present?")
-		median_attackedImage, median_wpsnrWatermarkAttacked, median_decisionMade, median_scale = bf.median_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
-		printer_of_best("median", "scale", median_scale, median_wpsnrWatermarkAttacked, median_attackedImage)
-		print("SHARPENING")
-		sharpening_attackedImage, sharpening_wpsnrWatermarkAttacked, sharpening_decisionMade, sharpening_sigma, sharpening_alpha = bf.sharpening_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
+#		print("AWGN: Is the watermark present?")
+#		awgn_attackedImage, awgn_wpsnrWatermarkAttacked, awgn_decisionMade, awgn_std= bf.awgn_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
+#		printer_of_best("awgn", "std", awgn_std, awgn_wpsnrWatermarkAttacked, awgn_attackedImage)
+#		print("BLUR: Is the watermark present?")
+#		blur_attackedImage, blur_wpsnrWatermarkAttacked, blur_decisionMade, blur_sigma = bf.blur_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
+#		printer_of_best("blur", "sigma", blur_sigma, blur_wpsnrWatermarkAttacked, blur_attackedImage)
+#		print("JPEG: Is the watermark present?")
+#		jpeg_attackedImage, jpeg_wpsnrWatermarkAttacked, jpeg_decisionMade, jpeg_std = bf.jpeg_compression_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
+#		printer_of_best("jpeg", "std", jpeg_std, jpeg_wpsnrWatermarkAttacked, jpeg_attackedImage)
+#		print("RESIZING: Is the watermark present?")
+#		resizing_attackedImage, resizing_wpsnrWatermarkAttacked, resizing_decisionMade, resizing_scale = bf.resizing_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
+#		printer_of_best("resizing", "scale", resizing_scale, resizing_wpsnrWatermarkAttacked, resizing_attackedImage)
+#		print("MEDIAN: Is the watermark present?")
+#		median_attackedImage, median_wpsnrWatermarkAttacked, median_decisionMade, median_scale = bf.median_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
+#		printer_of_best("median", "scale", median_scale, median_wpsnrWatermarkAttacked, median_attackedImage)
+		print("SHARPENING basic bf ")
+		sharpening_attackedImage, sharpening_wpsnrWatermarkAttacked, sharpening_decisionMade, sharpening_sigma, sharpening_alpha = bf.sharpening_pretty_basic_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
 		if hasattr(sharpening_attackedImage, "__len__"):
 			print("BEST sharpening")
 			print("sharpening_alpha=", sharpening_alpha)
@@ -53,7 +46,7 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 			print("sharpening_wpsnrWatermarkAttacked=", sharpening_wpsnrWatermarkAttacked)
 		else:
 			print("sharpening does not work")
-	
+
 	laflag=int(input("do you want to apply localised attack? 1->yes, 0->no: "))
 	if laflag==1:
 		print("LOCALISED ATTACK", end = " ")
@@ -62,15 +55,15 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 		if decisionMade==0:
 			print("with wpsnr=", wpsnrWatermarkAttacked)
 		else:
-			print("localised does not work")	
-	
+			print("localised does not work")
+
 	caflag=int(input("do you want to apply combined attack? 1->yes, 0->no: "))
 	if caflag==1:
 		print("COMBINED ATTACK")
 		attackedImage, wpsnrWatermarkAttacked, decisionMade=ca.copositeAttack(name_originalImage, name_watermarkedImage, name_attackedImage)
 
 
-#CODE TO BE DELETED FOR THE COMPETITION		
+#CODE TO BE DELETED FOR THE COMPETITION
 #"""string_image = int(input("Enter name of the image without '.bmp': "))"""
 #name_mark="./ef26420c.npy"
 #"""name_originalImage = "../sample-images-roc/{num:04d}.bmp".format(num=string_image)"""
@@ -92,15 +85,16 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 #CODE TO BE MAINTAINTED FOR THE COMPETITION
 name_images_competitors=os.listdir("./images_of_competition")
 
+
 for name_image_to_be_attacked in name_images_competitors:
 	print("I'm trying to attack " + name_image_to_be_attacked)
-	
+
 	name_watermarkedImage="./images_of_competition/"+name_image_to_be_attacked
 	name_originalImage="./sample_images_roc/"+name_image_to_be_attacked[-8:]
 	name_attackedImage="./attacked/"+name_image_to_be_attacked[:-9]+"/ef26420c_"+name_image_to_be_attacked
 	definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
-	
-	
-	
-	
-	
+
+
+
+
+

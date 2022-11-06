@@ -7,8 +7,7 @@ import image_processing as ip
 import psnr as psnr
 import bf_attack as bf
 import numpy as np
-import embedding_ef26420c as emb
-import detection_ef26420c as det
+import detection_caller as det_c
 
 #REMARK: since jpeg_compression and resizing change the dimensions of the squares, we can't combine them in a localised way
 def localised_attack(name_originalImage, name_watermarkedImage, name_attackedImage, awgn_std=21, blur_sigma=1.3, median_kernel_size=5, sharpening_sigma=0.5, sharpening_alpha=0.5, flat_sensor=0):
@@ -46,7 +45,7 @@ def localised_attack(name_originalImage, name_watermarkedImage, name_attackedIma
 	name_attackedImage=name_attackedImage[:-4]+'LA.bmp'
 	cv2.imwrite(name_attackedImage, attackedImage)
 	
-	decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+	decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 	
 	os.rename(name_attackedImage, name_attackedImage[:-4]+str(wpsnrWatermarkAttacked)[:5]+'.bmp')
 	

@@ -2,8 +2,7 @@ import cv2
 import image_processing as ip
 import psnr as psnr
 import numpy as np
-import embedding_ef26420c as emb
-import detection_ef26420c as det
+import detection_caller as det_c
 import os
 
 def copositeAttack(name_originalImage, name_watermarkedImage, name_attackedImage):
@@ -47,7 +46,7 @@ def copositeAttack(name_originalImage, name_watermarkedImage, name_attackedImage
 		name_attackedImage=name_attackedImage[:-4]+'CA.bmp'
 		cv2.imwrite(name_attackedImage, watermarkedImage)
 		
-		decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+		decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 		if decisionMade:
 			print("the watermark is still present")
 			print("and the wpsnr is: ", wpsnrWatermarkAttacked)

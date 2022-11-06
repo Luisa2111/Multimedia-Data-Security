@@ -2,10 +2,11 @@
 #So I am interested only in that value of std that break the watermark
 #Remember: we want that the watermark will be not present
 import image_processing as ip
-import detection_ef26420c as det
+import detection_caller as det_c
 import numpy as np
 import cv2
 import os
+
 
 
 
@@ -26,7 +27,7 @@ def awgn_bf(name_originalImage, name_watermarkedImage, name_attackedImage, std_m
 		for std in np.arange(std_min, std_max+std_step, std_step):
 			attackedImage=ip.awgn(watermarkedImage, std, seed)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to destroy the watermark
 			if decisionMade==0:
 #				print("No: std=", std,"-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
@@ -41,7 +42,7 @@ def awgn_bf(name_originalImage, name_watermarkedImage, name_attackedImage, std_m
 		for std in np.flip(np.arange(std_min-std_step,std_max+std_step, std_step)):
 			attackedImage=ip.awgn(watermarkedImage, std, seed)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==1:
 #				print("Yes: std=", std, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
@@ -81,7 +82,7 @@ def blur_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma
 		for sigma in np.arange(sigma_min, sigma_max+sigma_step, sigma_step):
 			attackedImage=ip.blur(watermarkedImage, sigma)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to destroy the watermark
 			if decisionMade==0:
 #				print("No: sigma=", sigma, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
@@ -93,7 +94,7 @@ def blur_bf(name_originalImage, name_watermarkedImage, name_attackedImage, sigma
 		for sigma in np.flip(np.arange(sigma_min-sigma_step,sigma_max, sigma_step)):
 			attackedImage=ip.blur(watermarkedImage, sigma)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==1:
 #				print("Yes: sigma=", sigma, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked) 
@@ -133,7 +134,7 @@ def jpeg_compression_bf(name_originalImage, name_watermarkedImage, name_attacked
 		for qf in np.flip(np.arange(qf_min-qf_step,qf_max, qf_step)):
 			attackedImage=ip.jpeg_compression(watermarkedImage, qf)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==0:
 #				print("No: qf=", qf, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
@@ -145,7 +146,7 @@ def jpeg_compression_bf(name_originalImage, name_watermarkedImage, name_attacked
 		for qf in np.arange(qf_min-qf_step,qf_max, qf_step):
 			attackedImage=ip.jpeg_compression(watermarkedImage, qf)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==1:
 #				print("Yes: qf=", qf, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked) 
@@ -183,7 +184,7 @@ def resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, s
 		for scale in np.arange(scale_min, scale_max+scale_step, scale_step):
 			attackedImage=ip.resizing(watermarkedImage, scale)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to destroy the watermark
 			if decisionMade==1:
 #				print("Yes: scale=", scale, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)				  
@@ -196,7 +197,7 @@ def resizing_bf(name_originalImage, name_watermarkedImage, name_attackedImage, s
 				return attackedImage, wpsnrWatermarkAttacked, 0, 0
 			attackedImage=ip.resizing(watermarkedImage, scale)
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			#I want to find the watermark
 			if decisionMade==0:
 #				print("No: scale=", scale, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
@@ -240,7 +241,7 @@ def median_bf(name_originalImage, name_watermarkedImage, name_attackedImage, ker
 	for kernel_size in np.arange(kernel_size_min, kernel_size_max+kernel_size_step, kernel_size_step):
 		attackedImage = ip.median(watermarkedImage, kernel_size)
 		cv2.imwrite(name_attackedImage, attackedImage)
-		decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+		decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 		#I want to destroy the watermark
 		if decisionMade==0 and wpsnrWatermarkAttacked<1000:
 #			print("No: kernel_size=", kernel_size, "-> wpsnrWatermarkAttacked=", wpsnrWatermarkAttacked)
@@ -278,7 +279,7 @@ def sharpening_bf(name_originalImage, name_watermarkedImage, name_attackedImage,
 		for alpha in np.arange(alpha_min, alpha_max+alpha_step, alpha_step):
 			attackedImage=ip.sharpening(watermarkedImage, sigma, alpha) #this it the image attacked
 			cv2.imwrite(name_attackedImage, attackedImage)
-			decisionMade, wpsnrWatermarkAttacked = det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
+			decisionMade, wpsnrWatermarkAttacked = det_c.detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage)
 			if decisionMade==0:
 				listwpsnrwatermark.append([attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha])
 				break
@@ -329,6 +330,14 @@ def sharpening_bf_best(name_originalImage, name_watermarkedImage, name_attackedI
 				return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha
 	return 0, "Something wrong in general", "Something wrong in general", "Something wrong in general", "Something wrong in general"
 
+def sharpening_pretty_basic_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage):
+	originalImage = cv2.imread(name_originalImage, 0)
+	watermarkedImage = cv2.imread(name_watermarkedImage, 0)
+	#sharpening search
+	attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha = sharpening_bf(name_originalImage, name_watermarkedImage, name_attackedImage,0.4, 1.0, 0.1,0.4, 1.0, 0.1)
+	if hasattr(attackedImage, "__len__"):
+		return attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma, alpha
+	return 0, "Something wrong in general", "Something wrong in general", "Something wrong in general", "Something wrong in general"
 
 
 
