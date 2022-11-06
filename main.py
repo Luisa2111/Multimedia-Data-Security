@@ -28,7 +28,7 @@ def main():
 
     # embed watermark into three different pictures of 512x512 (as it will be in the challenge)
     # name_image = 'sample-images-roc/0031.bmp'
-    img = 'lena'
+    img = '0000'
     name_image = 'sample-images-roc/' + img +'.bmp'
     image = cv2.imread(name_image,0)
     name_out = 'watermarked.bmp'
@@ -48,7 +48,7 @@ def main():
     print('sim', sim)
 
     def check_mark(X, X_star):
-        X_star = np.rint((X_star)).astype(int)
+        X_star = np.sign((X_star)).astype(int)
         # print(X_star)
         res = [1 for a, b in zip(X, X_star) if a == b]
         if sum(res) != 1024:
