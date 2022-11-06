@@ -179,9 +179,9 @@ name_watermarkedImage = "./embedded_images/" + string_image + ".bmp"
 attackedImage, wpsnrWatermarkAttacked, decisionMade, std, sigma = awgn_blurring(name_originalImage, name_watermarkedImage)
 print("std: " + str(std) + ", sigma: " + str(sigma) + " , wpsnr: " + str(wpsnrWatermarkAttacked))
 # new brute-force
-attackedImage, wpsnrWatermarkAttacked, decisionMade, std_awgn_single = bfa.awgn_bf_best(name_originalImage, name_watermarkedImage)
-attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma_blur_single = bfa.blur_bf_best(name_originalImage, name_watermarkedImage)
-attackedImage, wpsnr, decisionMade, std, sigma = awgn_blurring_optimized_2(name_originalImage, name_watermarkedImage, std_awgn_single, sigma_blur_single, wpsnrWatermarkAttacked)
-print("std: " + str(std) + ", sigma: " + str(sigma) + " , wpsnr: " + str(wpsnr))
+#attackedImage, wpsnrWatermarkAttacked, decisionMade, std_awgn_single = bfa.awgn_bf_best(name_originalImage, name_watermarkedImage)
+#attackedImage, wpsnrWatermarkAttacked, decisionMade, sigma_blur_single = bfa.blur_bf_best(name_originalImage, name_watermarkedImage)
+#attackedImage, wpsnr, decisionMade, std, sigma = awgn_blurring_optimized_2(name_originalImage, name_watermarkedImage, std_awgn_single, sigma_blur_single, wpsnrWatermarkAttacked)
+#print("std: " + str(std) + ", sigma: " + str(sigma) + " , wpsnr: " + str(wpsnr))
 #median_blurring(name_originalImage, name_watermarkedImage)
 #resizing_blurring(name_originalImage, name_watermarkedImage)
