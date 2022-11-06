@@ -3,8 +3,9 @@ import time
 
 import bf_attack as bf
 import localised_attack as la
+import bf_composition_attacks as bfa
 import image_processing as ip
-
+import cv2
 def printer_of_best(nameOfAttack, nameOfvariable, valueOfvariable, wpsnr, attackedImage):
 	if hasattr(attackedImage, "__len__"):
 		print("BEST ", nameOfAttack)
@@ -20,6 +21,7 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 	#then try to combine them
 	print("Against", name_watermarkedImage)
 	#it should be returned the best wpsnr
+
 	print("BRUTE FORCE")
 	print("AWGN: Is the watermark present?")
 	awgn_attackedImage, awgn_wpsnrWatermarkAttacked, awgn_decisionMade, awgn_std= bf.awgn_bf_best(name_originalImage, name_watermarkedImage, name_attackedImage)
@@ -55,6 +57,27 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 	else:
 		print("localised does not work")
 
+	print("COMPOSITION ATTACK")
+	attackedImage, wpsnr, decisionMade, std, sigma = bfa.awgn_blurring(name_originalImage, name_watermarkedImage, name_attackedImage)
+	name_for_saving = name_attackedImage + "_awgn_blurring_std_" + str(std) + "_sigma_" + str(sigma) + "_wpsnr_" + str(wpsnr)+".bmp"
+	attackedImage = name_attackedImage[:-4]+'_awgn_blurring.bmp'
+	os.rename(attackedImage, name_for_saving)
+	print("AWGN-Blurring-Attack with wpsnr = " + str(wpsnr))
+	attackedImage, wpsnr, decisionMade, kernel, sigma = bfa.median_blurring(name_originalImage,name_watermarkedImage, name_attackedImage)
+	name_for_saving = name_attackedImage + "_median_blurring_kernel_" + str(kernel) + "_sigma_" + str(sigma) + "_wpsnr_" + str(wpsnr)+".bmp"
+	attackedImage = name_attackedImage[:-4] + '_median_blurring.bmp'
+	os.rename(attackedImage, name_for_saving)
+	print("Median-Blurring-Attack with wpsnr = " + str(wpsnr))
+	attackedImage, wpsnr, decisionMade, scale, sigma = bfa.resizing_blurring(name_originalImage, name_watermarkedImage,name_attackedImage)
+	name_for_saving = name_attackedImage + "_resizing_blurring_scale_" + str(scale) + "_sigma_" + str(sigma) + "_wpsnr_" + str(wpsnr)+".bmp"
+	attackedImage = name_attackedImage[:-4]+'_resizing_blurring.bmp'
+	os.rename(attackedImage, name_for_saving)
+	print("Resizing-Blurring-Attack with wpsnr = " + str(wpsnr))
+	attackedImage, wpsnr, decisionMade, std, kernel = bfa.awgn_median(name_originalImage,name_watermarkedImage,name_attackedImage)
+	name_for_saving = name_attackedImage + "_awgn_median_std_" + str(std) + "_kernel_" + str(kernel) + "_wpsnr_" + str(wpsnr)+".bmp"
+	attackedImage = name_attackedImage[:-4] + '_awgn_median.bmp'
+	os.rename(attackedImage, name_for_saving)
+	print("AWGN-Median-Attack with wpsnr = " + str(wpsnr))
 
 #CODE TO BE DELETED FOR THE COMPETITION
 #"""string_image = int(input("Enter name of the image without '.bmp': "))"""
