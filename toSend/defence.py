@@ -20,8 +20,8 @@ threeshold = 1.87
 mark_size = 1024
 
 dir_im = 'images/'
-image_name = 'tree'
-# image_name = 'rollercoaster'
+# image_name = 'tree'
+image_name = 'rollercoaster'
 # image_name = 'buildings'
 name_image = dir_im + image_name + '.bmp'
 name_out = dir_im + 'ef26420c_' + image_name + '.bmp'
@@ -33,6 +33,10 @@ image = cv2.imread(name_image, 0)
 if 'tree.bmp' in name_image:
     alpha = 5
     step = 24.3
+
+if 'buildings.bmp' in name_image:
+    alpha = 5
+    step = 19
 
 watermarked = embedding(name_image, name_output=name_out, name_mark= mark, alpha = alpha,
                  dim = dim, step = step, max_splits=max_splits,
@@ -67,7 +71,7 @@ if attack_analysis:
             problem.add(i)
     print('problems in',problem, '| min sim',min(SIM))
 
-fakemark_analysis = True
+fakemark_analysis = False
 
 if fakemark_analysis:
     SIM = []

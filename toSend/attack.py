@@ -60,7 +60,8 @@ def random_attack_param(image, output = False):
     ori = image.copy()
     w = 0
     i = random.randint(1, 6)
-    while w < 35:
+    print(i)
+    while w < 35 or w > 45:
         if i == 1:
             attacked = ip.awgn(image, random.uniform(0.5, 10), random.randint(0, 9999))
         elif i == 2:
@@ -73,7 +74,7 @@ def random_attack_param(image, output = False):
             attacked = ip.resizing(image, random.uniform(0.1, 0.7))
         elif i == 6:
             attacked = ip.jpeg_compression(image, random.randint(1, 75))
-        w = wpsnr(ori, image)
+        w = wpsnr(attacked, image)
     if output:
         # print('Attacked with attack :',i)
         return attacked, i
