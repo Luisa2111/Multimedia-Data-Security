@@ -99,16 +99,19 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 
 
 #CODE TO BE MAINTAINTED FOR THE COMPETITION
-name_images_competitors=os.listdir("./images_of_competition")
-
+name_images_competitors=["buildings", "rollercoaster", "tree"]
+name_groups_competitors=["ef26420c", "pixel", "youshallnotmark",
+						 "blitz", "omega", "howimetyourmark", "weusedlsb", "thebavarians",
+						 "theyarethesamepicture", "dinkleberg", "failedfouriertransform"]
 start = time.time()
 for name_image_to_be_attacked in name_images_competitors:
-	print("I'm trying to attack " + name_image_to_be_attacked)
+	for name_group_to_be_attacked in name_groups_competitors:
+		print("I'm trying to attack " + name_group_to_be_attacked+ "_"+name_image_to_be_attacked+".bmp")
 
-	name_watermarkedImage="./images_of_competition/"+name_image_to_be_attacked
-	name_originalImage="./sample_images_roc/"+name_image_to_be_attacked[-8:]
-	name_attackedImage="./attacked/"+name_image_to_be_attacked[:-9]+"/ef26420c_"+name_image_to_be_attacked
-	definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
+		name_watermarkedImage="./images_of_competition/"+ name_group_to_be_attacked+ "_"+name_image_to_be_attacked+".bmp"
+		name_originalImage="./sample_images_roc/"+name_image_to_be_attacked+".bmp"
+		name_attackedImage="./attacked/"+name_group_to_be_attacked+"/ef26420c_"+name_group_to_be_attacked+"_"+name_image_to_be_attacked+".bmp"
+		definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
 end = time.time()
 print("the attacks take ", end-start, " seconds")
 
