@@ -1,35 +1,37 @@
+
+
 def detection_caller(name_originalImage, name_watermarkedImage, name_attackedImage):
-    if name_watermarkedImage[24:-9] == "pixel":
+    if "pixel" in name_watermarkedImage[24:]:
         import detection_pixel as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "ef26420c":
+    elif "ef26420c" in name_watermarkedImage[24:]:
         import detection_ef26420c as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "youshallnotmark":
+    elif "youshallnotmark" in name_watermarkedImage[24:]:
         import detection_youshallnotmark as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "blitz":
+    elif "blitz" in name_watermarkedImage[24:]:
         import detection_blitz as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "omega":
+    elif "omega" in name_watermarkedImage[24:]:
         import detection_howimetyourmark as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "howimetyourmark":
+    elif "howimetyourmark" in name_watermarkedImage[24:]:
         import detection_omega as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "weusedlsb":
+    elif "weusedlsb" in name_watermarkedImage[24:]:
         import detection_weusedlsb as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "thebavarians":
+    elif "thebavarians" in name_watermarkedImage[24:]:
         import detection_thebavarians as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "theyarethesamepicture":
+    elif "theyarethesamepicture" in name_watermarkedImage[24:]:
         import detection_theyarethesamepicture as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[24:-9] == "dinkleberg":
+    elif "dinkleberg" in name_watermarkedImage[24:]:
         import detection_dinkleberg as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
-    elif name_watermarkedImage[:-9] == "failedfouriertransform":
+    elif "failedfouriertransform" in name_watermarkedImage[:]:
         import detection_failedfouriertransform as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
 
