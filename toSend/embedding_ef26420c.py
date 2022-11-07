@@ -89,12 +89,14 @@ def embedding(name_image, name_mark, alpha=5, name_output='watermarked.bmp', dim
 	if sh[0] % dim != 0:
 		return 'img size not div by ' + str(dim)
 
-
+	if np.count_nonzero(q) > max_splits:
+		print('splits set to 500')
 	splits = min(np.count_nonzero(q), max_splits)
 
 	# case of flat images
 	# we short the mark and proceed with a different embedding strategy for the second part
 	if splits < min_splits:
+		print('strategy for flat started')
 		new_mark_size = int(splits * sub_size - 1)
 		flat_mark_size = mark.size - new_mark_size
 		mark_flat = mark[new_mark_size:]

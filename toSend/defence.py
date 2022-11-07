@@ -20,15 +20,19 @@ threeshold = 1.87
 mark_size = 1024
 
 dir_im = 'images/'
-# image_name = 'tree'
+image_name = 'tree'
 # image_name = 'rollercoaster'
-image_name = 'buildings'
+# image_name = 'buildings'
 name_image = dir_im + image_name + '.bmp'
 name_out = dir_im + 'ef26420c_' + image_name + '.bmp'
 mark = 'ef26420c.npy'
 MARK = np.load('ef26420c.npy')
 MARK = np.array([(-1) ** m for m in MARK])
 image = cv2.imread(name_image, 0)
+
+if 'tree.bmp' in name_image:
+    alpha = 5
+    step = 24.3
 
 watermarked = embedding(name_image, name_output=name_out, name_mark= mark, alpha = alpha,
                  dim = dim, step = step, max_splits=max_splits,
@@ -63,7 +67,7 @@ if attack_analysis:
             problem.add(i)
     print('problems in',problem, '| min sim',min(SIM))
 
-fakemark_analysis = False
+fakemark_analysis = True
 
 if fakemark_analysis:
     SIM = []
@@ -178,7 +182,7 @@ if roc:
 
     plt.show()
 
-atk = at.random_attack(watermarked)
+atk = at.random_attack_param(watermarked)
 name_atk = 'atk.bmp'
 cv2.imwrite(name_atk,atk)
 plt.figure(figsize=(15, 6))

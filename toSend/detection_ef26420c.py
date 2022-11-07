@@ -369,12 +369,17 @@ def detection(name_original, name_watermarked, name_attacked):
 	min_splits = 170
 	sub_size = 6
 	ceil = True
+	if 'tree.bmp' in name_original:
+		alpha = 5
+		step = 24.3
+
 	# threeshold = 2.53 # for FPR = 0.01
 	threeshold = 1.87 # for a FPR = 0.05
 	mark_size = 1024
 
 	image = cv2.imread(name_original, 0)
 	wat_original = cv2.imread(name_watermarked,0)
+
 	wat_attacked = cv2.imread(name_attacked,0)
 	mark, extracted_mark = extraction_parallel(image, wat_original, wat_attacked, mark_size, alpha, dim = dim, step = step, max_splits = max_splits, min_splits = min_splits,
 								sub_size = sub_size, Xi_exp = Xi_exp, Lambda_exp = Lambda_exp, L_exp = L_exp , ceil = ceil)

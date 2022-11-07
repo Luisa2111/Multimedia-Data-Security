@@ -59,8 +59,8 @@ just used and implemented for our own testing purposes
 def random_attack_param(image, output = False):
     ori = image.copy()
     w = 0
+    i = random.randint(1, 6)
     while w < 35:
-        i = random.randint(1, 6)
         if i == 1:
             attacked = ip.awgn(image, random.uniform(0.5, 10), random.randint(0, 9999))
         elif i == 2:
@@ -87,13 +87,13 @@ def random_attack_param(image, output = False):
 def attack_wpsnr_fix(image, i):
     attacked = image.copy()
     w = 0
-    while (w < 35 or w > 50) and (i != 3 or w == 0):
+    while (w < 35 or w > 40) and (i != 3 or w == 0):
         if i == 1:
-            attacked = ip.awgn(image, random.uniform(0.5, 10), random.randint(0, 9999))
+            attacked = ip.awgn(attacked, random.uniform(0.5, 10), random.randint(0, 9999))
         elif i == 2:
             attacked = ip.blur(image, random.uniform(0.5, 3))
         elif i == 3:
-            attacked = ip.sharpening(image, random.uniform(0.9, 1.1), random.uniform(0.9, 1.1))
+            attacked = ip.sharpening(image, 0.55, 0.55) # random.uniform(0.4, 0.6), random.uniform(0.4, 0.6))
         elif i == 4:
             attacked = ip.median(image, [random.randint(1, 5) * 2 + 1, random.randint(1, 5) * 2 + 1])
         elif i == 5:
