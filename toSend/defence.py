@@ -20,7 +20,9 @@ threeshold = 1.87
 mark_size = 1024
 
 dir_im = 'images/'
-image_name = 'lena'
+# image_name = 'tree'
+# image_name = 'rollercoaster'
+image_name = 'buildings'
 name_image = dir_im + image_name + '.bmp'
 name_out = dir_im + 'ef26420c_' + image_name + '.bmp'
 mark = 'ef26420c.npy'
@@ -176,7 +178,7 @@ if roc:
 
     plt.show()
 
-atk = at.random_attack_param(watermarked)
+atk = at.random_attack(watermarked)
 name_atk = 'atk.bmp'
 cv2.imwrite(name_atk,atk)
 plt.figure(figsize=(15, 6))

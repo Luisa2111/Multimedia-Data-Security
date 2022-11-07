@@ -10,7 +10,7 @@ if __name__ == "__main__":
 
     mark = np.random.uniform(0.0, 1.0, mark_size)
     mark = np.uint8(np.rint(mark))
-    img = 'lena'
+    img = 'buildings'
     name_image = 'toSend/images/' + img + '.bmp'
     name_out = path_out + 'wat_' + img + '-00' + '.bmp'
     oldembeddings.embeddingSS.embedding(name_image, mark, name_output=name_out,alpha=0.05)
