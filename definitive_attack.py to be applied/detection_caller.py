@@ -14,10 +14,10 @@ def detection_caller(name_originalImage, name_watermarkedImage, name_attackedIma
         import detection_blitz as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
     elif "omega" in name_watermarkedImage[24:]:
-        import detection_howimetyourmark as det
+        import detection_omega as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
     elif "howimetyourmark" in name_watermarkedImage[24:]:
-        import detection_omega as det
+        import detection_howimetyourmark as det
         return det.detection(name_originalImage, name_watermarkedImage, name_attackedImage)
     elif "weusedlsb" in name_watermarkedImage[24:]:
         import detection_weusedlsb as det

@@ -1,0 +1,134 @@
+
+/Users/giacomoborin/venv_personal/data_hiding4/venv/bin/python /Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py 
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.0
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+I'm trying to attack pixel_buildings.bmp
+Against ./images_of_competition/pixel_buildings.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+BEST  awgn
+awgn _ std = 22.190000000000015
+awgn _wpsnrWatermarkAttacked= 36.67745246786663
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.6099999999999999
+blur _wpsnrWatermarkAttacked= 32.626512241971476
+JPEG: Is the watermark present?
+jpeg  does not work
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 0.27000000000000013
+resizing _wpsnrWatermarkAttacked= 30.845570349503383
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 9
+median _wpsnrWatermarkAttacked= 29.6437590924358
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.5
+sharpening_wpsnrWatermarkAttacked= 24.233517376685093
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 23.900309710216476
+COMPOSITION ATTACK
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Blurring-Attack with wpsnr = awgn-blurring does not work
+Median-Blurring-Attack with wpsnr = median-blurring does not work
+wpsnrWatermarkAttacked is less than 35...
+Resizing-Blurring-Attack with wpsnr = resize-blurring does not work
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Median-Attack with wpsnr = awgn-median does not work
+I'm trying to attack pixel_rollercoaster.bmp
+Against ./images_of_competition/pixel_rollercoaster.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+BEST  awgn
+awgn _ std = 23.51000000000001
+awgn _wpsnrWatermarkAttacked= 35.915868440340546
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.88
+blur _wpsnrWatermarkAttacked= 31.631291039882182
+JPEG: Is the watermark present?
+BEST  jpeg
+jpeg _ std = 10
+jpeg _wpsnrWatermarkAttacked= 39.83436107919439
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 0.16999999999999998
+resizing _wpsnrWatermarkAttacked= 27.3009106882534
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 15
+median _wpsnrWatermarkAttacked= 25.294484841832737
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.6
+sharpening_wpsnrWatermarkAttacked= 24.336233627345774
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 24.560315934275767
+COMPOSITION ATTACK
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Blurring-Attack with wpsnr = awgn-blurring does not work
+Median-Blurring-Attack with wpsnr = 32.11655309318788
+wpsnrWatermarkAttacked is less than 35...
+Resizing-Blurring-Attack with wpsnr = resize-blurring does not work
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Median-Attack with wpsnr = awgn-median does not work
+I'm trying to attack pixel_tree.bmp
+Against ./images_of_competition/pixel_tree.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+BEST  awgn
+awgn _ std = 23.34000000000001
+awgn _wpsnrWatermarkAttacked= 36.04681892402196
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.8199999999999998
+blur _wpsnrWatermarkAttacked= 31.007276770449366
+JPEG: Is the watermark present?
+BEST  jpeg
+jpeg _ std = 10
+jpeg _wpsnrWatermarkAttacked= 37.70036719431537
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 0.31000000000000005
+resizing _wpsnrWatermarkAttacked= 31.538098086052674
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 7
+median _wpsnrWatermarkAttacked= 29.767645653534625
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.4
+sharpening_wpsnrWatermarkAttacked= 27.70298550860526
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 22.019700400873127
+COMPOSITION ATTACK
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Blurring-Attack with wpsnr = awgn-blurring does not work
+Median-Blurring-Attack with wpsnr = median-blurring does not work
+wpsnrWatermarkAttacked is less than 35...
+Resizing-Blurring-Attack with wpsnr = resize-blurring does not work
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Median-Attack with wpsnr = awgn-median does not work
+the attacks take  366.5020751953125  seconds
+
+Process finished with exit code 0

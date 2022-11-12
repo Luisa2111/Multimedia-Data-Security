@@ -55,40 +55,41 @@ def main():
             print('The marks are different, please check your code')
         print(sum(res))
 
-    check_mark(mark, mark_ex)
+    # check_mark(mark, mark_ex)
+    atk_phase = False
+    if atk_phase:
+        problem = set({})
+        print('starting attacks')
+        SIM = []
+        for i in range(1, 7):
+            atk = at.attack_num(watermarked, i)
+            mark_atk = dt.extraction(image=cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size, alpha=alpha,
+                                     dim=dim, step=step, max_splits=max_splits,
+                                     min_splits=min_splits, sub_size=sub_size,
+                                     Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
+            sim = similarity(mark_ex, mark_atk)
+            SIM.append(sim)
+            print(i, sim, wpsnr(watermarked, atk))
+            if sim < 4:
+                problem.add(i)
+                # print(i, wpsnr(watermarked,atk))
+            """print('mark atk :',mark_atk)
+            print('positive >1 :', len([m for m in mark_atk if ( m > 1)]))
+            print('positive 1> x > 0 :', len([m for m in mark_atk if (m > 0 and m < 1)]))
+            print('negative < 0 :', len([m for m in mark_atk if (m < 0)]))
+            print('similiarity :', similarity(mark,mark_atk))"""
 
-    problem = set({})
-    print('starting attacks')
-    SIM = []
-    for i in range(1, 7):
-        atk = at.attack_num(watermarked, i)
-        mark_atk = dt.extraction(image=cv2.imread(name_image, 0), watermarked=atk, mark_size=mark.size, alpha=alpha,
-                                 dim=dim, step=step, max_splits=max_splits,
-                                 min_splits=min_splits, sub_size=sub_size,
-                                 Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil = ceil)
-        sim = similarity(mark_ex, mark_atk)
-        SIM.append(sim)
-        print(i, sim, wpsnr(watermarked, atk))
-        if sim < 4:
-            problem.add(i)
-            # print(i, wpsnr(watermarked,atk))
-        """print('mark atk :',mark_atk)
-        print('positive >1 :', len([m for m in mark_atk if ( m > 1)]))
-        print('positive 1> x > 0 :', len([m for m in mark_atk if (m > 0 and m < 1)]))
-        print('negative < 0 :', len([m for m in mark_atk if (m < 0)]))
-        print('similiarity :', similarity(mark,mark_atk))"""
-
-    print('problems in',problem, '| min sim',min(SIM))
+        print('problems in',problem, '| min sim',min(SIM))
 
 
     print('analizing fake watermarked image')
-    fakemark = dt.extraction(image, image,
+    """fakemark = dt.extraction(image, image,
                              mark.size, alpha=alpha,
                              dim=dim, step=step, max_splits=max_splits,
                              min_splits=min_splits, sub_size=sub_size,
                              Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil=ceil
                              )
-    print('fakemark from original',similarity(mark_ex,fakemark))
+    print('fakemark from original',similarity(mark_ex,fakemark))"""
     FAKE = []
     """for i in range(1,7):
         fakemark = dt.extraction(image, at.attack_num(image,i), mark_size=mark.size,alpha=alpha, step = step, max_splits=max_splits)
@@ -102,13 +103,13 @@ def main():
                                  min_splits=min_splits, sub_size=sub_size,
                                  Xi_exp=Xi_exp, Lambda_exp=Lambda_exp, L_exp=L_exp, ceil=ceil
                                  )
-        FAKE.append(similarity(mark_ex,fakemark))
+        FAKE.append(fakemark)
 
-    print(max(FAKE))
 
-    """plt.hist(np.concatenate(FAKE), bins=50)
+
+    plt.hist(np.concatenate(FAKE), bins=200)
     plt.gca().set(title='Frequency Histogram', ylabel='Frequency')
-    plt.show()"""
+    plt.show()
 
 
     atk = at.attack_num(watermarked, 2)

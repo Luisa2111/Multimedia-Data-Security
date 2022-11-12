@@ -99,10 +99,14 @@ def definitive_attack(name_originalImage, name_watermarkedImage, name_attackedIm
 
 
 #CODE TO BE MAINTAINTED FOR THE COMPETITION
-name_images_competitors=["buildings", "rollercoaster", "tree"]
-name_groups_competitors=["ef26420c", "pixel", "youshallnotmark",
-						 "blitz", "omega", "howimetyourmark", "weusedlsb", "thebavarians",
-						 "theyarethesamepicture", "dinkleberg", "failedfouriertransform"]
+name_images_competitors=["rollercoaster"]
+# name_images_competitors=["buildings", "rollercoaster", "tree"]
+# name_groups_competitors=["pixel"]
+name_groups_competitors=["youshallnotmark"]
+# name_groups_competitors=["ef26420c", "pixel", "youshallnotmark",
+#						 "blitz", "omega", "howimetyourmark", "weusedlsb", "thebavarians",
+#						 "theyarethesamepicture", "dinkleberg", "failedfouriertransform"]
+
 start = time.time()
 for name_image_to_be_attacked in name_images_competitors:
 	for name_group_to_be_attacked in name_groups_competitors:

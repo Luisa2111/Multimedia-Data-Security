@@ -1,0 +1,120 @@
+
+/Users/giacomoborin/venv_personal/data_hiding4/venv/bin/python /Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py 
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.0
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+I'm trying to attack failedfouriertransform_buildings.bmp
+Against ./images_of_competition/failedfouriertransform_buildings.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+wpsnrWatermarkAttacked is less than 35...
+awgn  does not work
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.03
+blur _wpsnrWatermarkAttacked= 38.313570413730744
+JPEG: Is the watermark present?
+BEST  jpeg
+jpeg _ std = 8
+jpeg _wpsnrWatermarkAttacked= 37.59299219104011
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 0.32000000000000006
+resizing _wpsnrWatermarkAttacked= 33.012874328314275
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 7
+median _wpsnrWatermarkAttacked= 32.47036145804428
+SHARPENING basic bf 
+sharpening does not work
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+localised does not work
+COMPOSITION ATTACK
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Blurring-Attack with wpsnr = awgn-blurring does not work
+Median-Blurring-Attack with wpsnr = 39.8608823020091
+Resizing-Blurring-Attack with wpsnr = resize-blurring does not work
+AWGN-Median-Attack with wpsnr = 32.47352969666831
+I'm trying to attack failedfouriertransform_rollercoaster.bmp
+Against ./images_of_competition/failedfouriertransform_rollercoaster.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+wpsnrWatermarkAttacked is less than 35...
+awgn  does not work
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.1500000000000001
+blur _wpsnrWatermarkAttacked= 37.424568824729064
+JPEG: Is the watermark present?
+jpeg  does not work
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 0.30000000000000004
+resizing _wpsnrWatermarkAttacked= 32.81873153982792
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 5
+median _wpsnrWatermarkAttacked= 35.92009325935878
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.4
+sharpening_wpsnrWatermarkAttacked= 29.482251219964684
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 24.513587013203203
+COMPOSITION ATTACK
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Blurring-Attack with wpsnr = awgn-blurring does not work
+Median-Blurring-Attack with wpsnr = median-blurring does not work
+Resizing-Blurring-Attack with wpsnr = 37.00253462797597
+AWGN-Median-Attack with wpsnr = 35.918775887481814
+I'm trying to attack failedfouriertransform_tree.bmp
+Against ./images_of_competition/failedfouriertransform_tree.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+wpsnrWatermarkAttacked is less than 35...
+awgn  does not work
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.05
+blur _wpsnrWatermarkAttacked= 37.479248611716834
+JPEG: Is the watermark present?
+BEST  jpeg
+jpeg _ std = 8
+jpeg _wpsnrWatermarkAttacked= 36.05296156524692
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 0.30000000000000004
+resizing _wpsnrWatermarkAttacked= 31.404462188638952
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 7
+median _wpsnrWatermarkAttacked= 30.005679601397162
+SHARPENING basic bf 
+sharpening does not work
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 22.14930031459342
+COMPOSITION ATTACK
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Blurring-Attack with wpsnr = awgn-blurring does not work
+Median-Blurring-Attack with wpsnr = median-blurring does not work
+Resizing-Blurring-Attack with wpsnr = resize-blurring does not work
+wpsnrWatermarkAttacked is less than 35...
+AWGN-Median-Attack with wpsnr = awgn-median does not work
+the attacks take  467.10289311408997  seconds
+
+Process finished with exit code 0

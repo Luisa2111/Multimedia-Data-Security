@@ -1,0 +1,395 @@
+I'm trying to attack blitz_buildings.bmp
+Against ./images_of_competition/blitz_buildings.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+wPSNR: 9999999.00dB
+Attack unsuccsesfull SIM = 51.691502
+wPSNR: 62.97dB
+Attack unsuccsesfull SIM = 49.384758
+wPSNR: 57.22dB
+Attack unsuccsesfull SIM = 44.495532
+wPSNR: 53.74dB
+Attack unsuccsesfull SIM = 38.792652
+wPSNR: 51.26dB
+attack sucsessfull. SIM = 33.368948
+wPSNR: 51.26dB
+attack sucsessfull. SIM = 33.368948
+wPSNR: 51.48dB
+attack sucsessfull. SIM = 33.896401
+wPSNR: 51.71dB
+Attack unsuccsesfull SIM = 34.401910
+wPSNR: 51.71dB
+Attack unsuccsesfull SIM = 34.401910
+wPSNR: 51.68dB
+Attack unsuccsesfull SIM = 34.333792
+wPSNR: 51.66dB
+Attack unsuccsesfull SIM = 34.294874
+wPSNR: 51.64dB
+attack sucsessfull. SIM = 34.276767
+BEST  awgn
+awgn _ std = 3.83
+awgn _wpsnrWatermarkAttacked= 51.63853772047056
+BLUR: Is the watermark present?
+wPSNR: 9999999.00dB
+Attack unsuccsesfull SIM = 51.691502
+wPSNR: 38.53dB
+attack sucsessfull. SIM = -14.762537
+wPSNR: 39.98dB
+attack sucsessfull. SIM = -13.901815
+wPSNR: 41.65dB
+attack sucsessfull. SIM = -12.741361
+wPSNR: 43.58dB
+attack sucsessfull. SIM = -11.082031
+wPSNR: 45.87dB
+attack sucsessfull. SIM = -8.283825
+wPSNR: 49.10dB
+attack sucsessfull. SIM = -2.379217
+wPSNR: 52.81dB
+attack sucsessfull. SIM = 20.602209
+wPSNR: 53.58dB
+Attack unsuccsesfull SIM = 42.911365
+wPSNR: 53.58dB
+Attack unsuccsesfull SIM = 42.911365
+wPSNR: 52.96dB
+Attack unsuccsesfull SIM = 42.655779
+wPSNR: 54.52dB
+Attack unsuccsesfull SIM = 42.085689
+wPSNR: 54.52dB
+Attack unsuccsesfull SIM = 42.043639
+wPSNR: 54.51dB
+Attack unsuccsesfull SIM = 41.919615
+wPSNR: 52.93dB
+Attack unsuccsesfull SIM = 41.316802
+wPSNR: 54.39dB
+Attack unsuccsesfull SIM = 38.700303
+wPSNR: 52.76dB
+Attack unsuccsesfull SIM = 36.068611
+wPSNR: 53.37dB
+attack sucsessfull. SIM = 30.190917
+BEST  blur
+blur _ sigma = 0.3800000000000001
+blur _wpsnrWatermarkAttacked= 53.37415300491799
+JPEG: Is the watermark present?
+wPSNR: 54.32dB
+Attack unsuccsesfull SIM = 39.782321
+wPSNR: 53.37dB
+Attack unsuccsesfull SIM = 36.954256
+wPSNR: 52.30dB
+attack sucsessfull. SIM = 33.875697
+wPSNR: 52.10dB
+attack sucsessfull. SIM = 33.400934
+wPSNR: 52.30dB
+attack sucsessfull. SIM = 33.875697
+wPSNR: 52.52dB
+attack sucsessfull. SIM = 33.358314
+wPSNR: 52.78dB
+Attack unsuccsesfull SIM = 34.565644
+BEST  jpeg
+jpeg _ std = 58
+jpeg _wpsnrWatermarkAttacked= 52.780318122403614
+RESIZING: Is the watermark present?
+wPSNR: 49.26dB
+attack sucsessfull. SIM = -4.257358
+wPSNR: 49.26dB
+attack sucsessfull. SIM = -4.257358
+wPSNR: 52.42dB
+attack sucsessfull. SIM = 2.914502
+wPSNR: 52.64dB
+attack sucsessfull. SIM = 3.422227
+wPSNR: 53.07dB
+attack sucsessfull. SIM = 6.108860
+wPSNR: 53.74dB
+attack sucsessfull. SIM = 6.620914
+wPSNR: 53.75dB
+attack sucsessfull. SIM = 5.588963
+wPSNR: 54.43dB
+attack sucsessfull. SIM = 8.262022
+wPSNR: 54.50dB
+attack sucsessfull. SIM = 9.394579
+wPSNR: 54.69dB
+attack sucsessfull. SIM = 10.209266
+wPSNR: 55.27dB
+attack sucsessfull. SIM = 11.048048
+wPSNR: 77.33dB
+Attack unsuccsesfull SIM = 51.347648
+wPSNR: 55.68dB
+attack sucsessfull. SIM = 14.293954
+BEST  resizing
+resizing _ scale = 2.989999999999999
+resizing _wpsnrWatermarkAttacked= 55.68413821261095
+MEDIAN: Is the watermark present?
+wPSNR: 45.28dB
+attack sucsessfull. SIM = -0.140424
+BEST  median
+median _ scale = 3
+median _wpsnrWatermarkAttacked= 45.28208261863778
+SHARPENING basic bf 
+wPSNR: 28.60dB
+attack sucsessfull. SIM = -5.751623
+wPSNR: 24.23dB
+attack sucsessfull. SIM = -6.334468
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.4
+sharpening_wpsnrWatermarkAttacked= 28.600135402190986
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+wPSNR: 23.89dB
+attack sucsessfull. SIM = -15.096638
+with wpsnr= 23.89494875827875
+COMPOSITION ATTACK
+wPSNR: 38.65dB
+attack sucsessfull. SIM = -14.717279
+wPSNR: 38.65dB
+attack sucsessfull. SIM = -14.717279
+
+
+
+/Users/giacomoborin/venv_personal/data_hiding4/venv/bin/python /Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py 
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.0
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+I'm trying to attack blitz_rollercoaster.bmp
+Against ./images_of_competition/blitz_rollercoaster.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+wPSNR: 9999999.00dB
+Attack unsuccsesfull SIM = 73.566348
+wPSNR: 62.97dB
+Attack unsuccsesfull SIM = 70.860479
+wPSNR: 57.22dB
+Attack unsuccsesfull SIM = 64.097524
+wPSNR: 53.73dB
+Attack unsuccsesfull SIM = 55.641416
+wPSNR: 51.25dB
+Attack unsuccsesfull SIM = 47.463504
+wPSNR: 49.32dB
+Attack unsuccsesfull SIM = 40.393842
+wPSNR: 47.74dB
+attack sucsessfull. SIM = 34.108372
+wPSNR: 47.74dB
+attack sucsessfull. SIM = 34.108372
+wPSNR: 47.89dB
+Attack unsuccsesfull SIM = 34.673692
+wPSNR: 47.89dB
+Attack unsuccsesfull SIM = 34.673692
+wPSNR: 47.87dB
+Attack unsuccsesfull SIM = 34.642047
+wPSNR: 47.86dB
+Attack unsuccsesfull SIM = 34.591711
+wPSNR: 47.84dB
+Attack unsuccsesfull SIM = 34.578028
+wPSNR: 47.83dB
+Attack unsuccsesfull SIM = 34.482303
+wPSNR: 47.82dB
+Attack unsuccsesfull SIM = 34.440948
+wPSNR: 47.80dB
+Attack unsuccsesfull SIM = 34.362124
+wPSNR: 47.79dB
+Attack unsuccsesfull SIM = 34.285470
+wPSNR: 47.77dB
+attack sucsessfull. SIM = 34.220374
+BEST  awgn
+awgn _ std = 5.979999999999995
+awgn _wpsnrWatermarkAttacked= 47.771145148044674
+BLUR: Is the watermark present?
+wPSNR: 9999999.00dB
+Attack unsuccsesfull SIM = 73.566348
+wPSNR: 38.92dB
+attack sucsessfull. SIM = -15.896808
+wPSNR: 40.35dB
+attack sucsessfull. SIM = -12.049224
+wPSNR: 41.99dB
+attack sucsessfull. SIM = -6.627582
+wPSNR: 43.88dB
+attack sucsessfull. SIM = 1.283326
+wPSNR: 46.13dB
+attack sucsessfull. SIM = 14.439581
+wPSNR: 49.38dB
+Attack unsuccsesfull SIM = 37.532023
+wPSNR: 49.38dB
+Attack unsuccsesfull SIM = 37.532023
+wPSNR: 49.01dB
+Attack unsuccsesfull SIM = 34.470856
+wPSNR: 48.66dB
+attack sucsessfull. SIM = 31.756559
+BEST  blur
+blur _ sigma = 0.5200000000000001
+blur _wpsnrWatermarkAttacked= 48.65631128840153
+JPEG: Is the watermark present?
+wPSNR: 54.37dB
+Attack unsuccsesfull SIM = 52.288551
+wPSNR: 53.48dB
+Attack unsuccsesfull SIM = 47.834877
+wPSNR: 52.54dB
+Attack unsuccsesfull SIM = 44.464917
+wPSNR: 51.75dB
+Attack unsuccsesfull SIM = 40.714069
+wPSNR: 51.23dB
+Attack unsuccsesfull SIM = 34.982721
+wPSNR: 50.35dB
+attack sucsessfull. SIM = 30.896182
+wPSNR: 50.03dB
+attack sucsessfull. SIM = 30.910657
+wPSNR: 50.35dB
+attack sucsessfull. SIM = 30.896182
+wPSNR: 50.47dB
+attack sucsessfull. SIM = 31.653399
+wPSNR: 50.58dB
+attack sucsessfull. SIM = 31.950643
+wPSNR: 50.81dB
+Attack unsuccsesfull SIM = 38.636579
+BEST  jpeg
+jpeg _ std = 44
+jpeg _wpsnrWatermarkAttacked= 50.810090871012264
+RESIZING: Is the watermark present?
+wPSNR: 49.55dB
+attack sucsessfull. SIM = 30.327381
+wPSNR: 49.55dB
+attack sucsessfull. SIM = 30.327381
+wPSNR: 52.77dB
+Attack unsuccsesfull SIM = 47.825137
+wPSNR: 52.77dB
+Attack unsuccsesfull SIM = 47.825137
+wPSNR: 52.79dB
+Attack unsuccsesfull SIM = 49.077733
+wPSNR: 52.76dB
+Attack unsuccsesfull SIM = 47.884753
+wPSNR: 52.82dB
+Attack unsuccsesfull SIM = 48.965386
+wPSNR: 52.68dB
+Attack unsuccsesfull SIM = 48.153446
+wPSNR: 52.63dB
+Attack unsuccsesfull SIM = 48.673460
+wPSNR: 52.67dB
+Attack unsuccsesfull SIM = 50.218437
+wPSNR: 52.79dB
+Attack unsuccsesfull SIM = 50.720874
+wPSNR: 52.75dB
+Attack unsuccsesfull SIM = 48.936354
+wPSNR: 52.87dB
+Attack unsuccsesfull SIM = 50.414042
+wPSNR: 49.55dB
+attack sucsessfull. SIM = 30.327381
+BEST  resizing
+resizing _ scale = 2.0
+resizing _wpsnrWatermarkAttacked= 49.55287064832865
+MEDIAN: Is the watermark present?
+wPSNR: 44.21dB
+attack sucsessfull. SIM = 28.678281
+BEST  median
+median _ scale = 3
+median _wpsnrWatermarkAttacked= 44.211700436469044
+SHARPENING basic bf 
+wPSNR: 29.42dB
+attack sucsessfull. SIM = 12.568442
+wPSNR: 25.52dB
+attack sucsessfull. SIM = 1.509566
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.4
+sharpening_wpsnrWatermarkAttacked= 29.418565082867648
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+wPSNR: 24.50dB
+attack sucsessfull. SIM = -25.661580
+with wpsnr= 24.495534738789626
+COMPOSITION ATTACK
+wPSNR: 39.05dB
+attack sucsessfull. SIM = -15.792029
+wPSNR: 39.05dB
+attack sucsessfull. SIM = -15.792029
+Traceback (most recent call last):
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 118, in <module>
+    definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 61, in definitive_attack
+    attackedImage, wpsnr, decisionMade, std, sigma = bfa.awgn_blurring(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 26, in awgn_blurring
+    attackedImage, wpsnrWatermarkAttacked, decisionMade, std, sigma = awgn_blurring_bf(name_originalImage, name_watermarkedImage,name_attackedImage,sigma -1, sigma, 0.1 ,std - 1, std, 0.1, 123, -1)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 62, in awgn_blurring_bf
+    attackedImage = ip.awgn(watermarkedImage, std, seed_awgn)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/image_processing.py", line 19, in awgn
+    attacked = img + np.random.normal(mean, std, img.shape)
+  File "mtrand.pyx", line 1510, in numpy.random.mtrand.RandomState.normal
+  File "_common.pyx", line 610, in numpy.random._common.cont
+  File "_common.pyx", line 419, in numpy.random._common.check_constraint
+ValueError: scale < 0
+
+Process finished with exit code 1
+
+
+
+/Users/giacomoborin/venv_personal/data_hiding4/venv/bin/python /Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py 
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.0
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+I'm trying to attack blitz_tree.bmp
+Against ./images_of_competition/blitz_tree.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+
+BEST  awgn
+awgn _ std = 6.619999999999997
+awgn _wpsnrWatermarkAttacked= 46.897104101348546
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 0.43000000000000005
+blur _wpsnrWatermarkAttacked= 51.442442915986334
+JPEG: Is the watermark present?
+wPSNR: 50.68dB
+BEST  jpeg
+jpeg _ std = 30
+jpeg _wpsnrWatermarkAttacked= 46.41502678130969
+RESIZING: Is the watermark present?
+
+BEST  resizing
+resizing _ scale = 2.94
+resizing _wpsnrWatermarkAttacked= 54.36353621834584
+MEDIAN: Is the watermark present?
+wPSNR: 41.92dB
+attack sucsessfull. SIM = 3.344319
+BEST  median
+median _ scale = 3
+median _wpsnrWatermarkAttacked= 41.92284359961033
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.4
+sharpening_wpsnrWatermarkAttacked= 27.69931572827927
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+wPSNR: 22.01dB
+attack sucsessfull. SIM = -32.883059
+with wpsnr= 22.012246297800708
+COMPOSITION ATTACK
+wPSNR: 37.94dB
+attack sucsessfull. SIM = -17.251865
+wPSNR: 37.94dB
+attack sucsessfull. SIM = -17.251865
+Traceback (most recent call last):
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 118, in <module>
+    definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 61, in definitive_attack
+    attackedImage, wpsnr, decisionMade, std, sigma = bfa.awgn_blurring(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 26, in awgn_blurring
+    attackedImage, wpsnrWatermarkAttacked, decisionMade, std, sigma = awgn_blurring_bf(name_originalImage, name_watermarkedImage,name_attackedImage,sigma -1, sigma, 0.1 ,std - 1, std, 0.1, 123, -1)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 62, in awgn_blurring_bf
+    attackedImage = ip.awgn(watermarkedImage, std, seed_awgn)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/image_processing.py", line 19, in awgn
+    attacked = img + np.random.normal(mean, std, img.shape)
+  File "mtrand.pyx", line 1510, in numpy.random.mtrand.RandomState.normal
+  File "_common.pyx", line 610, in numpy.random._common.cont
+  File "_common.pyx", line 419, in numpy.random._common.check_constraint
+ValueError: scale < 0
+
+Process finished with exit code 1

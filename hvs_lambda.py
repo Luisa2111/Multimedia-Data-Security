@@ -129,19 +129,19 @@ if __name__ == "__main__":
     plt.title('Original')
     plt.imshow(image, cmap='gray')
     plt.subplot(142)
-    plt.title('Matrix')
-    matrix = hvs_quantization_Xi(image)
+    plt.title('Matrix of Xi values')
+    matrix = hvs_quantization_Xi(image)**0.2
     plt.imshow(matrix, cmap='gray')
     plt.subplot(143)
-    plt.title('Mean')
-    hvs = hvs_step(image, dim=8, step=15, Xi_exp = 0.2, Lambda_exp = 0.3, L_exp = 0.2)
-    print('max',np.max(hvs),'| != 0', np.count_nonzero(hvs))
-    print(hvs)
-    plt.imshow(hvs, cmap='gray')
-    plt.subplot(144)
-    matrix = hvs_quantization_Lambda(image)
-    plt.title('Matrix Lambda')
+    matrix = hvs_quantization_Lambda(image) ** 0.3
+    plt.title('Matrix of Lambda values')
     plt.imshow(matrix, cmap='gray')
-    plt.show()
+    plt.subplot(144)
+    hvs = hvs_step(image, dim=8, step=20, Xi_exp=0.2, Lambda_exp=0.3, L_exp=0.2)
+    plt.title('Blocks, non zero = ' + str(np.count_nonzero(hvs)))
+    print('max', np.max(hvs), '| != 0', np.count_nonzero(hvs))
+    plt.imshow(hvs, cmap='gray')
+
+
     plt.show()
 

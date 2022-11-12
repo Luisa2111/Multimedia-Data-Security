@@ -1,0 +1,122 @@
+
+/Users/giacomoborin/venv_personal/data_hiding4/venv/bin/python /Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py 
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.0
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+I'm trying to attack howimetyourmark_buildings.bmp
+Against ./images_of_competition/howimetyourmark_buildings.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/numpy/lib/function_base.py:2853: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/numpy/lib/function_base.py:2854: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+BEST  awgn
+awgn _ std = 0.21000000000000005
+awgn _wpsnrWatermarkAttacked= 80.98
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 0.13
+blur _wpsnrWatermarkAttacked= 53.29
+JPEG: Is the watermark present?
+BEST  jpeg
+jpeg _ std = 65
+jpeg _wpsnrWatermarkAttacked= 54.21
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 2.989999999999999
+resizing _wpsnrWatermarkAttacked= 55.69
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 3
+median _wpsnrWatermarkAttacked= 45.27
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.5
+sharpening_wpsnrWatermarkAttacked= 24.23
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 23.88
+COMPOSITION ATTACK
+Traceback (most recent call last):
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 118, in <module>
+    definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 61, in definitive_attack
+    attackedImage, wpsnr, decisionMade, std, sigma = bfa.awgn_blurring(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 26, in awgn_blurring
+    attackedImage, wpsnrWatermarkAttacked, decisionMade, std, sigma = awgn_blurring_bf(name_originalImage, name_watermarkedImage,name_attackedImage,sigma -1, sigma, 0.1 ,std - 1, std, 0.1, 123, -1)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 62, in awgn_blurring_bf
+    attackedImage = ip.awgn(watermarkedImage, std, seed_awgn)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/image_processing.py", line 19, in awgn
+    attacked = img + np.random.normal(mean, std, img.shape)
+  File "mtrand.pyx", line 1510, in numpy.random.mtrand.RandomState.normal
+  File "_common.pyx", line 610, in numpy.random._common.cont
+  File "_common.pyx", line 419, in numpy.random._common.check_constraint
+ValueError: scale < 0
+
+Process finished with exit code 1
+
+
+
+/Users/giacomoborin/venv_personal/data_hiding4/venv/bin/python /Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py 
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/scipy/__init__.py:146: UserWarning: A NumPy version >=1.16.5 and <1.23.0 is required for this version of SciPy (detected version 1.23.0
+  warnings.warn(f"A NumPy version >={np_minversion} and <{np_maxversion}"
+I'm trying to attack howimetyourmark_rollercoaster.bmp
+Against ./images_of_competition/howimetyourmark_rollercoaster.bmp
+BRUTE FORCE
+AWGN: Is the watermark present?
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/numpy/lib/function_base.py:2853: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[:, None]
+/Users/giacomoborin/venv_personal/data_hiding4/venv/lib/python3.8/site-packages/numpy/lib/function_base.py:2854: RuntimeWarning: invalid value encountered in divide
+  c /= stddev[None, :]
+BEST  awgn
+awgn _ std = 0.22000000000000006
+awgn _wpsnrWatermarkAttacked= 79.78
+BLUR: Is the watermark present?
+BEST  blur
+blur _ sigma = 1.3099999999999998
+blur _wpsnrWatermarkAttacked= 35.48
+JPEG: Is the watermark present?
+jpeg  does not work
+RESIZING: Is the watermark present?
+BEST  resizing
+resizing _ scale = 2.2799999999999985
+resizing _wpsnrWatermarkAttacked= 53.11
+MEDIAN: Is the watermark present?
+BEST  median
+median _ scale = 5
+median _wpsnrWatermarkAttacked= 35.91
+SHARPENING basic bf 
+BEST sharpening
+sharpening_alpha= 0.4
+sharpening_sigma= 0.4
+sharpening_wpsnrWatermarkAttacked= 29.41
+LOCALISED ATTACK with flat sensibility: 0
+awgn_std 20
+blur_sigma 1.3
+median_kernel_size 3
+sharpening_sigma 0.5
+sharpening_alpha 0.4
+with wpsnr= 24.46
+COMPOSITION ATTACK
+Traceback (most recent call last):
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 118, in <module>
+    definitive_attack(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/definitive_attack.py", line 61, in definitive_attack
+    attackedImage, wpsnr, decisionMade, std, sigma = bfa.awgn_blurring(name_originalImage, name_watermarkedImage, name_attackedImage)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 26, in awgn_blurring
+    attackedImage, wpsnrWatermarkAttacked, decisionMade, std, sigma = awgn_blurring_bf(name_originalImage, name_watermarkedImage,name_attackedImage,sigma -1, sigma, 0.1 ,std - 1, std, 0.1, 123, -1)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/bf_composition_attacks.py", line 62, in awgn_blurring_bf
+    attackedImage = ip.awgn(watermarkedImage, std, seed_awgn)
+  File "/Users/giacomoborin/venv_personal/data_hiding4/project-ef26420c/definitive_attack.py to be applied/image_processing.py", line 19, in awgn
+    attacked = img + np.random.normal(mean, std, img.shape)
+  File "mtrand.pyx", line 1510, in numpy.random.mtrand.RandomState.normal
+  File "_common.pyx", line 610, in numpy.random._common.cont
+  File "_common.pyx", line 419, in numpy.random._common.check_constraint
+ValueError: scale < 0
+
+Process finished with exit code 1
